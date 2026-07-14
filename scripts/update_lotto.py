@@ -29,9 +29,35 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA_FILE = ROOT / "data" / "lotto_results.json"
 KST = timezone(timedelta(hours=9))
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/124.0 Safari/537.36 MyLottoNoteUpdater/4.0",
+    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/124.0 Safari/537.36 MyLottoNoteUpdater/5.0",
     "Accept-Language": "ko-KR,ko;q=0.9,en;q=0.5",
 }
+
+SESSION = requests.Session()
+SESSION.headers.update(HEADERS)
+try:
+    from requests.adapters import HTTPAdapter
+    from urllib3.util.retry import Retry
+
+    retry = Retry(
+        total=2,
+        connect=2,
+        read=2,
+        backoff_factor=0.8,
+        status_forcelist=(429, 500, 502, 503, 504),
+        allowed_methods=frozenset({"GET"}),
+        raise_on_status=False,
+    )
+    SESSION.mount("https://", HTTPAdapter(max_retries=retry))
+    SESSION.mount("http://", HTTPAdapter(max_retries=retry))
+except Exception:
+    pass
+
+
+def http_get(url: str, *, params: dict[str, Any] | None = None, timeout: int = 10) -> requests.Response:
+    response = SESSION.get(url, params=params, timeout=timeout)
+    response.raise_for_status()
+    return response
 
 
 def clean_text(value: str) -> str:
@@ -145,11 +171,10 @@ def summary_missing(row: dict[str, Any]) -> bool:
 
 def fetch_legacy_json(round_no: int) -> tuple[dict[str, Any] | None, dict[str, int]]:
     try:
-        res = requests.get(
+        res = http_get(
             "https://www.dhlottery.co.kr/common.do",
             params={"method": "getLottoNumber", "drwNo": round_no},
-            headers=HEADERS,
-            timeout=10,
+            timeout=8,
         )
         res.raise_for_status()
         data = res.json()
@@ -294,7 +319,7 @@ def fetch_result_page(round_no: int) -> tuple[dict[str, Any] | None, dict[str, i
     best_summary: dict[str, int] = {}
     for url, params in candidates:
         try:
-            res = requests.get(url, params=params, headers=HEADERS, timeout=12)
+            res = http_get(url, params=params, timeout=10)
             res.raise_for_status()
             soup = BeautifulSoup(res.text, "html.parser")
             page_text = soup.get_text(" ", strip=True)
@@ -359,7 +384,7 @@ def fetch_first_prize_stores(round_no: int) -> list[dict[str, str]]:
     ]
     for url, params in candidates:
         try:
-            res = requests.get(url, params=params, headers=HEADERS, timeout=12)
+            res = http_get(url, params=params, timeout=10)
             res.raise_for_status()
             soup = BeautifulSoup(res.text, "html.parser")
             if str(round_no) not in soup.get_text(" ", strip=True):
@@ -471,7 +496,7 @@ def main() -> int:
         print(f"[안내] {target}회 결과는 아직 확인되지 않았습니다.")
 
     # 2) 최신 회차 중 미완성 데이터는 우선 보완합니다.
-    recent_count = max(1, min(int(os.environ.get("RECENT_CHECK_COUNT", "3")), 10))
+    recent_count = max(1, min(int(os.environ.get("RECENT_CHECK_COUNT", "20")), 30))
     recent_rounds = [
         r for r in range(max(1, latest - recent_count + 1), latest + 1)
         if r in by_round and not row_complete(by_round[r])
@@ -504,10 +529,11 @@ def main() -> int:
         "schemaVersion": 2,
         "service": {
             "name": "MyLottoNote Data Server",
-            "description": "새 회차는 즉시 추가하고, 과거 미완성 회차만 소량 자동 보완하는 통합 데이터 서버",
+            "description": "새 회차를 즉시 추가하고 최근 20회 미완성 정보를 우선 보완한 뒤 과거 미완성 회차를 소량 처리하는 통합 데이터 서버",
             "generatedAt": now,
-            "backfillMode": "incremental-missing-only",
+            "backfillMode": "recent-priority-incremental",
             "backfillBatchSize": backlog_size,
+            "recentPriorityCount": recent_count,
             "backfillCursor": next_cursor,
             "backfillRange": {"from": 1, "to": latest},
             "completedRoundCount": completed_count,
