@@ -3,11 +3,11 @@
   "service": {
     "name": "MyLottoNote Data Server",
     "description": "새 회차를 즉시 추가하고 최근 20회 미완성 정보를 우선 보완한 뒤 과거 미완성 회차를 소량 처리하는 통합 데이터 서버",
-    "generatedAt": "2026-07-15T01:48:37+09:00",
+    "generatedAt": "2026-07-15T06:36:15+09:00",
     "backfillMode": "recent-priority-incremental",
     "backfillBatchSize": 5,
     "recentPriorityCount": 20,
-    "backfillCursor": 71,
+    "backfillCursor": 76,
     "backfillRange": {
       "from": 1,
       "to": 1232
@@ -16,7 +16,7 @@
     "incompleteRoundCount": 1217
   },
   "latestRound": 1232,
-  "updatedAt": "2026-07-15T01:48:37+09:00",
+  "updatedAt": "2026-07-15T06:36:15+09:00",
   "results": [
     {
       "round": 1,
@@ -1880,7 +1880,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 3260524600,
           "winnerCount": null
         },
         "second": {
@@ -1906,7 +1906,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 2766662100,
           "winnerCount": null
         },
         "second": {
@@ -1932,7 +1932,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 5284949800,
           "winnerCount": null
         },
         "second": {
@@ -1958,7 +1958,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 3914616900,
           "winnerCount": null
         },
         "second": {
