@@ -193,6 +193,43 @@ def _numbers_from_selectors(soup: BeautifulSoup) -> tuple[list[int], int] | None
     return None
 
 
+def parse_prize_summary_from_text(text: str, round_no: int | None = None) -> dict[str, int]:
+    """표 구조가 달라도 한국어 본문에서 당첨 상세정보를 보완 추출합니다."""
+    normalized = clean_text(text)
+    summary: dict[str, int] = {}
+
+    patterns: dict[str, tuple[str, ...]] = {
+        "firstPrizeWinnerCount": (
+            r"1등(?:\s*당첨자|\s*당첨(?:게임)?)?\s*(?:는|은|:)?\s*([0-9,]+)\s*(?:명|게임)",
+            r"1등\s*([0-9,]+)\s*(?:명|게임)",
+        ),
+        "secondPrizeWinnerCount": (
+            r"2등(?:\s*당첨자|\s*당첨(?:게임)?)?\s*(?:는|은|:)?\s*([0-9,]+)\s*(?:명|게임)",
+            r"2등\s*([0-9,]+)\s*(?:명|게임)",
+        ),
+        "firstPrizeAmount": (
+            r"1등[^.]{0,100}?(?:각각|각|1게임당)?\s*([0-9,]+)\s*원",
+            r"1게임당\s*당첨금[^0-9]{0,20}([0-9,]+)\s*원",
+        ),
+        "totalSalesAmount": (
+            r"총\s*판매금액\s*(?:은|는|:)?\s*([0-9,]+)\s*원",
+            r"총판매금액\s*(?:은|는|:)?\s*([0-9,]+)\s*원",
+            r"판매금액[^0-9]{0,20}([0-9,]+)\s*원",
+        ),
+    }
+    for key, candidates in patterns.items():
+        for pattern in candidates:
+            match = re.search(pattern, normalized)
+            if match:
+                value = int(match.group(1).replace(",", ""))
+                # 기사 본문에서 '25억3326만원'처럼 축약된 금액은 정밀값이 아니므로 제외합니다.
+                if key in {"firstPrizeAmount", "totalSalesAmount"} and value < 100_000_000:
+                    continue
+                summary[key] = value
+                break
+    return summary
+
+
 def parse_prize_summary(soup: BeautifulSoup) -> dict[str, int]:
     summary: dict[str, int] = {}
     for table in soup.find_all("table"):
@@ -241,6 +278,9 @@ def parse_prize_summary(soup: BeautifulSoup) -> dict[str, int]:
         if match:
             summary["totalSalesAmount"] = int(match.group(1).replace(",", ""))
             break
+    text_summary = parse_prize_summary_from_text(text)
+    for key, value in text_summary.items():
+        summary.setdefault(key, value)
     return summary
 
 
@@ -248,6 +288,7 @@ def fetch_result_page(round_no: int) -> tuple[dict[str, Any] | None, dict[str, i
     candidates = [
         ("https://www.dhlottery.co.kr/lt645/result", {"result": "byWin", "drwNo": round_no}),
         ("https://www.dhlottery.co.kr/gameResult.do", {"method": "byWin", "drwNo": round_no}),
+        (f"https://pyony.com/lotto/rounds/{round_no}/", None),
     ]
     best_summary: dict[str, int] = {}
     for url, params in candidates:
