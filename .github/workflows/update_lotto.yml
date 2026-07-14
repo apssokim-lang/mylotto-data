@@ -44,8 +44,14 @@ jobs:
           p=json.load(open('data/lotto_results.json',encoding='utf-8'))
           assert p['schemaVersion'] == 2
           assert p['results']
-          assert p['service']['backfillMode'] == 'all-rounds-batched'
-          assert 1 <= p['service']['backfillCursor'] <= p['latestRound']
+          service = p.get('service', {})
+          assert service.get('backfillMode') == 'all-rounds-batched', 'service.backfillMode 누락 또는 값 오류'
+          cursor = service.get('backfillCursor')
+          assert isinstance(cursor, int), 'service.backfillCursor 누락 또는 형식 오류'
+          assert 1 <= cursor <= p['latestRound'], 'service.backfillCursor 범위 오류'
+          assert service.get('backfillBatchSize') == 50, 'service.backfillBatchSize 누락 또는 값 오류'
+          assert service.get('backfillRange', {}).get('from') == 1, 'service.backfillRange.from 오류'
+          assert service.get('backfillRange', {}).get('to') == p['latestRound'], 'service.backfillRange.to 오류'
           for r in p['results']:
               assert set(['round','date','winning','prize','stores']).issubset(r)
               assert set(['numbers','bonus']).issubset(r['winning'])
