@@ -32030,13 +32030,13 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
-          "winnerCount": null
+          "perGameAmount": 2533260819,
+          "winnerCount": 11
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 92
         },
-        "totalSalesAmount": null
+        "totalSalesAmount": 114636304000
       },
       "stores": [
         {
