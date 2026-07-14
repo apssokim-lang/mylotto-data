@@ -2,11 +2,18 @@
   "schemaVersion": 2,
   "service": {
     "name": "MyLottoNote Data Server",
-    "description": "당첨번호, 당첨금, 당첨게임 수, 총 판매금액, 1등 판매점 통합 데이터",
-    "generatedAt": "2026-07-13T00:00:00+09:00"
+    "description": "1회부터 최신회차까지 당첨번호, 당첨금, 당첨게임 수, 총 판매금액, 1등 판매점을 순환 보완하는 통합 데이터",
+    "generatedAt": "2026-07-14T14:46:24+09:00",
+    "backfillMode": "all-rounds-batched",
+    "backfillBatchSize": 50,
+    "backfillCursor": 51,
+    "backfillRange": {
+      "from": 1,
+      "to": 1232
+    }
   },
   "latestRound": 1232,
-  "updatedAt": "2026-07-13T00:00:00+09:00",
+  "updatedAt": "2026-07-14T14:46:24+09:00",
   "results": [
     {
       "round": 1,
@@ -50,7 +57,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 2002006800,
           "winnerCount": null
         },
         "second": {
@@ -76,7 +83,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 2000000000,
           "winnerCount": null
         },
         "second": {
@@ -154,7 +161,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 6574451700,
           "winnerCount": null
         },
         "second": {
@@ -258,7 +265,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 6430437900,
           "winnerCount": null
         },
         "second": {
@@ -284,7 +291,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 4780152300,
           "winnerCount": null
         },
         "second": {
@@ -310,7 +317,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 1348845700,
           "winnerCount": null
         },
         "second": {
@@ -362,7 +369,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 9375048300,
           "winnerCount": null
         },
         "second": {
@@ -388,7 +395,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 17014245000,
           "winnerCount": null
         },
         "second": {
@@ -414,7 +421,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 4377146100,
           "winnerCount": null
         },
         "second": {
@@ -440,7 +447,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 5349491200,
           "winnerCount": null
         },
         "second": {
@@ -492,7 +499,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 40722959400,
           "winnerCount": null
         },
         "second": {
@@ -518,7 +525,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 19352212800,
           "winnerCount": null
         },
         "second": {
@@ -544,7 +551,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 797475400,
           "winnerCount": null
         },
         "second": {
@@ -570,7 +577,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 4552194900,
           "winnerCount": null
         },
         "second": {
@@ -596,7 +603,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 4317947700,
           "winnerCount": null
         },
         "second": {
@@ -648,7 +655,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 24227745300,
           "winnerCount": null
         },
         "second": {
@@ -674,7 +681,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 3495069900,
           "winnerCount": null
         },
         "second": {
@@ -700,7 +707,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 9543982500,
           "winnerCount": null
         },
         "second": {
@@ -726,7 +733,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 1700361100,
           "winnerCount": null
         },
         "second": {
@@ -752,7 +759,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 3552594000,
           "winnerCount": null
         },
         "second": {
@@ -778,7 +785,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 8728555500,
           "winnerCount": null
         },
         "second": {
@@ -804,7 +811,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 8106672900,
           "winnerCount": null
         },
         "second": {
@@ -830,7 +837,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 1634528300,
           "winnerCount": null
         },
         "second": {
@@ -856,7 +863,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 14903517600,
           "winnerCount": null
         },
         "second": {
@@ -882,7 +889,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 3056918000,
           "winnerCount": null
         },
         "second": {
@@ -908,7 +915,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 5054598200,
           "winnerCount": null
         },
         "second": {
@@ -934,7 +941,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 16014475800,
           "winnerCount": null
         },
         "second": {
@@ -960,7 +967,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 4985999400,
           "winnerCount": null
         },
         "second": {
@@ -986,7 +993,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 5374866400,
           "winnerCount": null
         },
         "second": {
@@ -1012,7 +1019,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 2623748800,
           "winnerCount": null
         },
         "second": {
@@ -1038,7 +1045,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 1147652400,
           "winnerCount": null
         },
         "second": {
@@ -1090,7 +1097,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 6899280100,
           "winnerCount": null
         },
         "second": {
@@ -1116,7 +1123,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 17749630800,
           "winnerCount": null
         },
         "second": {
@@ -1142,7 +1149,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 3362155800,
           "winnerCount": null
         },
         "second": {
@@ -1168,7 +1175,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 8356417800,
           "winnerCount": null
         },
         "second": {
@@ -1194,7 +1201,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 5327758800,
           "winnerCount": null
         },
         "second": {
@@ -1220,7 +1227,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 3250042400,
           "winnerCount": null
         },
         "second": {
@@ -1246,7 +1253,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 2415673600,
           "winnerCount": null
         },
         "second": {
@@ -1272,7 +1279,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 1967504600,
           "winnerCount": null
         },
         "second": {
@@ -1298,7 +1305,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 5227061400,
           "winnerCount": null
         },
         "second": {
@@ -31573,370 +31580,6 @@
       "stores": []
     },
     {
-      "round": 1215,
-      "date": "2026-03-14",
-      "winning": {
-        "numbers": [
-          13,
-          15,
-          19,
-          21,
-          44,
-          45
-        ],
-        "bonus": 0
-      },
-      "prize": {
-        "first": {
-          "perGameAmount": null,
-          "winnerCount": null
-        },
-        "second": {
-          "winnerCount": null
-        },
-        "totalSalesAmount": null
-      },
-      "stores": []
-    },
-    {
-      "round": 1216,
-      "date": "2026-03-21",
-      "winning": {
-        "numbers": [
-          3,
-          10,
-          14,
-          15,
-          23,
-          24
-        ],
-        "bonus": 0
-      },
-      "prize": {
-        "first": {
-          "perGameAmount": null,
-          "winnerCount": null
-        },
-        "second": {
-          "winnerCount": null
-        },
-        "totalSalesAmount": null
-      },
-      "stores": []
-    },
-    {
-      "round": 1217,
-      "date": "2026-03-28",
-      "winning": {
-        "numbers": [
-          8,
-          10,
-          15,
-          20,
-          29,
-          31
-        ],
-        "bonus": 0
-      },
-      "prize": {
-        "first": {
-          "perGameAmount": null,
-          "winnerCount": null
-        },
-        "second": {
-          "winnerCount": null
-        },
-        "totalSalesAmount": null
-      },
-      "stores": []
-    },
-    {
-      "round": 1218,
-      "date": "2026-04-04",
-      "winning": {
-        "numbers": [
-          3,
-          28,
-          31,
-          32,
-          42,
-          45
-        ],
-        "bonus": 0
-      },
-      "prize": {
-        "first": {
-          "perGameAmount": null,
-          "winnerCount": null
-        },
-        "second": {
-          "winnerCount": null
-        },
-        "totalSalesAmount": null
-      },
-      "stores": []
-    },
-    {
-      "round": 1219,
-      "date": "2026-04-11",
-      "winning": {
-        "numbers": [
-          1,
-          2,
-          15,
-          28,
-          39,
-          45
-        ],
-        "bonus": 0
-      },
-      "prize": {
-        "first": {
-          "perGameAmount": null,
-          "winnerCount": null
-        },
-        "second": {
-          "winnerCount": null
-        },
-        "totalSalesAmount": null
-      },
-      "stores": []
-    },
-    {
-      "round": 1220,
-      "date": "2026-04-18",
-      "winning": {
-        "numbers": [
-          2,
-          22,
-          25,
-          28,
-          34,
-          43
-        ],
-        "bonus": 0
-      },
-      "prize": {
-        "first": {
-          "perGameAmount": null,
-          "winnerCount": null
-        },
-        "second": {
-          "winnerCount": null
-        },
-        "totalSalesAmount": null
-      },
-      "stores": []
-    },
-    {
-      "round": 1221,
-      "date": "2026-04-25",
-      "winning": {
-        "numbers": [
-          6,
-          13,
-          18,
-          28,
-          30,
-          36
-        ],
-        "bonus": 0
-      },
-      "prize": {
-        "first": {
-          "perGameAmount": null,
-          "winnerCount": null
-        },
-        "second": {
-          "winnerCount": null
-        },
-        "totalSalesAmount": null
-      },
-      "stores": []
-    },
-    {
-      "round": 1222,
-      "date": "2026-05-02",
-      "winning": {
-        "numbers": [
-          4,
-          11,
-          17,
-          22,
-          32,
-          41
-        ],
-        "bonus": 0
-      },
-      "prize": {
-        "first": {
-          "perGameAmount": null,
-          "winnerCount": null
-        },
-        "second": {
-          "winnerCount": null
-        },
-        "totalSalesAmount": null
-      },
-      "stores": []
-    },
-    {
-      "round": 1223,
-      "date": "2026-05-09",
-      "winning": {
-        "numbers": [
-          16,
-          18,
-          20,
-          32,
-          33,
-          39
-        ],
-        "bonus": 0
-      },
-      "prize": {
-        "first": {
-          "perGameAmount": null,
-          "winnerCount": null
-        },
-        "second": {
-          "winnerCount": null
-        },
-        "totalSalesAmount": null
-      },
-      "stores": []
-    },
-    {
-      "round": 1224,
-      "date": "2026-05-16",
-      "winning": {
-        "numbers": [
-          9,
-          18,
-          21,
-          27,
-          44,
-          45
-        ],
-        "bonus": 0
-      },
-      "prize": {
-        "first": {
-          "perGameAmount": null,
-          "winnerCount": null
-        },
-        "second": {
-          "winnerCount": null
-        },
-        "totalSalesAmount": null
-      },
-      "stores": []
-    },
-    {
-      "round": 1225,
-      "date": "2026-05-23",
-      "winning": {
-        "numbers": [
-          8,
-          9,
-          19,
-          25,
-          41,
-          42
-        ],
-        "bonus": 0
-      },
-      "prize": {
-        "first": {
-          "perGameAmount": null,
-          "winnerCount": null
-        },
-        "second": {
-          "winnerCount": null
-        },
-        "totalSalesAmount": null
-      },
-      "stores": []
-    },
-    {
-      "round": 1226,
-      "date": "2026-05-30",
-      "winning": {
-        "numbers": [
-          4,
-          6,
-          13,
-          17,
-          26,
-          28
-        ],
-        "bonus": 0
-      },
-      "prize": {
-        "first": {
-          "perGameAmount": null,
-          "winnerCount": null
-        },
-        "second": {
-          "winnerCount": null
-        },
-        "totalSalesAmount": null
-      },
-      "stores": []
-    },
-    {
-      "round": 1227,
-      "date": "2026-06-06",
-      "winning": {
-        "numbers": [
-          1,
-          14,
-          16,
-          34,
-          41,
-          44
-        ],
-        "bonus": 0
-      },
-      "prize": {
-        "first": {
-          "perGameAmount": null,
-          "winnerCount": null
-        },
-        "second": {
-          "winnerCount": null
-        },
-        "totalSalesAmount": null
-      },
-      "stores": []
-    },
-    {
-      "round": 1228,
-      "date": "2026-06-13",
-      "winning": {
-        "numbers": [
-          24,
-          29,
-          30,
-          31,
-          35,
-          44
-        ],
-        "bonus": 0
-      },
-      "prize": {
-        "first": {
-          "perGameAmount": null,
-          "winnerCount": null
-        },
-        "second": {
-          "winnerCount": null
-        },
-        "totalSalesAmount": null
-      },
-      "stores": []
-    },
-    {
       "round": 1229,
       "date": "2026-06-20",
       "winning": {
@@ -31952,7 +31595,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 3519759000,
           "winnerCount": null
         },
         "second": {
@@ -31960,7 +31603,48 @@
         },
         "totalSalesAmount": null
       },
-      "stores": []
+      "stores": [
+        {
+          "name": "로또킹",
+          "method": "자동",
+          "address": "서울 영등포구 영중로 2 1층(영등포동3가)"
+        },
+        {
+          "name": "대박복권",
+          "method": "수동",
+          "address": "서울 동작구 동작대로27가길 36 1층"
+        },
+        {
+          "name": "대치럭키 로또",
+          "method": "수동",
+          "address": "서울 강남구 선릉로76길 38 1층 3호"
+        },
+        {
+          "name": "거액의꿈",
+          "method": "반자동",
+          "address": "부산 남구 우암로154번길 54"
+        },
+        {
+          "name": "인현동지하가판",
+          "method": "자동",
+          "address": "인천 중구 참외전로 132-2 동인천역 78번 출구 지하1층 가판대"
+        },
+        {
+          "name": "이마트24 순천산단점",
+          "method": "자동",
+          "address": "전남 순천시 산단1길 6"
+        },
+        {
+          "name": "황금노다지",
+          "method": "자동",
+          "address": "경남 김해시 경원로 13 1층 삼거리쪽"
+        },
+        {
+          "name": "로또냉동",
+          "method": "자동",
+          "address": "경남 김해시 장유로 331-1 좌측 복권판매점"
+        }
+      ]
     },
     {
       "round": 1230,
@@ -31978,7 +31662,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 1771357196,
           "winnerCount": null
         },
         "second": {
@@ -31986,7 +31670,88 @@
         },
         "totalSalesAmount": null
       },
-      "stores": []
+      "stores": [
+        {
+          "name": "복권만화",
+          "method": "자동",
+          "address": "서울 서초구 사임당로 39 1층 102호"
+        },
+        {
+          "name": "스파",
+          "method": "자동",
+          "address": "서울 노원구 동일로 1493 주공10단지종합상가111"
+        },
+        {
+          "name": "행운당",
+          "method": "자동",
+          "address": "서울 노원구 노해로 506 바상가동 106호"
+        },
+        {
+          "name": "대박복권방",
+          "method": "자동",
+          "address": "서울 광진구 면목로 174"
+        },
+        {
+          "name": "천하명당복권방역전점",
+          "method": "자동",
+          "address": "대전 동구 대전로 815"
+        },
+        {
+          "name": "로또기업",
+          "method": "수동",
+          "address": "대전 동구 동서대로 1684 복합터미널 건너편"
+        },
+        {
+          "name": "천하명당(염포점)",
+          "method": "자동",
+          "address": "울산 북구 염포로 643"
+        },
+        {
+          "name": "럭키",
+          "method": "자동",
+          "address": "경기 평택시 서동대로 1207 1층"
+        },
+        {
+          "name": "월척복권방",
+          "method": "자동",
+          "address": "경기 용인시 기흥구 강남동로100번길 9 103호"
+        },
+        {
+          "name": "오케이마트",
+          "method": "자동",
+          "address": "경기 성남시 중원구 광명로 80 1층 101호(성남동)"
+        },
+        {
+          "name": "다미 로또",
+          "method": "자동",
+          "address": "경기 김포시 김포대로 2231 1동 1층 102호"
+        },
+        {
+          "name": "마두역상행선 가판대",
+          "method": "자동",
+          "address": "경기 고양시 일산동구 중앙로 1181 마두역 중앙 횡단보도 오른쪽"
+        },
+        {
+          "name": "세명24시로또",
+          "method": "자동",
+          "address": "충북 제천시 바이오밸리로 211 3호"
+        },
+        {
+          "name": "오징어게임복권방",
+          "method": "자동",
+          "address": "충북 음성군 대금로 602 101호"
+        },
+        {
+          "name": "리틀밥독 소이 행운복권",
+          "method": "자동",
+          "address": "경북 구미시 인동35길 9 1층 리틀밥독 소이 행운복권"
+        },
+        {
+          "name": "나누리로또",
+          "method": "자동",
+          "address": "경북 경산시 성암로15길 4 1층"
+        }
+      ]
     },
     {
       "round": 1231,
@@ -32004,7 +31769,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 1652990074,
           "winnerCount": null
         },
         "second": {
@@ -32012,7 +31777,93 @@
         },
         "totalSalesAmount": null
       },
-      "stores": []
+      "stores": [
+        {
+          "name": "현대비디오",
+          "method": "자동",
+          "address": "서울 동대문구 장한로25길 45"
+        },
+        {
+          "name": "가로판매점",
+          "method": "자동",
+          "address": "서울 관악구 과천대로 955"
+        },
+        {
+          "name": "삼정그린환경",
+          "method": "자동",
+          "address": "서울 강동구 양재대로 1355 오스카상가136호"
+        },
+        {
+          "name": "돈벼락 로또 판매점",
+          "method": "자동",
+          "address": "서울 강동구 천호대로159길 43 1층"
+        },
+        {
+          "name": "돈벼락맞는곳",
+          "method": "자동",
+          "address": "부산 동구 조방로49번길 18-1"
+        },
+        {
+          "name": "드림마트",
+          "method": "자동",
+          "address": "인천 미추홀구 인하로 211"
+        },
+        {
+          "name": "복권전문점",
+          "method": "수동",
+          "address": "대전 유성구 유성대로694번길 84"
+        },
+        {
+          "name": "복권명당(대청점)",
+          "method": "자동",
+          "address": "대전 동구 용운로 67"
+        },
+        {
+          "name": "복권방",
+          "method": "자동",
+          "address": "울산 울주군 덕남로 87"
+        },
+        {
+          "name": "대박나라",
+          "method": "반자동",
+          "address": "경기 시흥시 함송로 15 111호(정왕동화신프라자)"
+        },
+        {
+          "name": "한아름복권방(매탄점)",
+          "method": "자동",
+          "address": "경기 수원시 영통구 권선로 808"
+        },
+        {
+          "name": "돼지꿈복권",
+          "method": "자동",
+          "address": "경기 고양시 일산서구 덕이로 222-30 1층 105호"
+        },
+        {
+          "name": "비엠복권",
+          "method": "자동",
+          "address": "충북 청주시 흥덕구 대신로 108"
+        },
+        {
+          "name": "통정로또명당마트",
+          "method": "자동",
+          "address": "충남 천안시 동남구 통정4로 49 위너타워 맞은편"
+        },
+        {
+          "name": "터미널복권방",
+          "method": "자동",
+          "address": "전북 정읍시 연지8길 6"
+        },
+        {
+          "name": "구룡포명당",
+          "method": "자동",
+          "address": "경북 포항시 남구 구룡포길 90-3 1층 (대로변0"
+        },
+        {
+          "name": "로또 휴게",
+          "method": "수동",
+          "address": "제주 제주시 연삼로 626"
+        }
+      ]
     },
     {
       "round": 1232,
