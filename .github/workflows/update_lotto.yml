@@ -1,4 +1,4 @@
-name: 로또 당첨번호 자동 업데이트
+name: 로또 통합 데이터 자동 업데이트
 
 on:
   workflow_dispatch:
@@ -31,19 +31,34 @@ jobs:
       - name: 필요한 도구 설치
         run: pip install -r requirements.txt
 
-      - name: 다음 회차 확인 및 JSON 갱신
+      - name: 당첨번호·당첨금·판매점 통합 갱신
         run: python scripts/update_lotto.py
+
+      - name: JSON v2 구조 검사
+        run: |
+          python - <<'PY'
+          import json
+          p=json.load(open('data/lotto_results.json',encoding='utf-8'))
+          assert p['schemaVersion'] == 2
+          assert p['results']
+          for r in p['results']:
+              assert set(['round','date','winning','prize','stores']).issubset(r)
+              assert set(['numbers','bonus']).issubset(r['winning'])
+              assert set(['first','second','totalSalesAmount']).issubset(r['prize'])
+              assert set(['perGameAmount','winnerCount']).issubset(r['prize']['first'])
+              assert 'winnerCount' in r['prize']['second']
+          print('JSON v2 구조 검사 통과')
+          PY
 
       - name: 바뀐 JSON이 있으면 자동 저장
         shell: bash
         run: |
           if git diff --quiet -- data/lotto_results.json; then
-            echo "새 회차가 아직 없어 저장할 변경사항이 없습니다."
+            echo "저장할 변경사항이 없습니다."
             exit 0
           fi
-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/lotto_results.json
-          git commit -m "자동 업데이트: 로또 최신 당첨번호"
+          git commit -m "자동 업데이트: 로또 통합 데이터 v2"
           git push
