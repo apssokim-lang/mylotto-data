@@ -33,13 +33,13 @@ jobs:
       - name: 필요한 도구 설치
         run: pip install -r requirements.txt
 
-      - name: 최신회차 즉시 확인 및 미완성 회차 소량 보완
+      - name: 최신회차 확인 · 최근 20회 우선 보완 · 과거 미완성 소량 보완
         env:
           BACKFILL_BATCH_SIZE: 5
-          RECENT_CHECK_COUNT: 3
+          RECENT_CHECK_COUNT: 20
         run: python scripts/update_lotto.py
 
-      - name: JSON v2.4 구조 검사
+      - name: JSON v2.5 구조 검사
         run: |
           python - <<'PY'
           import json
@@ -47,10 +47,11 @@ jobs:
           assert p['schemaVersion'] == 2
           assert p['results']
           service = p.get('service', {})
-          assert service.get('backfillMode') == 'incremental-missing-only'
+          assert service.get('backfillMode') == 'recent-priority-incremental'
           assert isinstance(service.get('backfillCursor'), int)
           assert 1 <= service['backfillCursor'] <= p['latestRound']
           assert service.get('backfillBatchSize') == 5
+          assert service.get('recentPriorityCount') == 20
           assert service.get('backfillRange', {}).get('from') == 1
           assert service.get('backfillRange', {}).get('to') == p['latestRound']
           assert isinstance(service.get('completedRoundCount'), int)
@@ -61,7 +62,7 @@ jobs:
               assert set(['first','second','totalSalesAmount']).issubset(r['prize'])
               assert set(['perGameAmount','winnerCount']).issubset(r['prize']['first'])
               assert 'winnerCount' in r['prize']['second']
-          print('JSON v2.4 구조 검사 통과')
+          print('JSON v2.5 구조 검사 통과')
           PY
 
       - name: 바뀐 JSON이 있으면 자동 저장
@@ -74,5 +75,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/lotto_results.json
-          git commit -m "자동 업데이트: 최신회차 및 미완성 회차 보완"
+          git commit -m "자동 업데이트: 최신회차·최근20회·과거 미완성 보완"
           git push
