@@ -2,18 +2,20 @@
   "schemaVersion": 2,
   "service": {
     "name": "MyLottoNote Data Server",
-    "description": "1회부터 최신회차까지 당첨번호, 당첨금, 당첨게임 수, 총 판매금액, 1등 판매점을 순환 보완하는 통합 데이터",
-    "generatedAt": "2026-07-14T14:46:24+09:00",
-    "backfillMode": "all-rounds-batched",
-    "backfillBatchSize": 50,
-    "backfillCursor": 51,
+    "description": "새 회차는 즉시 추가하고, 과거 미완성 회차만 소량 자동 보완하는 통합 데이터 서버",
+    "generatedAt": "2026-07-14T15:00:41+09:00",
+    "backfillMode": "incremental-missing-only",
+    "backfillBatchSize": 5,
+    "backfillCursor": 56,
     "backfillRange": {
       "from": 1,
       "to": 1232
-    }
+    },
+    "completedRoundCount": 1,
+    "incompleteRoundCount": 1217
   },
   "latestRound": 1232,
-  "updatedAt": "2026-07-14T14:46:24+09:00",
+  "updatedAt": "2026-07-14T15:00:41+09:00",
   "results": [
     {
       "round": 1,
@@ -1331,7 +1333,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 2421117000,
           "winnerCount": null
         },
         "second": {
@@ -1357,7 +1359,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 3900844900,
           "winnerCount": null
         },
         "second": {
@@ -1383,7 +1385,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 5014371000,
           "winnerCount": null
         },
         "second": {
@@ -1409,7 +1411,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 5148626600,
           "winnerCount": null
         },
         "second": {
@@ -1435,7 +1437,7 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
+          "perGameAmount": 7088799600,
           "winnerCount": null
         },
         "second": {
