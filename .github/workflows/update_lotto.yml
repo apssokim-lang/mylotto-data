@@ -3,9 +3,9 @@ name: 로또 통합 데이터 자동 업데이트
 on:
   workflow_dispatch:
   schedule:
-    # 전체 과거회차 보완: 매일 한국시간 03:20, 09:20, 15:20, 21:20
+    # 한국시간 매일 03:20, 09:20, 15:20, 21:20
     - cron: '20 18,0,6,12 * * *'
-    # 토요일 추첨 직후 추가 확인(한국시간 21:40, 22:10)
+    # 토요일 추첨 후 추가 확인: 한국시간 21:40, 22:10
     - cron: '40 12 * * 6'
     - cron: '10 13 * * 6'
 
@@ -14,11 +14,12 @@ permissions:
 
 concurrency:
   group: lotto-result-update
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   update:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: 저장소 파일 불러오기
         uses: actions/checkout@v4
@@ -32,12 +33,13 @@ jobs:
       - name: 필요한 도구 설치
         run: pip install -r requirements.txt
 
-      - name: 당첨번호·당첨금·판매점 통합 갱신
+      - name: 최신회차 즉시 확인 및 미완성 회차 소량 보완
         env:
-          BACKFILL_BATCH_SIZE: 50
+          BACKFILL_BATCH_SIZE: 5
+          RECENT_CHECK_COUNT: 3
         run: python scripts/update_lotto.py
 
-      - name: JSON v2 구조 검사
+      - name: JSON v2.4 구조 검사
         run: |
           python - <<'PY'
           import json
@@ -45,20 +47,21 @@ jobs:
           assert p['schemaVersion'] == 2
           assert p['results']
           service = p.get('service', {})
-          assert service.get('backfillMode') == 'all-rounds-batched', 'service.backfillMode 누락 또는 값 오류'
-          cursor = service.get('backfillCursor')
-          assert isinstance(cursor, int), 'service.backfillCursor 누락 또는 형식 오류'
-          assert 1 <= cursor <= p['latestRound'], 'service.backfillCursor 범위 오류'
-          assert service.get('backfillBatchSize') == 50, 'service.backfillBatchSize 누락 또는 값 오류'
-          assert service.get('backfillRange', {}).get('from') == 1, 'service.backfillRange.from 오류'
-          assert service.get('backfillRange', {}).get('to') == p['latestRound'], 'service.backfillRange.to 오류'
+          assert service.get('backfillMode') == 'incremental-missing-only'
+          assert isinstance(service.get('backfillCursor'), int)
+          assert 1 <= service['backfillCursor'] <= p['latestRound']
+          assert service.get('backfillBatchSize') == 5
+          assert service.get('backfillRange', {}).get('from') == 1
+          assert service.get('backfillRange', {}).get('to') == p['latestRound']
+          assert isinstance(service.get('completedRoundCount'), int)
+          assert isinstance(service.get('incompleteRoundCount'), int)
           for r in p['results']:
               assert set(['round','date','winning','prize','stores']).issubset(r)
               assert set(['numbers','bonus']).issubset(r['winning'])
               assert set(['first','second','totalSalesAmount']).issubset(r['prize'])
               assert set(['perGameAmount','winnerCount']).issubset(r['prize']['first'])
               assert 'winnerCount' in r['prize']['second']
-          print('JSON v2 구조 검사 통과')
+          print('JSON v2.4 구조 검사 통과')
           PY
 
       - name: 바뀐 JSON이 있으면 자동 저장
@@ -71,5 +74,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/lotto_results.json
-          git commit -m "자동 업데이트: 로또 통합 데이터 v2"
+          git commit -m "자동 업데이트: 최신회차 및 미완성 회차 보완"
           git push
