@@ -1,557 +1,378 @@
-#!/usr/bin/env python3
-"""마이로또노트 통합 데이터 서버 v2 자동 갱신기.
-
-JSON v2 구조를 항상 유지하며 다음 데이터를 한 회차 객체에 통합합니다.
-- 당첨번호 / 보너스 번호
-- 1등 1게임당 당첨금
-- 1등 당첨게임 수
-- 2등 당첨게임 수
-- 총 판매금액
-- 1등 판매점
-
-상세정보 수집에 실패해도 필드는 삭제하지 않고 null/빈 배열로 유지합니다.
-따라서 앱과 JSON 소비자는 매번 동일한 구조를 안전하게 사용할 수 있습니다.
-"""
 from __future__ import annotations
 
 import json
 import os
 import re
 import sys
+import time
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterable
 
 import requests
 from bs4 import BeautifulSoup
+from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeoutError
 
 ROOT = Path(__file__).resolve().parents[1]
-DATA_FILE = ROOT / "data" / "lotto_results.json"
+DATA_PATH = ROOT / "data" / "lotto_results.json"
 KST = timezone(timedelta(hours=9))
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/124.0 Safari/537.36 MyLottoNoteUpdater/5.0",
-    "Accept-Language": "ko-KR,ko;q=0.9,en;q=0.5",
-}
+RAW_API = "https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo={round_no}"
+RESULT_URL = "https://www.dhlottery.co.kr/lt645/result"
 
 SESSION = requests.Session()
-SESSION.headers.update(HEADERS)
-try:
-    from requests.adapters import HTTPAdapter
-    from urllib3.util.retry import Retry
-
-    retry = Retry(
-        total=2,
-        connect=2,
-        read=2,
-        backoff_factor=0.8,
-        status_forcelist=(429, 500, 502, 503, 504),
-        allowed_methods=frozenset({"GET"}),
-        raise_on_status=False,
-    )
-    SESSION.mount("https://", HTTPAdapter(max_retries=retry))
-    SESSION.mount("http://", HTTPAdapter(max_retries=retry))
-except Exception:
-    pass
+SESSION.headers.update({
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/126 Safari/537.36",
+    "Accept-Language": "ko-KR,ko;q=0.9,en;q=0.6",
+})
 
 
-def http_get(url: str, *, params: dict[str, Any] | None = None, timeout: int = 10) -> requests.Response:
-    response = SESSION.get(url, params=params, timeout=timeout)
-    response.raise_for_status()
-    return response
-
-
-def clean_text(value: str) -> str:
-    return re.sub(r"\s+", " ", value).strip()
-
-
-def only_int(value: str) -> int | None:
-    digits = re.sub(r"[^0-9]", "", value)
+def as_int(value: Any) -> int | None:
+    if value is None:
+        return None
+    digits = re.sub(r"[^0-9]", "", str(value))
     return int(digits) if digits else None
 
 
-def normalize_method(value: str) -> str:
-    text = clean_text(value)
-    for method in ("반자동", "자동", "수동"):
-        if method in text:
-            return method
-    return text or "확인"
+def load_data() -> dict[str, Any]:
+    with DATA_PATH.open("r", encoding="utf-8") as f:
+        data = json.load(f)
+    data.setdefault("schemaVersion", 2)
+    data.setdefault("results", [])
+    data.setdefault("service", {})
+    return data
 
 
-def blank_prize() -> dict[str, Any]:
+def save_data(data: dict[str, Any]) -> None:
+    data["latestRound"] = max((int(r.get("round", 0)) for r in data["results"]), default=0)
+    data["updatedAt"] = datetime.now(KST).isoformat(timespec="seconds")
+    DATA_PATH.parent.mkdir(parents=True, exist_ok=True)
+    tmp = DATA_PATH.with_suffix(".json.tmp")
+    tmp.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    tmp.replace(DATA_PATH)
+
+
+def normalize_round(item: dict[str, Any]) -> dict[str, Any]:
+    if "winning" not in item:
+        item["winning"] = {
+            "numbers": item.pop("numbers", []),
+            "bonus": item.pop("bonus", None),
+        }
+    item.setdefault("prize", {})
+    item["prize"].setdefault("first", {})
+    item["prize"]["first"].setdefault("perGameAmount", None)
+    item["prize"]["first"].setdefault("winnerCount", None)
+    item["prize"].setdefault("second", {})
+    item["prize"]["second"].setdefault("winnerCount", None)
+    item["prize"].setdefault("totalSalesAmount", None)
+    if "stores" not in item:
+        item["stores"] = item.pop("firstPrizeStores", []) or []
+    return item
+
+
+def fetch_legacy_json(round_no: int) -> dict[str, Any] | None:
+    try:
+        r = SESSION.get(RAW_API.format(round_no=round_no), timeout=20)
+        r.raise_for_status()
+        payload = r.json()
+    except Exception as exc:
+        print(f"[{round_no}] 공식 JSON 보조조회 실패: {exc}")
+        return None
+    if payload.get("returnValue") != "success":
+        return None
+    numbers = [payload.get(f"drwtNo{i}") for i in range(1, 7)]
+    if any(not isinstance(v, int) for v in numbers):
+        return None
+    first_total = as_int(payload.get("firstAccumamnt"))
+    first_winners = as_int(payload.get("firstPrzwnerCo"))
+    first_per_game = as_int(payload.get("firstWinamnt"))
+    if first_per_game is None and first_total and first_winners:
+        first_per_game = first_total // first_winners
     return {
-        "first": {"perGameAmount": None, "winnerCount": None},
-        "second": {"winnerCount": None},
-        "totalSalesAmount": None,
+        "round": round_no,
+        "date": payload.get("drwNoDate"),
+        "winning": {"numbers": numbers, "bonus": payload.get("bnusNo")},
+        "prize": {
+            "first": {"perGameAmount": first_per_game, "winnerCount": first_winners},
+            "second": {"winnerCount": None},
+            "totalSalesAmount": as_int(payload.get("totSellamnt")),
+        },
+        "stores": [],
     }
 
 
-def normalize_row(row: dict[str, Any]) -> dict[str, Any]:
-    """구버전/신버전 행을 JSON v2 표준 구조로 변환합니다."""
-    winning = row.get("winning") if isinstance(row.get("winning"), dict) else {}
-    numbers = winning.get("numbers", row.get("numbers", []))
-    bonus = winning.get("bonus", row.get("bonus"))
+def parse_money_table_text(text: str) -> dict[str, int | None]:
+    compact = re.sub(r"[\t\r]+", " ", text)
+    lines = [re.sub(r"\s+", " ", x).strip() for x in compact.split("\n") if x.strip()]
+    result: dict[str, int | None] = {
+        "firstPerGame": None,
+        "firstWinners": None,
+        "secondWinners": None,
+        "totalSales": None,
+    }
 
-    prize = row.get("prize") if isinstance(row.get("prize"), dict) else {}
-    first = prize.get("first") if isinstance(prize.get("first"), dict) else {}
-    second = prize.get("second") if isinstance(prize.get("second"), dict) else {}
+    # Table rows commonly become one line per cell. Find row starts and inspect the next cells.
+    for rank in ("1등", "2등"):
+        for idx, line in enumerate(lines):
+            if line == rank or line.startswith(rank + " "):
+                window = lines[idx: idx + 8]
+                nums = [as_int(v) for v in window]
+                nums = [v for v in nums if v is not None]
+                # Expected order: total prize, game count, per-game prize.
+                if rank == "1등" and len(nums) >= 3:
+                    result["firstWinners"] = nums[1]
+                    result["firstPerGame"] = nums[2]
+                elif rank == "2등" and len(nums) >= 2:
+                    result["secondWinners"] = nums[1]
+                break
 
-    stores = row.get("stores", row.get("firstPrizeStores", []))
-    if not isinstance(stores, list):
-        stores = []
+    # More tolerant Korean sentence/label patterns.
+    patterns = {
+        "firstWinners": [r"1등[^\n]{0,50}?당첨게임\s*수\s*([0-9,]+)", r"1등[^\n]{0,30}?([0-9,]+)\s*게임"],
+        "secondWinners": [r"2등[^\n]{0,50}?당첨게임\s*수\s*([0-9,]+)", r"2등[^\n]{0,30}?([0-9,]+)\s*게임"],
+        "firstPerGame": [r"1등[^\n]{0,100}?1게임당\s*당첨금\s*([0-9,]+)", r"1등[^\n]{0,80}?([0-9,]+)\s*원"],
+        "totalSales": [r"총\s*판매\s*금액\s*[:：]?\s*([0-9,]+)", r"총판매금액\s*[:：]?\s*([0-9,]+)"],
+    }
+    for key, regexes in patterns.items():
+        if result[key] is not None:
+            continue
+        for pattern in regexes:
+            m = re.search(pattern, text, re.S)
+            if m:
+                result[key] = as_int(m.group(1))
+                break
+    return result
+
+
+def parse_store_rows(text: str) -> list[dict[str, Any]]:
+    stores: list[dict[str, Any]] = []
+    lines = [re.sub(r"\s+", " ", x).strip() for x in text.splitlines() if x.strip()]
+    methods = {"자동", "수동", "반자동"}
+    for i, line in enumerate(lines):
+        if line not in methods:
+            continue
+        method = line
+        name = lines[i - 1] if i >= 1 else ""
+        address = lines[i + 1] if i + 1 < len(lines) else ""
+        # Skip headers and malformed rows.
+        if name in {"구분", "선택", "번호", "상호명", "상호"} or len(name) < 2:
+            continue
+        if address in methods or len(address) < 4:
+            address = ""
+        stores.append({"name": name, "method": method, "address": address})
+    # Stable de-duplication while keeping duplicate wins at same store if method differs.
+    unique: list[dict[str, Any]] = []
+    seen: set[tuple[str, str, str]] = set()
+    for s in stores:
+        key = (s["name"], s["method"], s["address"])
+        if key not in seen:
+            seen.add(key)
+            unique.append(s)
+    return unique
+
+
+def browser_fetch_round(page, round_no: int) -> dict[str, Any]:
+    print(f"[{round_no}] 공식 화면 브라우저 조회")
+    page.goto(RESULT_URL, wait_until="domcontentloaded", timeout=60_000)
+    page.wait_for_timeout(1500)
+
+    # Try selecting the desired round from any select containing that option.
+    selected = False
+    for select in page.locator("select").all():
+        try:
+            options = select.locator("option").all_text_contents()
+            target_idx = next((i for i, t in enumerate(options) if re.sub(r"\D", "", t) == str(round_no)), None)
+            if target_idx is not None:
+                values = select.locator("option").evaluate_all("els => els.map(e => e.value)")
+                select.select_option(values[target_idx])
+                selected = True
+                page.wait_for_timeout(1800)
+                break
+        except Exception:
+            continue
+
+    if not selected:
+        # Query candidates used by old/new versions of the official site.
+        candidates = [
+            f"{RESULT_URL}?result=byWin&lottoId=LO40&drwNo={round_no}",
+            f"{RESULT_URL}?drwNo={round_no}",
+            f"https://www.dhlottery.co.kr/gameResult.do?method=byWin&drwNo={round_no}",
+        ]
+        for url in candidates:
+            try:
+                page.goto(url, wait_until="domcontentloaded", timeout=45_000)
+                page.wait_for_timeout(1200)
+                body = page.locator("body").inner_text()
+                if f"{round_no}회" in body or f"제{round_no}회" in body:
+                    break
+            except Exception:
+                continue
+
+    body_text = page.locator("body").inner_text(timeout=20_000)
+    prize = parse_money_table_text(body_text)
+
+    stores: list[dict[str, Any]] = []
+    # Click a visible winning-store link/button; opening a new tab is supported.
+    store_targets = page.get_by_text(re.compile("당첨판매점"))
+    if store_targets.count() > 0:
+        try:
+            with page.context.expect_page(timeout=4_000) as popup_info:
+                store_targets.first.click(timeout=5_000)
+            popup = popup_info.value
+            popup.wait_for_load_state("domcontentloaded")
+            popup.wait_for_timeout(1200)
+            stores = parse_store_rows(popup.locator("body").inner_text())
+            popup.close()
+        except Exception:
+            try:
+                store_targets.first.click(timeout=5_000)
+                page.wait_for_timeout(1200)
+                stores = parse_store_rows(page.locator("body").inner_text())
+            except Exception:
+                pass
 
     return {
-        "round": int(row["round"]),
-        "date": str(row["date"]),
-        "winning": {
-            "numbers": [int(n) for n in numbers],
-            "bonus": int(bonus),
-        },
-        "prize": {
-            "first": {
-                "perGameAmount": first.get("perGameAmount", row.get("firstPrizeAmount")),
-                "winnerCount": first.get("winnerCount", row.get("firstPrizeWinnerCount")),
-            },
-            "second": {
-                "winnerCount": second.get("winnerCount", row.get("secondPrizeWinnerCount")),
-            },
-            "totalSalesAmount": prize.get("totalSalesAmount", row.get("totalSalesAmount")),
-        },
+        "firstPerGame": prize["firstPerGame"],
+        "firstWinners": prize["firstWinners"],
+        "secondWinners": prize["secondWinners"],
+        "totalSales": prize["totalSales"],
         "stores": stores,
     }
 
 
-def valid_row(row: dict[str, Any], expected_round: int) -> bool:
-    try:
-        winning = row["winning"]
-        nums = winning["numbers"]
-        bonus = winning["bonus"]
-        return (
-            row["round"] == expected_round
-            and re.fullmatch(r"\d{4}-\d{2}-\d{2}", row["date"]) is not None
-            and isinstance(nums, list)
-            and len(nums) == 6
-            and len(set(nums)) == 6
-            and all(isinstance(n, int) and 1 <= n <= 45 for n in nums)
-            and isinstance(bonus, int)
-            and 1 <= bonus <= 45
-            and bonus not in nums
-            and isinstance(row.get("prize"), dict)
-            and isinstance(row.get("stores"), list)
-        )
-    except Exception:
-        return False
+def is_incomplete(item: dict[str, Any]) -> bool:
+    p = item.get("prize", {})
+    first = p.get("first", {})
+    second = p.get("second", {})
+    return any([
+        not first.get("perGameAmount"),
+        not first.get("winnerCount"),
+        not second.get("winnerCount"),
+        not p.get("totalSalesAmount"),
+        not item.get("stores"),
+    ])
 
 
-def apply_summary(row: dict[str, Any], summary: dict[str, int]) -> bool:
+def merge_round(target: dict[str, Any], incoming: dict[str, Any]) -> bool:
     changed = False
-    prize = row["prize"]
-    mapping = {
-        "firstPrizeAmount": (prize["first"], "perGameAmount"),
-        "firstPrizeWinnerCount": (prize["first"], "winnerCount"),
-        "secondPrizeWinnerCount": (prize["second"], "winnerCount"),
-        "totalSalesAmount": (prize, "totalSalesAmount"),
-    }
-    for source_key, (target, target_key) in mapping.items():
-        value = summary.get(source_key)
-        if value is not None and target.get(target_key) != value:
-            target[target_key] = value
+    target = normalize_round(target)
+    if incoming.get("date") and not target.get("date"):
+        target["date"] = incoming["date"]
+        changed = True
+    win = incoming.get("winning", {})
+    if win.get("numbers") and not target["winning"].get("numbers"):
+        target["winning"]["numbers"] = win["numbers"]
+        changed = True
+    if win.get("bonus") is not None and target["winning"].get("bonus") is None:
+        target["winning"]["bonus"] = win["bonus"]
+        changed = True
+    inc_prize = incoming.get("prize", {})
+    for path in (("first", "perGameAmount"), ("first", "winnerCount"), ("second", "winnerCount")):
+        group, key = path
+        value = inc_prize.get(group, {}).get(key)
+        if value and target["prize"][group].get(key) != value:
+            target["prize"][group][key] = value
             changed = True
-    return changed
-
-
-def summary_missing(row: dict[str, Any]) -> bool:
-    prize = row["prize"]
-    return any(value is None for value in (
-        prize["first"].get("perGameAmount"),
-        prize["first"].get("winnerCount"),
-        prize["second"].get("winnerCount"),
-        prize.get("totalSalesAmount"),
-    ))
-
-
-def fetch_legacy_json(round_no: int) -> tuple[dict[str, Any] | None, dict[str, int]]:
-    try:
-        res = http_get(
-            "https://www.dhlottery.co.kr/common.do",
-            params={"method": "getLottoNumber", "drwNo": round_no},
-            timeout=8,
-        )
-        res.raise_for_status()
-        data = res.json()
-        if data.get("returnValue") != "success":
-            return None, {}
-        row = normalize_row({
-            "round": int(data["drwNo"]),
-            "date": str(data["drwNoDate"]),
-            "numbers": [int(data[f"drwtNo{i}"]) for i in range(1, 7)],
-            "bonus": int(data["bnusNo"]),
-        })
-        summary: dict[str, int] = {}
-        if data.get("firstWinamnt") is not None:
-            summary["firstPrizeAmount"] = int(data["firstWinamnt"])
-        if data.get("firstPrzwnerCo") is not None:
-            summary["firstPrizeWinnerCount"] = int(data["firstPrzwnerCo"])
-        if data.get("totSellamnt") is not None:
-            summary["totalSalesAmount"] = int(data["totSellamnt"])
-        apply_summary(row, summary)
-        return (row, summary) if valid_row(row, round_no) else (None, summary)
-    except Exception as exc:
-        print(f"[안내] 구형 JSON 조회 실패: {exc}")
-        return None, {}
-
-
-def _numbers_from_selectors(soup: BeautifulSoup) -> tuple[list[int], int] | None:
-    selectors = [
-        ".win_num .ball_645", ".lotto645_prizerank .ball",
-        ".lotto645_prizerank .ball_645", ".result-ball",
-        "[class*='win'] [class*='ball']",
-    ]
-    for selector in selectors:
-        values: list[int] = []
-        for node in soup.select(selector):
-            match = re.search(r"(?<!\d)([1-9]|[1-3]\d|4[0-5])(?!\d)", node.get_text(" ", strip=True))
-            if match:
-                values.append(int(match.group(1)))
-        for i in range(max(1, len(values) - 6)):
-            chunk = values[i:i + 7]
-            if len(chunk) == 7 and len(set(chunk[:6])) == 6 and chunk[6] not in chunk[:6]:
-                return chunk[:6], chunk[6]
-    return None
-
-
-def parse_prize_summary_from_text(text: str, round_no: int | None = None) -> dict[str, int]:
-    """표 구조가 달라도 한국어 본문에서 당첨 상세정보를 보완 추출합니다."""
-    normalized = clean_text(text)
-    summary: dict[str, int] = {}
-
-    patterns: dict[str, tuple[str, ...]] = {
-        "firstPrizeWinnerCount": (
-            r"1등(?:\s*당첨자|\s*당첨(?:게임)?)?\s*(?:는|은|:)?\s*([0-9,]+)\s*(?:명|게임)",
-            r"1등\s*([0-9,]+)\s*(?:명|게임)",
-        ),
-        "secondPrizeWinnerCount": (
-            r"2등(?:\s*당첨자|\s*당첨(?:게임)?)?\s*(?:는|은|:)?\s*([0-9,]+)\s*(?:명|게임)",
-            r"2등\s*([0-9,]+)\s*(?:명|게임)",
-        ),
-        "firstPrizeAmount": (
-            r"1등[^.]{0,100}?(?:각각|각|1게임당)?\s*([0-9,]+)\s*원",
-            r"1게임당\s*당첨금[^0-9]{0,20}([0-9,]+)\s*원",
-        ),
-        "totalSalesAmount": (
-            r"총\s*판매금액\s*(?:은|는|:)?\s*([0-9,]+)\s*원",
-            r"총판매금액\s*(?:은|는|:)?\s*([0-9,]+)\s*원",
-            r"판매금액[^0-9]{0,20}([0-9,]+)\s*원",
-        ),
-    }
-    for key, candidates in patterns.items():
-        for pattern in candidates:
-            match = re.search(pattern, normalized)
-            if match:
-                value = int(match.group(1).replace(",", ""))
-                # 기사 본문에서 '25억3326만원'처럼 축약된 금액은 정밀값이 아니므로 제외합니다.
-                if key in {"firstPrizeAmount", "totalSalesAmount"} and value < 100_000_000:
-                    continue
-                summary[key] = value
-                break
-    return summary
-
-
-def parse_prize_summary(soup: BeautifulSoup) -> dict[str, int]:
-    summary: dict[str, int] = {}
-    for table in soup.find_all("table"):
-        rows: list[list[str]] = []
-        for tr in table.find_all("tr"):
-            cells = [clean_text(cell.get_text(" ", strip=True)) for cell in tr.find_all(["th", "td"])]
-            if cells:
-                rows.append(cells)
-        if not rows:
-            continue
-
-        header_index = next((i for i, row in enumerate(rows)
-            if any("당첨게임" in c for c in row) and any("당첨금" in c for c in row)), -1)
-        if header_index < 0:
-            continue
-        headers = rows[header_index]
-
-        def col(*keywords: str) -> int:
-            return next((i for i, h in enumerate(headers) if all(k in h for k in keywords)), -1)
-
-        count_idx = col("당첨게임")
-        per_game_idx = col("1게임당", "당첨금")
-        if per_game_idx < 0:
-            per_game_idx = col("게임당", "당첨금")
-
-        for row in rows[header_index + 1:]:
-            joined = " ".join(row)
-            rank = 1 if re.search(r"(^|\s)1등($|\s)", joined) else 2 if re.search(r"(^|\s)2등($|\s)", joined) else None
-            if rank is None:
-                continue
-            if 0 <= count_idx < len(row):
-                count = only_int(row[count_idx])
-                if count is not None:
-                    summary["firstPrizeWinnerCount" if rank == 1 else "secondPrizeWinnerCount"] = count
-            if rank == 1 and 0 <= per_game_idx < len(row):
-                amount = only_int(row[per_game_idx])
-                if amount is not None:
-                    summary["firstPrizeAmount"] = amount
-
-    text = clean_text(soup.get_text(" ", strip=True))
-    for pattern in (
-        r"총\s*판매금액\s*[:：]?\s*([0-9,]+)\s*원",
-        r"총판매금액\s*[:：]?\s*([0-9,]+)\s*원",
-    ):
-        match = re.search(pattern, text)
-        if match:
-            summary["totalSalesAmount"] = int(match.group(1).replace(",", ""))
-            break
-    text_summary = parse_prize_summary_from_text(text)
-    for key, value in text_summary.items():
-        summary.setdefault(key, value)
-    return summary
-
-
-def fetch_result_page(round_no: int) -> tuple[dict[str, Any] | None, dict[str, int]]:
-    candidates = [
-        ("https://www.dhlottery.co.kr/lt645/result", {"result": "byWin", "drwNo": round_no}),
-        ("https://www.dhlottery.co.kr/gameResult.do", {"method": "byWin", "drwNo": round_no}),
-        (f"https://pyony.com/lotto/rounds/{round_no}/", None),
-    ]
-    best_summary: dict[str, int] = {}
-    for url, params in candidates:
-        try:
-            res = http_get(url, params=params, timeout=10)
-            res.raise_for_status()
-            soup = BeautifulSoup(res.text, "html.parser")
-            page_text = soup.get_text(" ", strip=True)
-            if not re.search(rf"(?<!\d){round_no}\s*회", page_text):
-                continue
-            summary = parse_prize_summary(soup)
-            if len(summary) > len(best_summary):
-                best_summary = summary
-            found = _numbers_from_selectors(soup)
-            if found is None:
-                continue
-            date_match = re.search(r"(20\d{2})[.년\-/]\s*(\d{1,2})[.월\-/]\s*(\d{1,2})", page_text)
-            if not date_match:
-                continue
-            row = normalize_row({
-                "round": round_no,
-                "date": f"{int(date_match.group(1)):04d}-{int(date_match.group(2)):02d}-{int(date_match.group(3)):02d}",
-                "numbers": found[0],
-                "bonus": found[1],
-            })
-            apply_summary(row, summary)
-            if valid_row(row, round_no):
-                return row, summary
-        except Exception as exc:
-            print(f"[안내] 공식 결과 페이지 조회 실패({url}): {exc}")
-    return None, best_summary
-
-
-def parse_store_table(soup: BeautifulSoup) -> list[dict[str, str]]:
-    stores: list[dict[str, str]] = []
-    seen: set[tuple[str, str, str]] = set()
-    for table in soup.find_all("table"):
-        header_text = " ".join(clean_text(th.get_text(" ", strip=True)) for th in table.find_all("th"))
-        if not ("상호" in header_text and ("소재지" in header_text or "주소" in header_text)):
-            continue
-        for tr in table.find_all("tr"):
-            cells = [clean_text(td.get_text(" ", strip=True)) for td in tr.find_all("td")]
-            if len(cells) < 3:
-                continue
-            if cells[0].isdigit() and len(cells) >= 4:
-                name, method, address = cells[1], cells[2], " ".join(cells[3:])
-            else:
-                method_index = next((i for i, c in enumerate(cells) if normalize_method(c) in {"자동", "수동", "반자동"}), -1)
-                if method_index <= 0 or method_index >= len(cells) - 1:
-                    continue
-                name, method, address = cells[method_index - 1], cells[method_index], " ".join(cells[method_index + 1:])
-            name, method, address = clean_text(name), normalize_method(method), clean_text(address)
-            if not name or not address:
-                continue
-            key = (name, method, address)
-            if key not in seen:
-                stores.append({"name": name, "method": method, "address": address})
-                seen.add(key)
-    return stores
-
-
-def fetch_first_prize_stores(round_no: int) -> list[dict[str, str]]:
-    candidates = [
-        ("https://www.dhlottery.co.kr/lt645/result", {"result": "byWin", "drwNo": round_no}),
-        ("https://www.dhlottery.co.kr/gameResult.do", {"method": "byWin", "drwNo": round_no}),
-        (f"https://pyony.com/lotto/rounds/{round_no}/", None),
-    ]
-    for url, params in candidates:
-        try:
-            res = http_get(url, params=params, timeout=10)
-            res.raise_for_status()
-            soup = BeautifulSoup(res.text, "html.parser")
-            if str(round_no) not in soup.get_text(" ", strip=True):
-                continue
-            stores = parse_store_table(soup)
-            if stores:
-                print(f"[성공] {round_no}회 1등 판매점 {len(stores)}건 수집")
-                return stores
-        except Exception as exc:
-            print(f"[안내] 판매점 조회 실패({url}): {exc}")
-    return []
-
-
-def row_complete(row: dict[str, Any]) -> bool:
-    """당첨 상세정보와 판매점이 모두 채워졌는지 확인합니다."""
-    return not summary_missing(row) and bool(row.get("stores"))
-
-
-def next_incomplete_rounds(
-    by_round: dict[int, dict[str, Any]],
-    latest: int,
-    cursor: int,
-    limit: int,
-    excluded: set[int],
-) -> tuple[list[int], int]:
-    """완료된 회차는 건너뛰고 미완성 회차만 최대 limit개 선택합니다."""
-    selected: list[int] = []
-    current = cursor if 1 <= cursor <= latest else 1
-    scanned = 0
-
-    while scanned < latest and len(selected) < limit:
-        if current not in excluded:
-            row = by_round.get(current)
-            if row is not None and not row_complete(row):
-                selected.append(current)
-        current = 1 if current >= latest else current + 1
-        scanned += 1
-
-    return selected, current
-
-
-def enrich_existing_round(row: dict[str, Any], round_no: int) -> bool:
-    """미완성인 항목만 조회해 기존 회차를 보완합니다."""
-    changed = False
-
-    if summary_missing(row):
-        _, legacy_summary = fetch_legacy_json(round_no)
-        if apply_summary(row, legacy_summary):
+    total = inc_prize.get("totalSalesAmount")
+    if total and target["prize"].get("totalSalesAmount") != total:
+        target["prize"]["totalSalesAmount"] = total
+        changed = True
+    if incoming.get("stores"):
+        if target.get("stores") != incoming["stores"]:
+            target["stores"] = incoming["stores"]
             changed = True
-
-        # 구형 JSON으로 채워지지 않은 항목이 있을 때만 HTML 조회를 추가합니다.
-        if summary_missing(row):
-            _, page_summary = fetch_result_page(round_no)
-            if apply_summary(row, page_summary):
-                changed = True
-
-        if summary_missing(row):
-            print(f"[안내] {round_no}회 당첨 상세정보 일부가 아직 비어 있습니다.")
-        else:
-            print(f"[성공] {round_no}회 당첨 상세정보 보완 완료")
-
-    if not row.get("stores"):
-        stores = fetch_first_prize_stores(round_no)
-        if stores:
-            row["stores"] = stores
-            changed = True
-
     return changed
 
 
 def main() -> int:
-    raw_payload = json.loads(DATA_FILE.read_text(encoding="utf-8"))
-    raw_results = raw_payload.get("results", [])
-    if not raw_results:
-        print("[오류] JSON에 기존 당첨 결과가 없습니다.")
-        return 1
+    data = load_data()
+    results = [normalize_round(x) for x in data["results"]]
+    results.sort(key=lambda x: int(x.get("round", 0)))
+    by_round = {int(x["round"]): x for x in results}
+    latest = max(by_round, default=0)
+    changed = False
 
-    rows = [normalize_row(dict(row)) for row in raw_results]
-    by_round = {row["round"]: row for row in rows if valid_row(row, row["round"])}
-    if not by_round:
-        print("[오류] 유효한 당첨 결과가 없습니다.")
-        return 1
-
-    changed = raw_payload.get("schemaVersion") != 2 or raw_results != rows
-    latest = max(by_round)
-    service = raw_payload.get("service") if isinstance(raw_payload.get("service"), dict) else {}
-
-    # 1) 새 회차는 항상 가장 먼저 확인합니다.
-    target = latest + 1
-    print(f"현재 JSON 최신 회차: {latest}회")
-    print(f"조회할 다음 회차: {target}회")
-    legacy_row, legacy_summary = fetch_legacy_json(target)
-    new_row = legacy_row
-    page_summary: dict[str, int] = {}
-
-    if new_row is None or summary_missing(new_row):
-        page_row, page_summary = fetch_result_page(target)
-        if new_row is None:
-            new_row = page_row
-
-    if new_row is not None:
-        apply_summary(new_row, {**legacy_summary, **page_summary})
-        new_row["stores"] = fetch_first_prize_stores(target)
-        by_round[target] = new_row
-        latest = target
+    # Add every newly available round using the official JSON endpoint.
+    candidate = latest + 1
+    while True:
+        fresh = fetch_legacy_json(candidate)
+        if not fresh:
+            break
+        fresh = normalize_round(fresh)
+        by_round[candidate] = fresh
+        results.append(fresh)
+        latest = candidate
+        candidate += 1
         changed = True
-        print(f"[성공] {target}회 통합 데이터 추가")
+
+    # Prioritize current/last 20 rounds, then a small batch of older incomplete rounds.
+    recent = [r for r in range(latest, max(0, latest - 20), -1) if r in by_round and is_incomplete(by_round[r])]
+    older = [r for r in sorted(by_round, reverse=True) if r <= latest - 20 and is_incomplete(by_round[r])]
+    cursor = as_int(data.get("service", {}).get("incompleteCursor")) or 0
+    if older:
+        cursor %= len(older)
+        old_batch = (older[cursor: cursor + 3] + older[:max(0, cursor + 3 - len(older))])[:3]
     else:
-        print(f"[안내] {target}회 결과는 아직 확인되지 않았습니다.")
+        old_batch = []
+    targets = []
+    for r in recent[:5] + old_batch:
+        if r not in targets:
+            targets.append(r)
 
-    # 2) 최신 회차 중 미완성 데이터는 우선 보완합니다.
-    recent_count = max(1, min(int(os.environ.get("RECENT_CHECK_COUNT", "20")), 30))
-    recent_rounds = [
-        r for r in range(max(1, latest - recent_count + 1), latest + 1)
-        if r in by_round and not row_complete(by_round[r])
-    ]
-    for round_no in recent_rounds:
-        print(f"[우선 보완] 최근 {round_no}회")
-        if enrich_existing_round(by_round[round_no], round_no):
-            changed = True
+    browser_errors: list[str] = []
+    if targets:
+        with sync_playwright() as p:
+            browser = p.chromium.launch(headless=True, args=["--disable-blink-features=AutomationControlled"])
+            context = browser.new_context(locale="ko-KR", timezone_id="Asia/Seoul", viewport={"width": 1440, "height": 1800})
+            page = context.new_page()
+            for round_no in targets:
+                item = by_round[round_no]
+                # Fill easy official JSON fields first.
+                legacy = fetch_legacy_json(round_no)
+                if legacy and merge_round(item, normalize_round(legacy)):
+                    changed = True
+                try:
+                    detail = browser_fetch_round(page, round_no)
+                    incoming = {
+                        "round": round_no,
+                        "winning": {},
+                        "prize": {
+                            "first": {"perGameAmount": detail["firstPerGame"], "winnerCount": detail["firstWinners"]},
+                            "second": {"winnerCount": detail["secondWinners"]},
+                            "totalSalesAmount": detail["totalSales"],
+                        },
+                        "stores": detail["stores"],
+                    }
+                    if merge_round(item, incoming):
+                        changed = True
+                    print(f"[{round_no}] 결과: 1등금={detail['firstPerGame']}, 1등수={detail['firstWinners']}, 2등수={detail['secondWinners']}, 판매액={detail['totalSales']}, 판매점={len(detail['stores'])}")
+                except Exception as exc:
+                    msg = f"[{round_no}] 브라우저 상세조회 실패: {exc}"
+                    print(msg)
+                    browser_errors.append(msg)
+            context.close()
+            browser.close()
 
-    # 3) 과거 회차는 '미완성인 회차만' 소량 처리합니다.
-    # 완료 회차에는 네트워크 요청을 전혀 보내지 않습니다.
-    backlog_size = max(1, min(int(os.environ.get("BACKFILL_BATCH_SIZE", "5")), 20))
-    cursor = int(service.get("backfillCursor", 1) or 1)
-    backlog_rounds, next_cursor = next_incomplete_rounds(
-        by_round,
-        latest,
-        cursor,
-        backlog_size,
-        set(recent_rounds),
-    )
-    print(f"과거 미완성 회차 보완 대상: {backlog_rounds or '없음'}")
-    for round_no in backlog_rounds:
-        if enrich_existing_round(by_round[round_no], round_no):
-            changed = True
-
-    now = datetime.now(KST).isoformat(timespec="seconds")
-    completed_count = sum(1 for row in by_round.values() if row_complete(row))
-    incomplete_count = len(by_round) - completed_count
-    payload = {
-        "schemaVersion": 2,
-        "service": {
-            "name": "MyLottoNote Data Server",
-            "description": "새 회차를 즉시 추가하고 최근 20회 미완성 정보를 우선 보완한 뒤 과거 미완성 회차를 소량 처리하는 통합 데이터 서버",
-            "generatedAt": now,
-            "backfillMode": "recent-priority-incremental",
-            "backfillBatchSize": backlog_size,
-            "recentPriorityCount": recent_count,
-            "backfillCursor": next_cursor,
-            "backfillRange": {"from": 1, "to": latest},
-            "completedRoundCount": completed_count,
-            "incompleteRoundCount": incomplete_count,
-        },
-        "latestRound": latest,
-        "updatedAt": now,
-        "results": [by_round[key] for key in sorted(by_round)],
-    }
-
-    output = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
-    DATA_FILE.write_text(output, encoding="utf-8")
-    print(
-        f"[완료] 최신 {latest}회 / 완성 {completed_count}회 / "
-        f"미완성 {incomplete_count}회 / 다음 검색 시작 {next_cursor}회"
-    )
+    results.sort(key=lambda x: int(x.get("round", 0)))
+    data["results"] = results
+    complete_count = sum(1 for x in results if not is_incomplete(x))
+    incomplete_count = len(results) - complete_count
+    service = data.setdefault("service", {})
+    service.update({
+        "collectorVersion": "2.6-playwright-official",
+        "mode": "new-round-fast-recent-priority-browser",
+        "recentPriorityCount": 20,
+        "olderBatchSize": 3,
+        "incompleteCursor": (cursor + len(old_batch)) if older else 0,
+        "completedRoundCount": complete_count,
+        "incompleteRoundCount": incomplete_count,
+        "lastRunAt": datetime.now(KST).isoformat(timespec="seconds"),
+        "lastBrowserErrors": browser_errors[-5:],
+    })
+    # Service diagnostics must always be saved even if no prize value changed.
+    save_data(data)
+    print(f"완료: 최신 {data['latestRound']}회 / 완성 {complete_count}회 / 미완성 {incomplete_count}회")
     return 0
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    raise SystemExit(main())
