@@ -1,17 +1,13 @@
 from __future__ import annotations
 
 import json
-import os
 import re
-import sys
-import time
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 import requests
-from bs4 import BeautifulSoup
-from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeoutError
+from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA_PATH = ROOT / "data" / "lotto_results.json"
@@ -33,6 +29,26 @@ def as_int(value: Any) -> int | None:
     return int(digits) if digits else None
 
 
+def valid_first_amount(v: Any) -> bool:
+    n = as_int(v)
+    return n is not None and 100_000_000 <= n <= 100_000_000_000
+
+
+def valid_first_winners(v: Any) -> bool:
+    n = as_int(v)
+    return n is not None and 1 <= n <= 1_000
+
+
+def valid_second_winners(v: Any) -> bool:
+    n = as_int(v)
+    return n is not None and 1 <= n <= 100_000
+
+
+def valid_total_sales(v: Any) -> bool:
+    n = as_int(v)
+    return n is not None and 1_000_000_000 <= n <= 10_000_000_000_000
+
+
 def load_data() -> dict[str, Any]:
     with DATA_PATH.open("r", encoding="utf-8") as f:
         data = json.load(f)
@@ -45,7 +61,6 @@ def load_data() -> dict[str, Any]:
 def save_data(data: dict[str, Any]) -> None:
     data["latestRound"] = max((int(r.get("round", 0)) for r in data["results"]), default=0)
     data["updatedAt"] = datetime.now(KST).isoformat(timespec="seconds")
-    DATA_PATH.parent.mkdir(parents=True, exist_ok=True)
     tmp = DATA_PATH.with_suffix(".json.tmp")
     tmp.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     tmp.replace(DATA_PATH)
@@ -53,10 +68,7 @@ def save_data(data: dict[str, Any]) -> None:
 
 def normalize_round(item: dict[str, Any]) -> dict[str, Any]:
     if "winning" not in item:
-        item["winning"] = {
-            "numbers": item.pop("numbers", []),
-            "bonus": item.pop("bonus", None),
-        }
+        item["winning"] = {"numbers": item.pop("numbers", []), "bonus": item.pop("bonus", None)}
     item.setdefault("prize", {})
     item["prize"].setdefault("first", {})
     item["prize"]["first"].setdefault("perGameAmount", None)
@@ -67,6 +79,32 @@ def normalize_round(item: dict[str, Any]) -> dict[str, Any]:
     if "stores" not in item:
         item["stores"] = item.pop("firstPrizeStores", []) or []
     return item
+
+
+def sanitize_prize(item: dict[str, Any]) -> bool:
+    """Remove impossible values already written by an older broken collector."""
+    changed = False
+    item = normalize_round(item)
+    first = item["prize"]["first"]
+    second = item["prize"]["second"]
+    if first.get("perGameAmount") is not None and not valid_first_amount(first["perGameAmount"]):
+        print(f"[{item.get('round')}] 비정상 1등 당첨금 삭제: {first['perGameAmount']}")
+        first["perGameAmount"] = None
+        changed = True
+    if first.get("winnerCount") is not None and not valid_first_winners(first["winnerCount"]):
+        print(f"[{item.get('round')}] 비정상 1등 게임 수 삭제: {first['winnerCount']}")
+        first["winnerCount"] = None
+        changed = True
+    if second.get("winnerCount") is not None and not valid_second_winners(second["winnerCount"]):
+        print(f"[{item.get('round')}] 비정상 2등 게임 수 삭제: {second['winnerCount']}")
+        second["winnerCount"] = None
+        changed = True
+    total = item["prize"].get("totalSalesAmount")
+    if total is not None and not valid_total_sales(total):
+        print(f"[{item.get('round')}] 비정상 총 판매금액 삭제: {total}")
+        item["prize"]["totalSalesAmount"] = None
+        changed = True
+    return changed
 
 
 def fetch_legacy_json(round_no: int) -> dict[str, Any] | None:
@@ -82,64 +120,58 @@ def fetch_legacy_json(round_no: int) -> dict[str, Any] | None:
     numbers = [payload.get(f"drwtNo{i}") for i in range(1, 7)]
     if any(not isinstance(v, int) for v in numbers):
         return None
-    first_total = as_int(payload.get("firstAccumamnt"))
-    first_winners = as_int(payload.get("firstPrzwnerCo"))
     first_per_game = as_int(payload.get("firstWinamnt"))
-    if first_per_game is None and first_total and first_winners:
-        first_per_game = first_total // first_winners
+    first_winners = as_int(payload.get("firstPrzwnerCo"))
+    total_sales = as_int(payload.get("totSellamnt"))
     return {
         "round": round_no,
         "date": payload.get("drwNoDate"),
         "winning": {"numbers": numbers, "bonus": payload.get("bnusNo")},
         "prize": {
-            "first": {"perGameAmount": first_per_game, "winnerCount": first_winners},
+            "first": {
+                "perGameAmount": first_per_game if valid_first_amount(first_per_game) else None,
+                "winnerCount": first_winners if valid_first_winners(first_winners) else None,
+            },
             "second": {"winnerCount": None},
-            "totalSalesAmount": as_int(payload.get("totSellamnt")),
+            "totalSalesAmount": total_sales if valid_total_sales(total_sales) else None,
         },
         "stores": [],
     }
 
 
-def parse_money_table_text(text: str) -> dict[str, int | None]:
-    compact = re.sub(r"[\t\r]+", " ", text)
-    lines = [re.sub(r"\s+", " ", x).strip() for x in compact.split("\n") if x.strip()]
-    result: dict[str, int | None] = {
-        "firstPerGame": None,
-        "firstWinners": None,
-        "secondWinners": None,
-        "totalSales": None,
-    }
+def parse_rank_table(page) -> dict[str, int | None]:
+    result = {"firstPerGame": None, "firstWinners": None, "secondWinners": None, "totalSales": None}
 
-    # Table rows commonly become one line per cell. Find row starts and inspect the next cells.
-    for rank in ("1등", "2등"):
-        for idx, line in enumerate(lines):
-            if line == rank or line.startswith(rank + " "):
-                window = lines[idx: idx + 8]
-                nums = [as_int(v) for v in window]
-                nums = [v for v in nums if v is not None]
-                # Expected order: total prize, game count, per-game prize.
-                if rank == "1등" and len(nums) >= 3:
-                    result["firstWinners"] = nums[1]
-                    result["firstPerGame"] = nums[2]
-                elif rank == "2등" and len(nums) >= 2:
-                    result["secondWinners"] = nums[1]
-                break
-
-    # More tolerant Korean sentence/label patterns.
-    patterns = {
-        "firstWinners": [r"1등[^\n]{0,50}?당첨게임\s*수\s*([0-9,]+)", r"1등[^\n]{0,30}?([0-9,]+)\s*게임"],
-        "secondWinners": [r"2등[^\n]{0,50}?당첨게임\s*수\s*([0-9,]+)", r"2등[^\n]{0,30}?([0-9,]+)\s*게임"],
-        "firstPerGame": [r"1등[^\n]{0,100}?1게임당\s*당첨금\s*([0-9,]+)", r"1등[^\n]{0,80}?([0-9,]+)\s*원"],
-        "totalSales": [r"총\s*판매\s*금액\s*[:：]?\s*([0-9,]+)", r"총판매금액\s*[:：]?\s*([0-9,]+)"],
-    }
-    for key, regexes in patterns.items():
-        if result[key] is not None:
+    # Parse only rows whose first cell is exactly 1등 or 2등.
+    for tr in page.locator("table tr").all():
+        try:
+            cells = [re.sub(r"\s+", " ", x).strip() for x in tr.locator("th, td").all_text_contents()]
+        except Exception:
             continue
-        for pattern in regexes:
-            m = re.search(pattern, text, re.S)
-            if m:
-                result[key] = as_int(m.group(1))
-                break
+        if not cells:
+            continue
+        rank = cells[0]
+        if rank not in {"1등", "2등"}:
+            continue
+        # Official header order: 순위 / 등위별 총 당첨금 / 당첨게임 수 / 1게임당 당첨금 / ...
+        if len(cells) >= 4:
+            game_count = as_int(cells[2])
+            per_game = as_int(cells[3])
+            if rank == "1등":
+                if valid_first_winners(game_count):
+                    result["firstWinners"] = game_count
+                if valid_first_amount(per_game):
+                    result["firstPerGame"] = per_game
+            else:
+                if valid_second_winners(game_count):
+                    result["secondWinners"] = game_count
+
+    body = page.locator("body").inner_text()
+    m = re.search(r"총\s*판매\s*금액\s*[:：]?\s*([0-9,]+)\s*원?", body)
+    if m:
+        total = as_int(m.group(1))
+        if valid_total_sales(total):
+            result["totalSales"] = total
     return result
 
 
@@ -150,18 +182,14 @@ def parse_store_rows(text: str) -> list[dict[str, Any]]:
     for i, line in enumerate(lines):
         if line not in methods:
             continue
-        method = line
         name = lines[i - 1] if i >= 1 else ""
         address = lines[i + 1] if i + 1 < len(lines) else ""
-        # Skip headers and malformed rows.
         if name in {"구분", "선택", "번호", "상호명", "상호"} or len(name) < 2:
             continue
         if address in methods or len(address) < 4:
             address = ""
-        stores.append({"name": name, "method": method, "address": address})
-    # Stable de-duplication while keeping duplicate wins at same store if method differs.
-    unique: list[dict[str, Any]] = []
-    seen: set[tuple[str, str, str]] = set()
+        stores.append({"name": name, "method": line, "address": address})
+    unique, seen = [], set()
     for s in stores:
         key = (s["name"], s["method"], s["address"])
         if key not in seen:
@@ -170,84 +198,102 @@ def parse_store_rows(text: str) -> list[dict[str, Any]]:
     return unique
 
 
-def browser_fetch_round(page, round_no: int) -> dict[str, Any]:
-    print(f"[{round_no}] 공식 화면 브라우저 조회")
+def select_round_and_submit(page, round_no: int) -> None:
     page.goto(RESULT_URL, wait_until="domcontentloaded", timeout=60_000)
-    page.wait_for_timeout(1500)
+    page.wait_for_timeout(1200)
 
-    # Try selecting the desired round from any select containing that option.
-    selected = False
+    chosen = False
     for select in page.locator("select").all():
         try:
-            options = select.locator("option").all_text_contents()
-            target_idx = next((i for i, t in enumerate(options) if re.sub(r"\D", "", t) == str(round_no)), None)
-            if target_idx is not None:
-                values = select.locator("option").evaluate_all("els => els.map(e => e.value)")
-                select.select_option(values[target_idx])
-                selected = True
-                page.wait_for_timeout(1800)
-                break
+            opts = select.locator("option")
+            texts = opts.all_text_contents()
+            values = opts.evaluate_all("els => els.map(e => e.value)")
+            idx = next((i for i, t in enumerate(texts) if as_int(t) == round_no), None)
+            if idx is None:
+                continue
+            select.select_option(values[idx])
+            chosen = True
+            # Explicitly dispatch events because the official page may not react to select_option alone.
+            select.dispatch_event("change")
+            break
         except Exception:
             continue
+    if not chosen:
+        raise RuntimeError(f"{round_no}회 선택 항목을 찾지 못했습니다.")
 
-    if not selected:
-        # Query candidates used by old/new versions of the official site.
-        candidates = [
-            f"{RESULT_URL}?result=byWin&lottoId=LO40&drwNo={round_no}",
-            f"{RESULT_URL}?drwNo={round_no}",
-            f"https://www.dhlottery.co.kr/gameResult.do?method=byWin&drwNo={round_no}",
-        ]
-        for url in candidates:
+    # Click the lookup button near the round selector.
+    clicked = False
+    for label in ("조회하기", "조회"):
+        btn = page.get_by_text(label, exact=True)
+        if btn.count() > 0:
             try:
-                page.goto(url, wait_until="domcontentloaded", timeout=45_000)
-                page.wait_for_timeout(1200)
-                body = page.locator("body").inner_text()
-                if f"{round_no}회" in body or f"제{round_no}회" in body:
-                    break
+                btn.first.click(timeout=5_000)
+                clicked = True
+                break
             except Exception:
-                continue
+                pass
+    if not clicked:
+        # Some versions use a submit button without visible exact text.
+        for css in ("button[type=submit]", "input[type=submit]"):
+            loc = page.locator(css)
+            if loc.count() > 0:
+                loc.first.click(timeout=5_000)
+                clicked = True
+                break
+    if not clicked:
+        raise RuntimeError("회차 조회 버튼을 찾지 못했습니다.")
 
-    body_text = page.locator("body").inner_text(timeout=20_000)
-    prize = parse_money_table_text(body_text)
+    page.wait_for_load_state("domcontentloaded", timeout=30_000)
+    page.wait_for_timeout(1400)
+
+    # Never save values unless the page confirms the requested round.
+    body = page.locator("body").inner_text()
+    if not re.search(rf"(?:제\s*)?{round_no}\s*회", body):
+        selected_values = []
+        for sel in page.locator("select").all():
+            try:
+                selected_values.append(sel.input_value())
+            except Exception:
+                pass
+        raise RuntimeError(f"요청한 {round_no}회 화면이 아님. 선택값={selected_values[:5]}")
+
+
+def browser_fetch_round(page, round_no: int) -> dict[str, Any]:
+    print(f"[{round_no}] 공식 화면 회차별 조회")
+    select_round_and_submit(page, round_no)
+    prize = parse_rank_table(page)
 
     stores: list[dict[str, Any]] = []
-    # Click a visible winning-store link/button; opening a new tab is supported.
-    store_targets = page.get_by_text(re.compile("당첨판매점"))
-    if store_targets.count() > 0:
+    targets = page.get_by_text(re.compile("당첨판매점"))
+    if targets.count() > 0:
         try:
             with page.context.expect_page(timeout=4_000) as popup_info:
-                store_targets.first.click(timeout=5_000)
+                targets.first.click(timeout=5_000)
             popup = popup_info.value
             popup.wait_for_load_state("domcontentloaded")
-            popup.wait_for_timeout(1200)
+            popup.wait_for_timeout(1000)
             stores = parse_store_rows(popup.locator("body").inner_text())
             popup.close()
         except Exception:
             try:
-                store_targets.first.click(timeout=5_000)
-                page.wait_for_timeout(1200)
+                targets.first.click(timeout=5_000)
+                page.wait_for_timeout(1000)
                 stores = parse_store_rows(page.locator("body").inner_text())
             except Exception:
                 pass
 
-    return {
-        "firstPerGame": prize["firstPerGame"],
-        "firstWinners": prize["firstWinners"],
-        "secondWinners": prize["secondWinners"],
-        "totalSales": prize["totalSales"],
-        "stores": stores,
-    }
+    return {**prize, "stores": stores}
 
 
 def is_incomplete(item: dict[str, Any]) -> bool:
-    p = item.get("prize", {})
-    first = p.get("first", {})
-    second = p.get("second", {})
+    item = normalize_round(item)
+    first = item["prize"]["first"]
+    second = item["prize"]["second"]
     return any([
-        not first.get("perGameAmount"),
-        not first.get("winnerCount"),
-        not second.get("winnerCount"),
-        not p.get("totalSalesAmount"),
+        not valid_first_amount(first.get("perGameAmount")),
+        not valid_first_winners(first.get("winnerCount")),
+        not valid_second_winners(second.get("winnerCount")),
+        not valid_total_sales(item["prize"].get("totalSalesAmount")),
         not item.get("stores"),
     ])
 
@@ -265,21 +311,25 @@ def merge_round(target: dict[str, Any], incoming: dict[str, Any]) -> bool:
     if win.get("bonus") is not None and target["winning"].get("bonus") is None:
         target["winning"]["bonus"] = win["bonus"]
         changed = True
-    inc_prize = incoming.get("prize", {})
-    for path in (("first", "perGameAmount"), ("first", "winnerCount"), ("second", "winnerCount")):
-        group, key = path
-        value = inc_prize.get(group, {}).get(key)
-        if value and target["prize"][group].get(key) != value:
-            target["prize"][group][key] = value
+
+    p = incoming.get("prize", {})
+    candidates = [
+        ("first", "perGameAmount", valid_first_amount),
+        ("first", "winnerCount", valid_first_winners),
+        ("second", "winnerCount", valid_second_winners),
+    ]
+    for group, key, validator in candidates:
+        value = p.get(group, {}).get(key)
+        if validator(value) and target["prize"][group].get(key) != as_int(value):
+            target["prize"][group][key] = as_int(value)
             changed = True
-    total = inc_prize.get("totalSalesAmount")
-    if total and target["prize"].get("totalSalesAmount") != total:
-        target["prize"]["totalSalesAmount"] = total
+    total = p.get("totalSalesAmount")
+    if valid_total_sales(total) and target["prize"].get("totalSalesAmount") != as_int(total):
+        target["prize"]["totalSalesAmount"] = as_int(total)
         changed = True
-    if incoming.get("stores"):
-        if target.get("stores") != incoming["stores"]:
-            target["stores"] = incoming["stores"]
-            changed = True
+    if incoming.get("stores") and target.get("stores") != incoming["stores"]:
+        target["stores"] = incoming["stores"]
+        changed = True
     return changed
 
 
@@ -291,7 +341,12 @@ def main() -> int:
     latest = max(by_round, default=0)
     changed = False
 
-    # Add every newly available round using the official JSON endpoint.
+    # Clean all previously corrupted numbers before doing any new fetch.
+    for item in results:
+        if sanitize_prize(item):
+            changed = True
+
+    # Add newly published rounds using the lightweight official JSON endpoint.
     candidate = latest + 1
     while True:
         fresh = fetch_legacy_json(candidate)
@@ -304,29 +359,27 @@ def main() -> int:
         candidate += 1
         changed = True
 
-    # Prioritize current/last 20 rounds, then a small batch of older incomplete rounds.
     recent = [r for r in range(latest, max(0, latest - 20), -1) if r in by_round and is_incomplete(by_round[r])]
     older = [r for r in sorted(by_round, reverse=True) if r <= latest - 20 and is_incomplete(by_round[r])]
     cursor = as_int(data.get("service", {}).get("incompleteCursor")) or 0
     if older:
         cursor %= len(older)
-        old_batch = (older[cursor: cursor + 3] + older[:max(0, cursor + 3 - len(older))])[:3]
+        old_batch = (older[cursor:cursor + 2] + older[:max(0, cursor + 2 - len(older))])[:2]
     else:
         old_batch = []
-    targets = []
-    for r in recent[:5] + old_batch:
+    targets: list[int] = []
+    for r in recent[:10] + old_batch:
         if r not in targets:
             targets.append(r)
 
     browser_errors: list[str] = []
     if targets:
         with sync_playwright() as p:
-            browser = p.chromium.launch(headless=True, args=["--disable-blink-features=AutomationControlled"])
+            browser = p.chromium.launch(headless=True)
             context = browser.new_context(locale="ko-KR", timezone_id="Asia/Seoul", viewport={"width": 1440, "height": 1800})
             page = context.new_page()
             for round_no in targets:
                 item = by_round[round_no]
-                # Fill easy official JSON fields first.
                 legacy = fetch_legacy_json(round_no)
                 if legacy and merge_round(item, normalize_round(legacy)):
                     changed = True
@@ -344,9 +397,9 @@ def main() -> int:
                     }
                     if merge_round(item, incoming):
                         changed = True
-                    print(f"[{round_no}] 결과: 1등금={detail['firstPerGame']}, 1등수={detail['firstWinners']}, 2등수={detail['secondWinners']}, 판매액={detail['totalSales']}, 판매점={len(detail['stores'])}")
+                    print(f"[{round_no}] 검증 결과: 1등금={detail['firstPerGame']}, 1등수={detail['firstWinners']}, 2등수={detail['secondWinners']}, 판매액={detail['totalSales']}, 판매점={len(detail['stores'])}")
                 except Exception as exc:
-                    msg = f"[{round_no}] 브라우저 상세조회 실패: {exc}"
+                    msg = f"[{round_no}] 회차별 상세조회 실패: {exc}"
                     print(msg)
                     browser_errors.append(msg)
             context.close()
@@ -355,22 +408,21 @@ def main() -> int:
     results.sort(key=lambda x: int(x.get("round", 0)))
     data["results"] = results
     complete_count = sum(1 for x in results if not is_incomplete(x))
-    incomplete_count = len(results) - complete_count
     service = data.setdefault("service", {})
     service.update({
-        "collectorVersion": "2.6-playwright-official",
-        "mode": "new-round-fast-recent-priority-browser",
+        "collectorVersion": "2.7-round-verified-row-parser",
+        "mode": "verified-round-submit-row-parser-with-sanity-checks",
         "recentPriorityCount": 20,
-        "olderBatchSize": 3,
+        "recentBatchSize": 10,
+        "olderBatchSize": 2,
         "incompleteCursor": (cursor + len(old_batch)) if older else 0,
         "completedRoundCount": complete_count,
-        "incompleteRoundCount": incomplete_count,
+        "incompleteRoundCount": len(results) - complete_count,
         "lastRunAt": datetime.now(KST).isoformat(timespec="seconds"),
-        "lastBrowserErrors": browser_errors[-5:],
+        "lastBrowserErrors": browser_errors[-10:],
     })
-    # Service diagnostics must always be saved even if no prize value changed.
     save_data(data)
-    print(f"완료: 최신 {data['latestRound']}회 / 완성 {complete_count}회 / 미완성 {incomplete_count}회")
+    print(f"완료: 최신 {data['latestRound']}회 / 완성 {complete_count}회 / 미완성 {len(results)-complete_count}회")
     return 0
 
 
