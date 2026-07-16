@@ -3,7 +3,7 @@ name: 로또 통합 데이터 자동 업데이트
 on:
   workflow_dispatch:
   schedule:
-    # UTC 기준. 한국시간 매일 09:20, 21:20
+    # 한국시간 매일 09:20, 21:20
     - cron: '20 0,12 * * *'
     # 토요일 추첨 뒤 한국시간 21:10, 21:40, 22:10
     - cron: '10,40 12 * * 6'
@@ -36,21 +36,26 @@ jobs:
           pip install -r requirements.txt
           python -m playwright install --with-deps chromium
 
-      - name: 공식 화면 기반 통합 갱신
+      - name: 회차 검증형 통합 갱신
         run: python scripts/update_lotto.py
 
-      - name: JSON 구조 검사
+      - name: JSON 구조 및 비정상 숫자 검사
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
-          p = Path('data/lotto_results.json')
-          data = json.loads(p.read_text(encoding='utf-8'))
-          assert isinstance(data.get('results'), list) and data['results']
-          assert data.get('service', {}).get('collectorVersion') == '2.6-playwright-official'
-          latest = max(data['results'], key=lambda x: int(x['round']))
-          assert 'winning' in latest and 'prize' in latest and 'stores' in latest
-          print('JSON 검사 완료:', data.get('latestRound'), '회')
+          data = json.loads(Path('data/lotto_results.json').read_text(encoding='utf-8'))
+          assert data.get('service', {}).get('collectorVersion') == '2.7-round-verified-row-parser'
+          for item in data.get('results', []):
+              p = item.get('prize', {})
+              f = p.get('first', {})
+              s = p.get('second', {})
+              a, w1, w2, total = f.get('perGameAmount'), f.get('winnerCount'), s.get('winnerCount'), p.get('totalSalesAmount')
+              assert a is None or 100_000_000 <= int(a) <= 100_000_000_000, (item.get('round'), 'firstAmount', a)
+              assert w1 is None or 1 <= int(w1) <= 1_000, (item.get('round'), 'firstWinners', w1)
+              assert w2 is None or 1 <= int(w2) <= 100_000, (item.get('round'), 'secondWinners', w2)
+              assert total is None or 1_000_000_000 <= int(total) <= 10_000_000_000_000, (item.get('round'), 'totalSales', total)
+          print('JSON 및 숫자 검증 완료:', data.get('latestRound'), '회')
           PY
 
       - name: 바뀐 JSON이 있으면 자동 저장
@@ -62,5 +67,5 @@ jobs:
           git config user.name "mylotto-data-bot"
           git config user.email "actions@users.noreply.github.com"
           git add data/lotto_results.json
-          git commit -m "자동 갱신: 로또 통합 데이터"
+          git commit -m "자동 갱신: 회차 검증 및 비정상 값 정리"
           git push
