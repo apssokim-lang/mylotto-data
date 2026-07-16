@@ -17,13 +17,13 @@
     "collectorVersion": "2.7-round-verified-row-parser",
     "mode": "verified-round-submit-row-parser-with-sanity-checks",
     "olderBatchSize": 2,
-    "incompleteCursor": 5,
-    "lastRunAt": "2026-07-16T21:37:11+09:00",
+    "incompleteCursor": 7,
+    "lastRunAt": "2026-07-17T01:54:43+09:00",
     "lastBrowserErrors": [],
     "recentBatchSize": 10
   },
   "latestRound": 1232,
-  "updatedAt": "2026-07-16T21:37:11+09:00",
+  "updatedAt": "2026-07-17T01:54:43+09:00",
   "results": [
     {
       "round": 1,
@@ -31377,7 +31377,7 @@
         "second": {
           "winnerCount": null
         },
-        "totalSalesAmount": null
+        "totalSalesAmount": 114636304000
       },
       "stores": []
     },
@@ -31403,7 +31403,7 @@
         "second": {
           "winnerCount": null
         },
-        "totalSalesAmount": null
+        "totalSalesAmount": 114636304000
       },
       "stores": []
     },
