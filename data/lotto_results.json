@@ -12,11 +12,17 @@
       "from": 1,
       "to": 1232
     },
-    "completedRoundCount": 1,
-    "incompleteRoundCount": 1217
+    "completedRoundCount": 6,
+    "incompleteRoundCount": 1212,
+    "collectorVersion": "2.6-playwright-official",
+    "mode": "new-round-fast-recent-priority-browser",
+    "olderBatchSize": 3,
+    "incompleteCursor": 3,
+    "lastRunAt": "2026-07-16T20:39:21+09:00",
+    "lastBrowserErrors": []
   },
   "latestRound": 1232,
-  "updatedAt": "2026-07-16T16:49:27+09:00",
+  "updatedAt": "2026-07-16T20:39:21+09:00",
   "results": [
     {
       "round": 1,
@@ -31468,13 +31474,13 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
-          "winnerCount": null
+          "perGameAmount": 11,
+          "winnerCount": 27865869009
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 4644311524
         },
-        "totalSalesAmount": null
+        "totalSalesAmount": 114636304000
       },
       "stores": []
     },
@@ -31494,13 +31500,13 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
-          "winnerCount": null
+          "perGameAmount": 11,
+          "winnerCount": 27865869009
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 4644311524
         },
-        "totalSalesAmount": null
+        "totalSalesAmount": 114636304000
       },
       "stores": []
     },
@@ -31520,13 +31526,13 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
-          "winnerCount": null
+          "perGameAmount": 11,
+          "winnerCount": 27865869009
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 4644311524
         },
-        "totalSalesAmount": null
+        "totalSalesAmount": 114636304000
       },
       "stores": []
     },
@@ -31546,13 +31552,13 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": 1740011646,
-          "winnerCount": null
+          "perGameAmount": 11,
+          "winnerCount": 27865869009
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 4644311524
         },
-        "totalSalesAmount": null
+        "totalSalesAmount": 114636304000
       },
       "stores": [
         {
@@ -31663,13 +31669,13 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": 2431577188,
-          "winnerCount": null
+          "perGameAmount": 11,
+          "winnerCount": 27865869009
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 4644311524
         },
-        "totalSalesAmount": null
+        "totalSalesAmount": 114636304000
       },
       "stores": [
         {
@@ -31745,13 +31751,13 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": 3519759000,
-          "winnerCount": null
+          "perGameAmount": 11,
+          "winnerCount": 27865869009
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 4644311524
         },
-        "totalSalesAmount": null
+        "totalSalesAmount": 114636304000
       },
       "stores": [
         {
@@ -31812,13 +31818,13 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": 1771357196,
-          "winnerCount": null
+          "perGameAmount": 11,
+          "winnerCount": 27865869009
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 4644311524
         },
-        "totalSalesAmount": null
+        "totalSalesAmount": 114636304000
       },
       "stores": [
         {
@@ -31919,13 +31925,13 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": 1652990074,
-          "winnerCount": null
+          "perGameAmount": 11,
+          "winnerCount": 27865869009
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 4644311524
         },
-        "totalSalesAmount": null
+        "totalSalesAmount": 114636304000
       },
       "stores": [
         {
