@@ -12,17 +12,18 @@
       "from": 1,
       "to": 1232
     },
-    "completedRoundCount": 6,
-    "incompleteRoundCount": 1212,
-    "collectorVersion": "2.6-playwright-official",
-    "mode": "new-round-fast-recent-priority-browser",
-    "olderBatchSize": 3,
-    "incompleteCursor": 3,
-    "lastRunAt": "2026-07-16T20:39:21+09:00",
-    "lastBrowserErrors": []
+    "completedRoundCount": 1,
+    "incompleteRoundCount": 1217,
+    "collectorVersion": "2.7-round-verified-row-parser",
+    "mode": "verified-round-submit-row-parser-with-sanity-checks",
+    "olderBatchSize": 2,
+    "incompleteCursor": 5,
+    "lastRunAt": "2026-07-16T21:37:11+09:00",
+    "lastBrowserErrors": [],
+    "recentBatchSize": 10
   },
   "latestRound": 1232,
-  "updatedAt": "2026-07-16T20:39:21+09:00",
+  "updatedAt": "2026-07-16T21:37:11+09:00",
   "results": [
     {
       "round": 1,
@@ -31428,7 +31429,7 @@
         "second": {
           "winnerCount": null
         },
-        "totalSalesAmount": null
+        "totalSalesAmount": 114636304000
       },
       "stores": []
     },
@@ -31454,7 +31455,7 @@
         "second": {
           "winnerCount": null
         },
-        "totalSalesAmount": null
+        "totalSalesAmount": 114636304000
       },
       "stores": []
     },
@@ -31474,11 +31475,11 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": 11,
-          "winnerCount": 27865869009
+          "perGameAmount": null,
+          "winnerCount": null
         },
         "second": {
-          "winnerCount": 4644311524
+          "winnerCount": null
         },
         "totalSalesAmount": 114636304000
       },
@@ -31500,11 +31501,11 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": 11,
-          "winnerCount": 27865869009
+          "perGameAmount": null,
+          "winnerCount": null
         },
         "second": {
-          "winnerCount": 4644311524
+          "winnerCount": null
         },
         "totalSalesAmount": 114636304000
       },
@@ -31526,11 +31527,11 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": 11,
-          "winnerCount": 27865869009
+          "perGameAmount": null,
+          "winnerCount": null
         },
         "second": {
-          "winnerCount": 4644311524
+          "winnerCount": null
         },
         "totalSalesAmount": 114636304000
       },
@@ -31552,11 +31553,11 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": 11,
-          "winnerCount": 27865869009
+          "perGameAmount": null,
+          "winnerCount": null
         },
         "second": {
-          "winnerCount": 4644311524
+          "winnerCount": null
         },
         "totalSalesAmount": 114636304000
       },
@@ -31669,11 +31670,11 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": 11,
-          "winnerCount": 27865869009
+          "perGameAmount": null,
+          "winnerCount": null
         },
         "second": {
-          "winnerCount": 4644311524
+          "winnerCount": null
         },
         "totalSalesAmount": 114636304000
       },
@@ -31751,11 +31752,11 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": 11,
-          "winnerCount": 27865869009
+          "perGameAmount": null,
+          "winnerCount": null
         },
         "second": {
-          "winnerCount": 4644311524
+          "winnerCount": null
         },
         "totalSalesAmount": 114636304000
       },
@@ -31818,11 +31819,11 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": 11,
-          "winnerCount": 27865869009
+          "perGameAmount": null,
+          "winnerCount": null
         },
         "second": {
-          "winnerCount": 4644311524
+          "winnerCount": null
         },
         "totalSalesAmount": 114636304000
       },
@@ -31925,11 +31926,11 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": 11,
-          "winnerCount": 27865869009
+          "perGameAmount": null,
+          "winnerCount": null
         },
         "second": {
-          "winnerCount": 4644311524
+          "winnerCount": null
         },
         "totalSalesAmount": 114636304000
       },
