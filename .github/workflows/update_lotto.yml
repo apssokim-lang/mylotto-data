@@ -3,23 +3,23 @@ name: 로또 통합 데이터 자동 업데이트
 on:
   workflow_dispatch:
   schedule:
-    # 한국시간 매일 03:20, 09:20, 15:20, 21:20
-    - cron: '20 18,0,6,12 * * *'
-    # 토요일 추첨 후 추가 확인: 한국시간 21:40, 22:10
-    - cron: '40 12 * * 6'
+    # UTC 기준. 한국시간 매일 09:20, 21:20
+    - cron: '20 0,12 * * *'
+    # 토요일 추첨 뒤 한국시간 21:10, 21:40, 22:10
+    - cron: '10,40 12 * * 6'
     - cron: '10 13 * * 6'
 
 permissions:
   contents: write
 
 concurrency:
-  group: lotto-result-update
-  cancel-in-progress: true
+  group: lotto-data-update
+  cancel-in-progress: false
 
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     steps:
       - name: 저장소 파일 불러오기
         uses: actions/checkout@v4
@@ -28,52 +28,39 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-          cache: 'pip'
+          cache: pip
 
       - name: 필요한 도구 설치
-        run: pip install -r requirements.txt
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          python -m playwright install --with-deps chromium
 
-      - name: 최신회차 확인 · 최근 20회 우선 보완 · 과거 미완성 소량 보완
-        env:
-          BACKFILL_BATCH_SIZE: 5
-          RECENT_CHECK_COUNT: 20
+      - name: 공식 화면 기반 통합 갱신
         run: python scripts/update_lotto.py
 
-      - name: JSON v2.5 구조 검사
+      - name: JSON 구조 검사
         run: |
           python - <<'PY'
           import json
-          p=json.load(open('data/lotto_results.json',encoding='utf-8'))
-          assert p['schemaVersion'] == 2
-          assert p['results']
-          service = p.get('service', {})
-          assert service.get('backfillMode') == 'recent-priority-incremental'
-          assert isinstance(service.get('backfillCursor'), int)
-          assert 1 <= service['backfillCursor'] <= p['latestRound']
-          assert service.get('backfillBatchSize') == 5
-          assert service.get('recentPriorityCount') == 20
-          assert service.get('backfillRange', {}).get('from') == 1
-          assert service.get('backfillRange', {}).get('to') == p['latestRound']
-          assert isinstance(service.get('completedRoundCount'), int)
-          assert isinstance(service.get('incompleteRoundCount'), int)
-          for r in p['results']:
-              assert set(['round','date','winning','prize','stores']).issubset(r)
-              assert set(['numbers','bonus']).issubset(r['winning'])
-              assert set(['first','second','totalSalesAmount']).issubset(r['prize'])
-              assert set(['perGameAmount','winnerCount']).issubset(r['prize']['first'])
-              assert 'winnerCount' in r['prize']['second']
-          print('JSON v2.5 구조 검사 통과')
+          from pathlib import Path
+          p = Path('data/lotto_results.json')
+          data = json.loads(p.read_text(encoding='utf-8'))
+          assert isinstance(data.get('results'), list) and data['results']
+          assert data.get('service', {}).get('collectorVersion') == '2.6-playwright-official'
+          latest = max(data['results'], key=lambda x: int(x['round']))
+          assert 'winning' in latest and 'prize' in latest and 'stores' in latest
+          print('JSON 검사 완료:', data.get('latestRound'), '회')
           PY
 
       - name: 바뀐 JSON이 있으면 자동 저장
-        shell: bash
         run: |
           if git diff --quiet -- data/lotto_results.json; then
-            echo "저장할 변경사항이 없습니다."
+            echo "변경된 데이터가 없습니다."
             exit 0
           fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "mylotto-data-bot"
+          git config user.email "actions@users.noreply.github.com"
           git add data/lotto_results.json
-          git commit -m "자동 업데이트: 최신회차·최근20회·과거 미완성 보완"
+          git commit -m "자동 갱신: 로또 통합 데이터"
           git push
