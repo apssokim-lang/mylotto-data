@@ -135,7 +135,7 @@ jobs:
               second_count = checks["2등 게임 수"]
               total_sales = checks["총 판매금액"]
 
-              if first_amount is not None and not 100_000_000 <= first_amount <= 10_000_000_000:
+              if first_amount is not None and not 10_000_000 <= first_amount <= 100_000_000_000:
                   raise SystemExit(
                       f"ERROR: {round_no}회 1등 당첨금이 비정상입니다: {first_amount}"
                   )
