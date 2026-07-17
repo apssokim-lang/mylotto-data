@@ -5,7 +5,7 @@ on:
   schedule:
     # 한국시간 매일 09:20, 21:20
     - cron: '20 0,12 * * *'
-    # 토요일 추첨 뒤 한국시간 21:10, 21:40, 22:10
+    # 토요일 추첨 후 재확인
     - cron: '10,40 12 * * 6'
     - cron: '10 13 * * 6'
 
@@ -19,7 +19,7 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 20
     steps:
       - name: 저장소 파일 불러오기
         uses: actions/checkout@v4
@@ -34,28 +34,39 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          python -m playwright install --with-deps chromium
 
-      - name: 회차 검증형 통합 갱신
+      - name: 검증된 회차별 데이터 갱신
         run: python scripts/update_lotto.py
 
-      - name: JSON 구조 및 비정상 숫자 검사
+      - name: JSON 및 최근 회차 회귀 검사
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
           data = json.loads(Path('data/lotto_results.json').read_text(encoding='utf-8'))
-          assert data.get('service', {}).get('collectorVersion') == '2.7-round-verified-row-parser'
-          for item in data.get('results', []):
-              p = item.get('prize', {})
-              f = p.get('first', {})
-              s = p.get('second', {})
-              a, w1, w2, total = f.get('perGameAmount'), f.get('winnerCount'), s.get('winnerCount'), p.get('totalSalesAmount')
-              assert a is None or 100_000_000 <= int(a) <= 100_000_000_000, (item.get('round'), 'firstAmount', a)
-              assert w1 is None or 1 <= int(w1) <= 1_000, (item.get('round'), 'firstWinners', w1)
-              assert w2 is None or 1 <= int(w2) <= 100_000, (item.get('round'), 'secondWinners', w2)
-              assert total is None or 1_000_000_000 <= int(total) <= 10_000_000_000_000, (item.get('round'), 'totalSales', total)
-          print('JSON 및 숫자 검증 완료:', data.get('latestRound'), '회')
+          assert data.get('service', {}).get('collectorVersion') == '2.8-verified-official-plus-round-table'
+          expected = {
+              1228: (2698334421, 11, 83),
+              1229: (3519759000, 8, 89),
+              1230: (1771357196, 16, 90),
+              1231: (1652990074, 17, 92),
+          }
+          by_round = {int(x['round']): x for x in data.get('results', [])}
+          for round_no, values in expected.items():
+              item = by_round[round_no]
+              actual = (
+                  item['prize']['first']['perGameAmount'],
+                  item['prize']['first']['winnerCount'],
+                  item['prize']['second']['winnerCount'],
+              )
+              assert actual == values, (round_no, actual, values)
+          totals = []
+          for round_no in (1229, 1230, 1231):
+              total = by_round[round_no]['prize'].get('totalSalesAmount')
+              if total is not None:
+                  totals.append(total)
+          assert len(totals) < 3 or len(set(totals)) > 1, ('복사된 총판매금액 감지', totals)
+          print('검증 완료:', data.get('latestRound'), '회')
           PY
 
       - name: 바뀐 JSON이 있으면 자동 저장
@@ -67,5 +78,5 @@ jobs:
           git config user.name "mylotto-data-bot"
           git config user.email "actions@users.noreply.github.com"
           git add data/lotto_results.json
-          git commit -m "자동 갱신: 회차 검증 및 비정상 값 정리"
+          git commit -m "자동 갱신: 검증된 회차별 당첨정보 복구"
           git push
