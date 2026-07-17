@@ -12,48 +12,22 @@
       "from": 1,
       "to": 1232
     },
-    "completedRoundCount": 5,
-    "incompleteRoundCount": 1227,
+    "completedRoundCount": 35,
+    "incompleteRoundCount": 1197,
     "collectorVersion": "3.0-gap-repair-pyony-primary",
     "mode": "pyony-primary-with-official-and-newsbrunch-fallback",
     "olderBatchSize": 10,
     "incompleteCursor": 12,
-    "lastRunAt": "2026-07-17T12:35:20+09:00",
+    "lastRunAt": "2026-07-17T12:17:39+09:00",
     "lastBrowserErrors": [],
     "recentBatchSize": 10,
-    "lastErrors": [
-      "1227회 일부 정보 미완성",
-      "1226회 일부 정보 미완성",
-      "1225회 일부 정보 미완성",
-      "1224회 일부 정보 미완성",
-      "1223회 일부 정보 미완성",
-      "1222회 일부 정보 미완성",
-      "1221회 일부 정보 미완성",
-      "1220회 일부 정보 미완성",
-      "1219회 일부 정보 미완성",
-      "1218회 일부 정보 미완성",
-      "1217회 일부 정보 미완성",
-      "1216회 일부 정보 미완성",
-      "1215회 일부 정보 미완성",
-      "1214회 일부 정보 미완성",
-      "1213회 일부 정보 미완성",
-      "1202회 일부 정보 미완성",
-      "1201회 일부 정보 미완성",
-      "1200회 일부 정보 미완성",
-      "1199회 일부 정보 미완성",
-      "1198회 일부 정보 미완성",
-      "1197회 일부 정보 미완성",
-      "1196회 일부 정보 미완성",
-      "1195회 일부 정보 미완성",
-      "1194회 일부 정보 미완성",
-      "1193회 일부 정보 미완성"
-    ],
-    "olderCursor": 20,
+    "lastErrors": [],
+    "olderCursor": 10,
     "missingRoundRepair": "enabled",
     "lastRepairAt": "2026-07-17T12:31:04+09:00"
   },
   "latestRound": 1232,
-  "updatedAt": "2026-07-17T12:35:20+09:00",
+  "updatedAt": "2026-07-17T12:31:04+09:00",
   "results": [
     {
       "round": 1,
@@ -32269,9 +32243,7 @@
       },
       "stores": [],
       "dataSource": {
-        "prize": "pyony-round-page",
-        "winning": "pyony-round-page",
-        "stores": "pending"
+        "prize": "pyony-round-table-verified"
       }
     },
     {
@@ -32300,9 +32272,7 @@
       },
       "stores": [],
       "dataSource": {
-        "prize": "pyony-round-page",
-        "winning": "pyony-round-page",
-        "stores": "pending"
+        "prize": "pyony-round-table-verified"
       }
     },
     {
@@ -32331,9 +32301,7 @@
       },
       "stores": [],
       "dataSource": {
-        "prize": "pyony-round-page",
-        "winning": "pyony-round-page",
-        "stores": "pending"
+        "prize": "pyony-round-table-verified"
       }
     },
     {
@@ -32352,20 +32320,16 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": 2001627550,
-          "winnerCount": 15
+          "perGameAmount": null,
+          "winnerCount": null
         },
         "second": {
-          "winnerCount": 94
+          "winnerCount": null
         },
         "totalSalesAmount": null
       },
       "stores": [],
-      "dataSource": {
-        "winning": "pyony-round-page",
-        "prize": "pyony-round-page",
-        "stores": "pending"
-      }
+      "dataSource": {}
     },
     {
       "round": 1197,
@@ -32383,20 +32347,16 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": 2205089827,
-          "winnerCount": 13
+          "perGameAmount": null,
+          "winnerCount": null
         },
         "second": {
-          "winnerCount": 74
+          "winnerCount": null
         },
         "totalSalesAmount": null
       },
       "stores": [],
-      "dataSource": {
-        "winning": "pyony-round-page",
-        "prize": "pyony-round-page",
-        "stores": "pending"
-      }
+      "dataSource": {}
     },
     {
       "round": 1198,
@@ -32414,20 +32374,16 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": 2953686638,
-          "winnerCount": 10
+          "perGameAmount": null,
+          "winnerCount": null
         },
         "second": {
-          "winnerCount": 78
+          "winnerCount": null
         },
         "totalSalesAmount": null
       },
       "stores": [],
-      "dataSource": {
-        "winning": "pyony-round-page",
-        "prize": "pyony-round-page",
-        "stores": "pending"
-      }
+      "dataSource": {}
     },
     {
       "round": 1199,
@@ -32445,20 +32401,16 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": 1695609839,
-          "winnerCount": 17
+          "perGameAmount": null,
+          "winnerCount": null
         },
         "second": {
-          "winnerCount": 75
+          "winnerCount": null
         },
         "totalSalesAmount": null
       },
       "stores": [],
-      "dataSource": {
-        "winning": "pyony-round-page",
-        "prize": "pyony-round-page",
-        "stores": "pending"
-      }
+      "dataSource": {}
     },
     {
       "round": 1200,
@@ -32476,20 +32428,16 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": 2357299875,
-          "winnerCount": 12
+          "perGameAmount": null,
+          "winnerCount": null
         },
         "second": {
-          "winnerCount": 80
+          "winnerCount": null
         },
         "totalSalesAmount": null
       },
       "stores": [],
-      "dataSource": {
-        "winning": "pyony-round-page",
-        "prize": "pyony-round-page",
-        "stores": "pending"
-      }
+      "dataSource": {}
     },
     {
       "round": 1201,
@@ -32507,20 +32455,16 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": 1414555718,
-          "winnerCount": 19
+          "perGameAmount": null,
+          "winnerCount": null
         },
         "second": {
-          "winnerCount": 84
+          "winnerCount": null
         },
         "totalSalesAmount": null
       },
       "stores": [],
-      "dataSource": {
-        "winning": "pyony-round-page",
-        "prize": "pyony-round-page",
-        "stores": "pending"
-      }
+      "dataSource": {}
     },
     {
       "round": 1202,
@@ -32538,20 +32482,16 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": 1920410813,
-          "winnerCount": 14
+          "perGameAmount": null,
+          "winnerCount": null
         },
         "second": {
-          "winnerCount": 109
+          "winnerCount": null
         },
         "totalSalesAmount": null
       },
       "stores": [],
-      "dataSource": {
-        "winning": "pyony-round-page",
-        "prize": "pyony-round-page",
-        "stores": "pending"
-      }
+      "dataSource": {}
     },
     {
       "round": 1203,
@@ -32970,10 +32910,8 @@
         }
       ],
       "dataSource": {
-        "prize": "pyony-round-page",
-        "rankTable": "pyony-round-page",
-        "winning": "pyony-round-page",
-        "stores": "pending"
+        "prize": "pyony-round-table-verified",
+        "rankTable": "pyony-round-page"
       }
     },
     {
@@ -33058,10 +32996,8 @@
         }
       ],
       "dataSource": {
-        "prize": "pyony-round-page",
-        "rankTable": "pyony-round-page",
-        "winning": "pyony-round-page",
-        "stores": "pending"
+        "prize": "pyony-round-table-verified",
+        "rankTable": "pyony-round-page"
       }
     },
     {
@@ -33090,8 +33026,8 @@
       },
       "stores": [],
       "dataSource": {
-        "winning": "pyony-round-page",
-        "prize": "pyony-round-page",
+        "winning": "verified-pyony",
+        "prize": "verified-pyony",
         "totalSales": "verified-public-report",
         "stores": "pending-auto-collection"
       }
@@ -33122,8 +33058,8 @@
       },
       "stores": [],
       "dataSource": {
-        "winning": "pyony-round-page",
-        "prize": "pyony-round-page",
+        "winning": "verified-pyony",
+        "prize": "verified-pyony",
         "totalSales": "verified-public-report",
         "stores": "pending-auto-collection"
       }
@@ -33154,8 +33090,8 @@
       },
       "stores": [],
       "dataSource": {
-        "winning": "pyony-round-page",
-        "prize": "pyony-round-page",
+        "winning": "verified-pyony",
+        "prize": "verified-pyony",
         "totalSales": "verified-public-report",
         "stores": "pending-auto-collection"
       }
@@ -33186,8 +33122,8 @@
       },
       "stores": [],
       "dataSource": {
-        "winning": "pyony-round-page",
-        "prize": "pyony-round-page",
+        "winning": "verified-pyony",
+        "prize": "verified-pyony",
         "totalSales": "verified-public-report",
         "stores": "pending-auto-collection"
       }
@@ -33218,8 +33154,8 @@
       },
       "stores": [],
       "dataSource": {
-        "winning": "pyony-round-page",
-        "prize": "pyony-round-page",
+        "winning": "verified-pyony",
+        "prize": "verified-pyony",
         "totalSales": "verified-public-report",
         "stores": "pending-auto-collection"
       }
@@ -33250,8 +33186,8 @@
       },
       "stores": [],
       "dataSource": {
-        "winning": "pyony-round-page",
-        "prize": "pyony-round-page",
+        "winning": "verified-pyony",
+        "prize": "verified-pyony",
         "totalSales": "verified-public-report",
         "stores": "pending-auto-collection"
       }
@@ -33282,8 +33218,8 @@
       },
       "stores": [],
       "dataSource": {
-        "winning": "pyony-round-page",
-        "prize": "pyony-round-page",
+        "winning": "verified-pyony",
+        "prize": "verified-pyony",
         "totalSales": "verified-public-report",
         "stores": "pending-auto-collection"
       }
@@ -33314,8 +33250,8 @@
       },
       "stores": [],
       "dataSource": {
-        "winning": "pyony-round-page",
-        "prize": "pyony-round-page",
+        "winning": "verified-pyony",
+        "prize": "verified-pyony",
         "totalSales": "verified-public-report",
         "stores": "pending-auto-collection"
       }
@@ -33346,8 +33282,8 @@
       },
       "stores": [],
       "dataSource": {
-        "winning": "pyony-round-page",
-        "prize": "pyony-round-page",
+        "winning": "verified-pyony",
+        "prize": "verified-pyony",
         "totalSales": "verified-public-report",
         "stores": "pending-auto-collection"
       }
@@ -33378,8 +33314,8 @@
       },
       "stores": [],
       "dataSource": {
-        "winning": "pyony-round-page",
-        "prize": "pyony-round-page",
+        "winning": "verified-pyony",
+        "prize": "verified-pyony",
         "totalSales": "verified-public-report",
         "stores": "pending-auto-collection"
       }
@@ -33410,8 +33346,8 @@
       },
       "stores": [],
       "dataSource": {
-        "winning": "pyony-round-page",
-        "prize": "pyony-round-page",
+        "winning": "verified-pyony",
+        "prize": "verified-pyony",
         "totalSales": "verified-public-report",
         "stores": "pending-auto-collection"
       }
@@ -33442,8 +33378,8 @@
       },
       "stores": [],
       "dataSource": {
-        "winning": "pyony-round-page",
-        "prize": "pyony-round-page",
+        "winning": "verified-pyony",
+        "prize": "verified-pyony",
         "totalSales": "verified-public-report",
         "stores": "pending-auto-collection"
       }
@@ -33474,8 +33410,8 @@
       },
       "stores": [],
       "dataSource": {
-        "winning": "pyony-round-page",
-        "prize": "pyony-round-page",
+        "winning": "verified-pyony",
+        "prize": "verified-pyony",
         "totalSales": "verified-public-report",
         "stores": "pending-auto-collection"
       }
