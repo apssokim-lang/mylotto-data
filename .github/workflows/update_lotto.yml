@@ -1,18 +1,65 @@
-      - name: JSON 및 최근 회차 회귀 검사
+name: 로또 통합 데이터 자동 업데이트
+
+on:
+  workflow_dispatch:
+  schedule:
+    # UTC 기준: 한국시간 매일 03:20, 09:20, 15:20, 21:20
+    - cron: "20 0,6,12,18 * * *"
+    # 한국시간 토요일 추첨 후 추가 확인
+    - cron: "10,40 12 * * 6"
+    - cron: "10 13 * * 6"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: lotto-data-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    name: update
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: 저장소 파일 불러오기
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Python 준비
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 필요한 도구 설치
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: 검증된 회차별 데이터 갱신
+        run: |
+          python scripts/update_lotto.py
+
+      - name: JSON 기본 구조 검사
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
 
           path = Path("data/lotto_results.json")
-          data = json.loads(path.read_text(encoding="utf-8"))
+          if not path.exists():
+              raise SystemExit("ERROR: data/lotto_results.json 파일이 없습니다.")
 
-          results = data.get("results", [])
+          data = json.loads(path.read_text(encoding="utf-8"))
+          results = data.get("results")
+
           if not isinstance(results, list):
               raise SystemExit("ERROR: results가 배열 형식이 아닙니다.")
 
-          by_round = {}
-
+          valid_rounds = {}
           for item in results:
               if not isinstance(item, dict):
                   continue
@@ -22,43 +69,71 @@
               except (TypeError, ValueError):
                   continue
 
-              by_round[round_no] = item
-
-          if not by_round:
-              raise SystemExit("ERROR: 유효한 회차 데이터가 없습니다.")
-
-          required_rounds = [1228, 1229, 1230, 1231]
-
-          for round_no in required_rounds:
-              item = by_round.get(round_no)
-
-              if item is None:
-                  print(f"WARNING: {round_no}회가 JSON에 없어 검사를 건너뜁니다.")
+              if round_no <= 0:
                   continue
+
+              winning = item.get("winning")
+              if isinstance(winning, dict):
+                  numbers = winning.get("numbers")
+                  bonus = winning.get("bonus")
+              else:
+                  numbers = item.get("numbers")
+                  bonus = item.get("bonus")
+
+              if not isinstance(numbers, list) or len(numbers) != 6:
+                  raise SystemExit(
+                      f"ERROR: {round_no}회 당첨번호가 6개가 아닙니다: {numbers}"
+                  )
+
+              try:
+                  normalized = [int(value) for value in numbers]
+                  normalized_bonus = int(bonus)
+              except (TypeError, ValueError):
+                  raise SystemExit(
+                      f"ERROR: {round_no}회 당첨번호 또는 보너스가 숫자가 아닙니다."
+                  )
+
+              if len(set(normalized)) != 6:
+                  raise SystemExit(f"ERROR: {round_no}회 당첨번호가 중복됐습니다.")
+
+              if any(value < 1 or value > 45 for value in normalized):
+                  raise SystemExit(
+                      f"ERROR: {round_no}회 당첨번호 범위가 잘못됐습니다."
+                  )
+
+              if normalized_bonus < 1 or normalized_bonus > 45:
+                  raise SystemExit(
+                      f"ERROR: {round_no}회 보너스 번호 범위가 잘못됐습니다."
+                  )
+
+              if normalized_bonus in normalized:
+                  raise SystemExit(
+                      f"ERROR: {round_no}회 보너스 번호가 당첨번호와 겹칩니다."
+                  )
 
               prize = item.get("prize") or {}
               first = prize.get("first") or {}
               second = prize.get("second") or {}
 
-              first_amount = first.get("perGameAmount")
-              first_count = first.get("winnerCount")
-              second_count = second.get("winnerCount")
-              total_sales = prize.get("totalSalesAmount")
-
-              numeric_values = {
-                  "1등 당첨금": first_amount,
-                  "1등 게임 수": first_count,
-                  "2등 게임 수": second_count,
-                  "총 판매금액": total_sales,
+              checks = {
+                  "1등 당첨금": first.get("perGameAmount"),
+                  "1등 게임 수": first.get("winnerCount"),
+                  "2등 게임 수": second.get("winnerCount"),
+                  "총 판매금액": prize.get("totalSalesAmount"),
               }
 
-              for label, value in numeric_values.items():
-                  if value is not None and (
-                      isinstance(value, bool) or not isinstance(value, int)
-                  ):
+              for label, value in checks.items():
+                  if value is None:
+                      continue
+                  if isinstance(value, bool) or not isinstance(value, int):
                       raise SystemExit(
-                          f"ERROR: {round_no}회 {label} 값이 숫자가 아닙니다: {value}"
+                          f"ERROR: {round_no}회 {label} 값이 정수가 아닙니다: {value}"
                       )
+
+              first_amount = checks["1등 당첨금"]
+              first_count = checks["1등 게임 수"]
+              second_count = checks["2등 게임 수"]
+              total_sales = checks["총 판매금액"]
 
               if first_amount is not None and not 100_000_000 <= first_amount <= 10_000_000_000:
                   raise SystemExit(
@@ -70,7 +145,7 @@
                       f"ERROR: {round_no}회 1등 게임 수가 비정상입니다: {first_count}"
                   )
 
-              if second_count is not None and not 1 <= second_count <= 1000:
+              if second_count is not None and not 1 <= second_count <= 2000:
                   raise SystemExit(
                       f"ERROR: {round_no}회 2등 게임 수가 비정상입니다: {second_count}"
                   )
@@ -80,11 +155,40 @@
                       f"ERROR: {round_no}회 총 판매금액이 비정상입니다: {total_sales}"
                   )
 
-              print(f"OK: {round_no}회 데이터 구조 및 값 검사 완료")
+              valid_rounds[round_no] = item
 
-          service = data.get("service")
-          if not isinstance(service, dict):
-              data["service"] = {}
+          if not valid_rounds:
+              raise SystemExit("ERROR: 유효한 회차 데이터가 없습니다.")
 
-          print(f"OK: 총 {len(by_round)}개 회차 JSON 검사 완료")
+          latest_round = data.get("latestRound")
+          if latest_round is not None:
+              try:
+                  latest_round = int(latest_round)
+              except (TypeError, ValueError):
+                  raise SystemExit("ERROR: latestRound가 숫자가 아닙니다.")
+
+              if latest_round not in valid_rounds:
+                  raise SystemExit(
+                      f"ERROR: latestRound {latest_round}회가 results에 없습니다."
+                  )
+
+          print(
+              f"OK: JSON 기본 구조 검사 완료 "
+              f"(총 {len(valid_rounds)}개 회차, 최신 {max(valid_rounds)}회)"
+          )
           PY
+
+      - name: 바뀐 JSON이 있으면 자동 저장
+        shell: bash
+        run: |
+          if git diff --quiet -- data/lotto_results.json; then
+            echo "새로 저장할 변경사항이 없습니다."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add data/lotto_results.json
+          git commit -m "자동 업데이트: 로또 통합 데이터"
+          git push
