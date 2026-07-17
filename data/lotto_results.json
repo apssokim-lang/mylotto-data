@@ -6,7 +6,7 @@
     "generatedAt": "2026-07-16T16:49:27+09:00",
     "backfillMode": "recent-priority-incremental",
     "backfillBatchSize": 5,
-    "recentPriorityCount": 30,
+    "recentPriorityCount": 20,
     "backfillCursor": 96,
     "backfillRange": {
       "from": 1,
@@ -14,17 +14,35 @@
     },
     "completedRoundCount": 0,
     "incompleteRoundCount": 1218,
-    "collectorVersion": "2.8-verified-official-plus-round-table",
-    "mode": "official-json-and-verified-server-rendered-round-table",
-    "olderBatchSize": 5,
+    "collectorVersion": "2.9-official-fallback-robust-rank-parser",
+    "mode": "official-json-plus-round-page",
+    "olderBatchSize": 10,
     "incompleteCursor": 12,
-    "lastRunAt": "2026-07-17T12:07:03+09:00",
+    "lastRunAt": "2026-07-17T12:17:39+09:00",
     "lastBrowserErrors": [],
     "recentBatchSize": 10,
-    "lastErrors": []
+    "lastErrors": [
+      "1232회 일부 정보 미완성",
+      "1231회 일부 정보 미완성",
+      "1230회 일부 정보 미완성",
+      "1229회 일부 정보 미완성",
+      "1214회 일부 정보 미완성",
+      "1213회 일부 정보 미완성",
+      "1212회 일부 정보 미완성",
+      "1211회 일부 정보 미완성",
+      "1210회 일부 정보 미완성",
+      "1209회 일부 정보 미완성",
+      "1208회 일부 정보 미완성",
+      "1207회 일부 정보 미완성",
+      "1206회 일부 정보 미완성",
+      "1205회 일부 정보 미완성",
+      "1204회 일부 정보 미완성",
+      "1203회 일부 정보 미완성"
+    ],
+    "olderCursor": 10
   },
   "latestRound": 1232,
-  "updatedAt": "2026-07-17T12:07:03+09:00",
+  "updatedAt": "2026-07-17T12:17:39+09:00",
   "results": [
     {
       "round": 1,
@@ -32516,7 +32534,8 @@
       },
       "stores": [],
       "dataSource": {
-        "prize": "pyony-round-table-verified"
+        "prize": "pyony-round-table-verified",
+        "rankTable": "pyony-round-page"
       }
     },
     {
@@ -32545,7 +32564,8 @@
       },
       "stores": [],
       "dataSource": {
-        "prize": "pyony-round-table-verified"
+        "prize": "pyony-round-table-verified",
+        "rankTable": "pyony-round-page"
       }
     },
     {
@@ -32574,7 +32594,8 @@
       },
       "stores": [],
       "dataSource": {
-        "prize": "pyony-round-table-verified"
+        "prize": "pyony-round-table-verified",
+        "rankTable": "pyony-round-page"
       }
     },
     {
@@ -32603,7 +32624,8 @@
       },
       "stores": [],
       "dataSource": {
-        "prize": "pyony-round-table-verified"
+        "prize": "pyony-round-table-verified",
+        "rankTable": "pyony-round-page"
       }
     },
     {
@@ -32632,7 +32654,8 @@
       },
       "stores": [],
       "dataSource": {
-        "prize": "pyony-round-table-verified"
+        "prize": "pyony-round-table-verified",
+        "rankTable": "pyony-round-page"
       }
     },
     {
@@ -32661,7 +32684,8 @@
       },
       "stores": [],
       "dataSource": {
-        "prize": "pyony-round-table-verified"
+        "prize": "pyony-round-table-verified",
+        "rankTable": "pyony-round-page"
       }
     },
     {
@@ -32690,7 +32714,8 @@
       },
       "stores": [],
       "dataSource": {
-        "prize": "pyony-round-table-verified"
+        "prize": "pyony-round-table-verified",
+        "rankTable": "pyony-round-page"
       }
     },
     {
@@ -32719,7 +32744,8 @@
       },
       "stores": [],
       "dataSource": {
-        "prize": "pyony-round-table-verified"
+        "prize": "pyony-round-table-verified",
+        "rankTable": "pyony-round-page"
       }
     },
     {
@@ -32748,7 +32774,8 @@
       },
       "stores": [],
       "dataSource": {
-        "prize": "pyony-round-table-verified"
+        "prize": "pyony-round-table-verified",
+        "rankTable": "pyony-round-page"
       }
     },
     {
@@ -32777,7 +32804,8 @@
       },
       "stores": [],
       "dataSource": {
-        "prize": "pyony-round-table-verified"
+        "prize": "pyony-round-table-verified",
+        "rankTable": "pyony-round-page"
       }
     },
     {
@@ -32897,7 +32925,8 @@
         }
       ],
       "dataSource": {
-        "prize": "pyony-round-table-verified"
+        "prize": "pyony-round-table-verified",
+        "rankTable": "pyony-round-page"
       }
     },
     {
@@ -32982,7 +33011,8 @@
         }
       ],
       "dataSource": {
-        "prize": "pyony-round-table-verified"
+        "prize": "pyony-round-table-verified",
+        "rankTable": "pyony-round-page"
       }
     },
     {
@@ -33052,7 +33082,8 @@
         }
       ],
       "dataSource": {
-        "prize": "pyony-round-table-verified"
+        "prize": "pyony-round-table-verified",
+        "rankTable": "pyony-round-page"
       }
     },
     {
@@ -33162,7 +33193,8 @@
         }
       ],
       "dataSource": {
-        "prize": "pyony-round-table-verified"
+        "prize": "pyony-round-table-verified",
+        "rankTable": "pyony-round-page"
       }
     },
     {
@@ -33277,7 +33309,8 @@
         }
       ],
       "dataSource": {
-        "prize": "pyony-round-table-verified"
+        "prize": "pyony-round-table-verified",
+        "rankTable": "pyony-round-page"
       }
     },
     {
@@ -33362,7 +33395,8 @@
         }
       ],
       "dataSource": {
-        "prize": "pyony-round-table-verified"
+        "prize": "pyony-round-table-verified",
+        "rankTable": "pyony-round-page"
       }
     }
   ]
