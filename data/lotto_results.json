@@ -12,37 +12,22 @@
       "from": 1,
       "to": 1232
     },
-    "completedRoundCount": 0,
-    "incompleteRoundCount": 1218,
-    "collectorVersion": "2.9-official-fallback-robust-rank-parser",
-    "mode": "official-json-plus-round-page",
+    "completedRoundCount": 35,
+    "incompleteRoundCount": 1197,
+    "collectorVersion": "3.0-gap-repair-pyony-primary",
+    "mode": "pyony-primary-with-official-and-newsbrunch-fallback",
     "olderBatchSize": 10,
     "incompleteCursor": 12,
     "lastRunAt": "2026-07-17T12:17:39+09:00",
     "lastBrowserErrors": [],
     "recentBatchSize": 10,
-    "lastErrors": [
-      "1232회 일부 정보 미완성",
-      "1231회 일부 정보 미완성",
-      "1230회 일부 정보 미완성",
-      "1229회 일부 정보 미완성",
-      "1214회 일부 정보 미완성",
-      "1213회 일부 정보 미완성",
-      "1212회 일부 정보 미완성",
-      "1211회 일부 정보 미완성",
-      "1210회 일부 정보 미완성",
-      "1209회 일부 정보 미완성",
-      "1208회 일부 정보 미완성",
-      "1207회 일부 정보 미완성",
-      "1206회 일부 정보 미완성",
-      "1205회 일부 정보 미완성",
-      "1204회 일부 정보 미완성",
-      "1203회 일부 정보 미완성"
-    ],
-    "olderCursor": 10
+    "lastErrors": [],
+    "olderCursor": 10,
+    "missingRoundRepair": "enabled",
+    "lastRepairAt": "2026-07-17T12:31:04+09:00"
   },
   "latestRound": 1232,
-  "updatedAt": "2026-07-17T12:17:39+09:00",
+  "updatedAt": "2026-07-17T12:31:04+09:00",
   "results": [
     {
       "round": 1,
@@ -33016,6 +33001,510 @@
       }
     },
     {
+      "round": 1215,
+      "date": "2026-03-14",
+      "winning": {
+        "numbers": [
+          13,
+          15,
+          19,
+          21,
+          44,
+          45
+        ],
+        "bonus": 39
+      },
+      "prize": {
+        "first": {
+          "perGameAmount": 1998542133,
+          "winnerCount": 16
+        },
+        "second": {
+          "winnerCount": 76
+        },
+        "totalSalesAmount": 126977101000
+      },
+      "stores": [],
+      "dataSource": {
+        "winning": "verified-pyony",
+        "prize": "verified-pyony",
+        "totalSales": "verified-public-report",
+        "stores": "pending-auto-collection"
+      }
+    },
+    {
+      "round": 1216,
+      "date": "2026-03-21",
+      "winning": {
+        "numbers": [
+          3,
+          10,
+          14,
+          15,
+          23,
+          24
+        ],
+        "bonus": 25
+      },
+      "prize": {
+        "first": {
+          "perGameAmount": 2148654000,
+          "winnerCount": 14
+        },
+        "second": {
+          "winnerCount": 87
+        },
+        "totalSalesAmount": 125556526000
+      },
+      "stores": [],
+      "dataSource": {
+        "winning": "verified-pyony",
+        "prize": "verified-pyony",
+        "totalSales": "verified-public-report",
+        "stores": "pending-auto-collection"
+      }
+    },
+    {
+      "round": 1217,
+      "date": "2026-03-28",
+      "winning": {
+        "numbers": [
+          8,
+          10,
+          15,
+          20,
+          29,
+          31
+        ],
+        "bonus": 41
+      },
+      "prize": {
+        "first": {
+          "perGameAmount": 2179738018,
+          "winnerCount": 14
+        },
+        "second": {
+          "winnerCount": 85
+        },
+        "totalSalesAmount": 125155256000
+      },
+      "stores": [],
+      "dataSource": {
+        "winning": "verified-pyony",
+        "prize": "verified-pyony",
+        "totalSales": "verified-public-report",
+        "stores": "pending-auto-collection"
+      }
+    },
+    {
+      "round": 1218,
+      "date": "2026-04-04",
+      "winning": {
+        "numbers": [
+          3,
+          28,
+          31,
+          32,
+          42,
+          45
+        ],
+        "bonus": 25
+      },
+      "prize": {
+        "first": {
+          "perGameAmount": 1714482042,
+          "winnerCount": 18
+        },
+        "second": {
+          "winnerCount": 80
+        },
+        "totalSalesAmount": 123335928000
+      },
+      "stores": [],
+      "dataSource": {
+        "winning": "verified-pyony",
+        "prize": "verified-pyony",
+        "totalSales": "verified-public-report",
+        "stores": "pending-auto-collection"
+      }
+    },
+    {
+      "round": 1219,
+      "date": "2026-04-11",
+      "winning": {
+        "numbers": [
+          1,
+          2,
+          15,
+          28,
+          39,
+          45
+        ],
+        "bonus": 31
+      },
+      "prize": {
+        "first": {
+          "perGameAmount": 2508232844,
+          "winnerCount": 12
+        },
+        "second": {
+          "winnerCount": 77
+        },
+        "totalSalesAmount": 120945801000
+      },
+      "stores": [],
+      "dataSource": {
+        "winning": "verified-pyony",
+        "prize": "verified-pyony",
+        "totalSales": "verified-public-report",
+        "stores": "pending-auto-collection"
+      }
+    },
+    {
+      "round": 1220,
+      "date": "2026-04-18",
+      "winning": {
+        "numbers": [
+          2,
+          22,
+          25,
+          28,
+          34,
+          43
+        ],
+        "bonus": 16
+      },
+      "prize": {
+        "first": {
+          "perGameAmount": 2114514161,
+          "winnerCount": 14
+        },
+        "second": {
+          "winnerCount": 85
+        },
+        "totalSalesAmount": 121958822000
+      },
+      "stores": [],
+      "dataSource": {
+        "winning": "verified-pyony",
+        "prize": "verified-pyony",
+        "totalSales": "verified-public-report",
+        "stores": "pending-auto-collection"
+      }
+    },
+    {
+      "round": 1221,
+      "date": "2026-04-25",
+      "winning": {
+        "numbers": [
+          6,
+          13,
+          18,
+          28,
+          30,
+          36
+        ],
+        "bonus": 9
+      },
+      "prize": {
+        "first": {
+          "perGameAmount": 1830801165,
+          "winnerCount": 16
+        },
+        "second": {
+          "winnerCount": 96
+        },
+        "totalSalesAmount": 122979623000
+      },
+      "stores": [],
+      "dataSource": {
+        "winning": "verified-pyony",
+        "prize": "verified-pyony",
+        "totalSales": "verified-public-report",
+        "stores": "pending-auto-collection"
+      }
+    },
+    {
+      "round": 1222,
+      "date": "2026-05-02",
+      "winning": {
+        "numbers": [
+          4,
+          11,
+          17,
+          22,
+          32,
+          41
+        ],
+        "bonus": 34
+      },
+      "prize": {
+        "first": {
+          "perGameAmount": 1202986844,
+          "winnerCount": 24
+        },
+        "second": {
+          "winnerCount": 115
+        },
+        "totalSalesAmount": 124243558000
+      },
+      "stores": [],
+      "dataSource": {
+        "winning": "verified-pyony",
+        "prize": "verified-pyony",
+        "totalSales": "verified-public-report",
+        "stores": "pending-auto-collection"
+      }
+    },
+    {
+      "round": 1223,
+      "date": "2026-05-09",
+      "winning": {
+        "numbers": [
+          16,
+          18,
+          20,
+          32,
+          33,
+          39
+        ],
+        "bonus": 26
+      },
+      "prize": {
+        "first": {
+          "perGameAmount": 1857554133,
+          "winnerCount": 16
+        },
+        "second": {
+          "winnerCount": 103
+        },
+        "totalSalesAmount": 122621163000
+      },
+      "stores": [],
+      "dataSource": {
+        "winning": "verified-pyony",
+        "prize": "verified-pyony",
+        "totalSales": "verified-public-report",
+        "stores": "pending-auto-collection"
+      }
+    },
+    {
+      "round": 1224,
+      "date": "2026-05-16",
+      "winning": {
+        "numbers": [
+          9,
+          18,
+          21,
+          27,
+          44,
+          45
+        ],
+        "bonus": 28
+      },
+      "prize": {
+        "first": {
+          "perGameAmount": 2414855250,
+          "winnerCount": 12
+        },
+        "second": {
+          "winnerCount": 70
+        },
+        "totalSalesAmount": 121110408000
+      },
+      "stores": [],
+      "dataSource": {
+        "winning": "verified-pyony",
+        "prize": "verified-pyony",
+        "totalSales": "verified-public-report",
+        "stores": "pending-auto-collection"
+      }
+    },
+    {
+      "round": 1225,
+      "date": "2026-05-23",
+      "winning": {
+        "numbers": [
+          8,
+          9,
+          19,
+          25,
+          41,
+          42
+        ],
+        "bonus": 33
+      },
+      "prize": {
+        "first": {
+          "perGameAmount": 2228133087,
+          "winnerCount": 13
+        },
+        "second": {
+          "winnerCount": 76
+        },
+        "totalSalesAmount": 120402887000
+      },
+      "stores": [],
+      "dataSource": {
+        "winning": "verified-pyony",
+        "prize": "verified-pyony",
+        "totalSales": "verified-public-report",
+        "stores": "pending-auto-collection"
+      }
+    },
+    {
+      "round": 1226,
+      "date": "2026-05-30",
+      "winning": {
+        "numbers": [
+          4,
+          6,
+          13,
+          17,
+          26,
+          28
+        ],
+        "bonus": 41
+      },
+      "prize": {
+        "first": {
+          "perGameAmount": 2815230113,
+          "winnerCount": 10
+        },
+        "second": {
+          "winnerCount": 75
+        },
+        "totalSalesAmount": 120259943000
+      },
+      "stores": [],
+      "dataSource": {
+        "winning": "verified-pyony",
+        "prize": "verified-pyony",
+        "totalSales": "verified-public-report",
+        "stores": "pending-auto-collection"
+      }
+    },
+    {
+      "round": 1227,
+      "date": "2026-06-06",
+      "winning": {
+        "numbers": [
+          1,
+          14,
+          16,
+          34,
+          41,
+          44
+        ],
+        "bonus": 13
+      },
+      "prize": {
+        "first": {
+          "perGameAmount": 2674808455,
+          "winnerCount": 11
+        },
+        "second": {
+          "winnerCount": 70
+        },
+        "totalSalesAmount": 118882558000
+      },
+      "stores": [],
+      "dataSource": {
+        "winning": "verified-pyony",
+        "prize": "verified-pyony",
+        "totalSales": "verified-public-report",
+        "stores": "pending-auto-collection"
+      }
+    },
+    {
+      "round": 1228,
+      "date": "2026-06-13",
+      "winning": {
+        "numbers": [
+          24,
+          29,
+          30,
+          31,
+          35,
+          44
+        ],
+        "bonus": 1
+      },
+      "prize": {
+        "first": {
+          "perGameAmount": 2698334421,
+          "winnerCount": 11
+        },
+        "second": {
+          "winnerCount": 83
+        },
+        "totalSalesAmount": 119052273000
+      },
+      "stores": [
+        {
+          "name": "감만정보통신",
+          "method": "자동",
+          "address": "부산 남구 우암로 150 복권판매점"
+        },
+        {
+          "name": "일등복권방",
+          "method": "자동",
+          "address": "부산 남구 고동골로 3"
+        },
+        {
+          "name": "나라복권",
+          "method": "자동",
+          "address": "인천 남동구 인주대로676번길 22 상가동 101호"
+        },
+        {
+          "name": "복돼지복권방",
+          "method": "자동",
+          "address": "경기 화성시 3.1만세로 43"
+        },
+        {
+          "name": "바른",
+          "method": "자동",
+          "address": "경기 하남시 신장로 68"
+        },
+        {
+          "name": "돈벼락",
+          "method": "자동",
+          "address": "경기 군포시 금당로 112 101호(당동)"
+        },
+        {
+          "name": "이마트24 백석동문점",
+          "method": "자동",
+          "address": "경기 고양시 일산동구 호수로 358-26 1층 편의점"
+        },
+        {
+          "name": "중앙복권방",
+          "method": "수동",
+          "address": "충북 청주시 청원구 율량로189번길 25"
+        },
+        {
+          "name": "복권나라",
+          "method": "자동",
+          "address": "전남 여수시 중앙로 62 1층"
+        },
+        {
+          "name": "동네복권",
+          "method": "자동",
+          "address": "경북 울진군 울진중앙로 27 1층"
+        },
+        {
+          "name": "로또명당",
+          "method": "자동",
+          "address": "경남 하동군 진교중앙길 22"
+        }
+      ],
+      "dataSource": {
+        "winning": "verified-pyony",
+        "prize": "verified-pyony",
+        "totalSales": "verified-public-report",
+        "stores": "verified-pyony"
+      }
+    },
+    {
       "round": 1229,
       "date": "2026-06-20",
       "winning": {
@@ -33037,7 +33526,7 @@
         "second": {
           "winnerCount": 89
         },
-        "totalSalesAmount": null
+        "totalSalesAmount": 116155532000
       },
       "stores": [
         {
@@ -33083,7 +33572,8 @@
       ],
       "dataSource": {
         "prize": "pyony-round-table-verified",
-        "rankTable": "pyony-round-page"
+        "rankTable": "pyony-round-page",
+        "totalSales": "verified-public-report"
       }
     },
     {
@@ -33108,7 +33598,7 @@
         "second": {
           "winnerCount": 90
         },
-        "totalSalesAmount": null
+        "totalSalesAmount": 120177677000
       },
       "stores": [
         {
@@ -33194,7 +33684,8 @@
       ],
       "dataSource": {
         "prize": "pyony-round-table-verified",
-        "rankTable": "pyony-round-page"
+        "rankTable": "pyony-round-page",
+        "totalSales": "verified-public-report"
       }
     },
     {
@@ -33219,7 +33710,7 @@
         "second": {
           "winnerCount": 92
         },
-        "totalSalesAmount": null
+        "totalSalesAmount": 118084580000
       },
       "stores": [
         {
@@ -33310,7 +33801,8 @@
       ],
       "dataSource": {
         "prize": "pyony-round-table-verified",
-        "rankTable": "pyony-round-page"
+        "rankTable": "pyony-round-page",
+        "totalSales": "verified-public-report"
       }
     },
     {
@@ -33335,7 +33827,7 @@
         "second": {
           "winnerCount": 92
         },
-        "totalSalesAmount": null
+        "totalSalesAmount": 114636304000
       },
       "stores": [
         {
@@ -33396,7 +33888,8 @@
       ],
       "dataSource": {
         "prize": "pyony-round-table-verified",
-        "rankTable": "pyony-round-page"
+        "rankTable": "pyony-round-page",
+        "totalSales": "verified-public-report"
       }
     }
   ]
