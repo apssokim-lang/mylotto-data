@@ -18,7 +18,7 @@
     "mode": "official-first-pyony-enrichment",
     "olderBatchSize": 10,
     "incompleteCursor": 12,
-    "lastRunAt": "2026-07-18T16:00:25+09:00",
+    "lastRunAt": "2026-07-18T16:13:14+09:00",
     "lastBrowserErrors": [],
     "recentBatchSize": 10,
     "lastErrors": [
@@ -30,15 +30,15 @@
     "lastRepairAt": "2026-07-17T12:31:04+09:00",
     "newRoundUpdate": "official-json-immediate",
     "coreBackfillBatchSize": 30,
-    "coreBackfillCursorRound": 1032,
+    "coreBackfillCursorRound": 1002,
     "storeBackfillBatchSize": 5,
-    "storeBackfillCursorRound": 1182,
+    "storeBackfillCursorRound": 1177,
     "completedCoreRoundCount": 18,
     "incompleteCoreRoundCount": 1214,
     "completedStoreRoundCount": 7
   },
   "latestRound": 1232,
-  "updatedAt": "2026-07-18T16:00:25+09:00",
+  "updatedAt": "2026-07-18T16:13:14+09:00",
   "results": [
     {
       "round": 1,
@@ -27110,16 +27110,21 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
-          "winnerCount": null
+          "perGameAmount": 1811116822,
+          "winnerCount": 14
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 66
         },
         "totalSalesAmount": null
       },
       "stores": [],
-      "dataSource": {}
+      "dataSource": {
+        "winning": "pyony-round-page",
+        "firstPrize": "pyony-round-page",
+        "firstWinnerCount": "pyony-round-page",
+        "secondWinnerCount": "pyony-round-page"
+      }
     },
     {
       "round": 1004,
@@ -27137,16 +27142,21 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
-          "winnerCount": null
+          "perGameAmount": 2576251913,
+          "winnerCount": 10
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 68
         },
         "totalSalesAmount": null
       },
       "stores": [],
-      "dataSource": {}
+      "dataSource": {
+        "winning": "pyony-round-page",
+        "firstPrize": "pyony-round-page",
+        "firstWinnerCount": "pyony-round-page",
+        "secondWinnerCount": "pyony-round-page"
+      }
     },
     {
       "round": 1005,
@@ -27164,16 +27174,21 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
-          "winnerCount": null
+          "perGameAmount": 2061199344,
+          "winnerCount": 12
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 84
         },
         "totalSalesAmount": null
       },
       "stores": [],
-      "dataSource": {}
+      "dataSource": {
+        "winning": "pyony-round-page",
+        "firstPrize": "pyony-round-page",
+        "firstWinnerCount": "pyony-round-page",
+        "secondWinnerCount": "pyony-round-page"
+      }
     },
     {
       "round": 1006,
@@ -27191,16 +27206,21 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
-          "winnerCount": null
+          "perGameAmount": 2855602125,
+          "winnerCount": 9
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 65
         },
         "totalSalesAmount": null
       },
       "stores": [],
-      "dataSource": {}
+      "dataSource": {
+        "winning": "pyony-round-page",
+        "firstPrize": "pyony-round-page",
+        "firstWinnerCount": "pyony-round-page",
+        "secondWinnerCount": "pyony-round-page"
+      }
     },
     {
       "round": 1007,
@@ -27218,16 +27238,21 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
-          "winnerCount": null
+          "perGameAmount": 2718786375,
+          "winnerCount": 9
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 70
         },
         "totalSalesAmount": null
       },
       "stores": [],
-      "dataSource": {}
+      "dataSource": {
+        "winning": "pyony-round-page",
+        "firstPrize": "pyony-round-page",
+        "firstWinnerCount": "pyony-round-page",
+        "secondWinnerCount": "pyony-round-page"
+      }
     },
     {
       "round": 1008,
@@ -27245,16 +27270,21 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
-          "winnerCount": null
+          "perGameAmount": 2267377910,
+          "winnerCount": 11
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 97
         },
         "totalSalesAmount": null
       },
       "stores": [],
-      "dataSource": {}
+      "dataSource": {
+        "winning": "pyony-round-page",
+        "firstPrize": "pyony-round-page",
+        "firstWinnerCount": "pyony-round-page",
+        "secondWinnerCount": "pyony-round-page"
+      }
     },
     {
       "round": 1009,
@@ -27272,16 +27302,21 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
-          "winnerCount": null
+          "perGameAmount": 1702462825,
+          "winnerCount": 15
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 69
         },
         "totalSalesAmount": null
       },
       "stores": [],
-      "dataSource": {}
+      "dataSource": {
+        "winning": "pyony-round-page",
+        "firstPrize": "pyony-round-page",
+        "firstWinnerCount": "pyony-round-page",
+        "secondWinnerCount": "pyony-round-page"
+      }
     },
     {
       "round": 1010,
@@ -27299,16 +27334,21 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
-          "winnerCount": null
+          "perGameAmount": 3119380079,
+          "winnerCount": 8
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 66
         },
         "totalSalesAmount": null
       },
       "stores": [],
-      "dataSource": {}
+      "dataSource": {
+        "winning": "pyony-round-page",
+        "firstPrize": "pyony-round-page",
+        "firstWinnerCount": "pyony-round-page",
+        "secondWinnerCount": "pyony-round-page"
+      }
     },
     {
       "round": 1011,
@@ -27326,16 +27366,21 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
-          "winnerCount": null
+          "perGameAmount": 2220348512,
+          "winnerCount": 11
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 76
         },
         "totalSalesAmount": null
       },
       "stores": [],
-      "dataSource": {}
+      "dataSource": {
+        "winning": "pyony-round-page",
+        "firstPrize": "pyony-round-page",
+        "firstWinnerCount": "pyony-round-page",
+        "secondWinnerCount": "pyony-round-page"
+      }
     },
     {
       "round": 1012,
@@ -27353,16 +27398,21 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
-          "winnerCount": null
+          "perGameAmount": 1861944318,
+          "winnerCount": 13
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 76
         },
         "totalSalesAmount": null
       },
       "stores": [],
-      "dataSource": {}
+      "dataSource": {
+        "winning": "pyony-round-page",
+        "firstPrize": "pyony-round-page",
+        "firstWinnerCount": "pyony-round-page",
+        "secondWinnerCount": "pyony-round-page"
+      }
     },
     {
       "round": 1013,
@@ -27380,16 +27430,21 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
-          "winnerCount": null
+          "perGameAmount": 5047570725,
+          "winnerCount": 5
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 79
         },
         "totalSalesAmount": null
       },
       "stores": [],
-      "dataSource": {}
+      "dataSource": {
+        "winning": "pyony-round-page",
+        "firstPrize": "pyony-round-page",
+        "firstWinnerCount": "pyony-round-page",
+        "secondWinnerCount": "pyony-round-page"
+      }
     },
     {
       "round": 1014,
@@ -27407,16 +27462,21 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
-          "winnerCount": null
+          "perGameAmount": 2410449338,
+          "winnerCount": 10
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 69
         },
         "totalSalesAmount": null
       },
       "stores": [],
-      "dataSource": {}
+      "dataSource": {
+        "winning": "pyony-round-page",
+        "firstPrize": "pyony-round-page",
+        "firstWinnerCount": "pyony-round-page",
+        "secondWinnerCount": "pyony-round-page"
+      }
     },
     {
       "round": 1015,
@@ -27434,16 +27494,21 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
-          "winnerCount": null
+          "perGameAmount": 3051105610,
+          "winnerCount": 8
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 102
         },
         "totalSalesAmount": null
       },
       "stores": [],
-      "dataSource": {}
+      "dataSource": {
+        "winning": "pyony-round-page",
+        "firstPrize": "pyony-round-page",
+        "firstWinnerCount": "pyony-round-page",
+        "secondWinnerCount": "pyony-round-page"
+      }
     },
     {
       "round": 1016,
@@ -27461,16 +27526,21 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
-          "winnerCount": null
+          "perGameAmount": 2260660671,
+          "winnerCount": 11
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 68
         },
         "totalSalesAmount": null
       },
       "stores": [],
-      "dataSource": {}
+      "dataSource": {
+        "winning": "pyony-round-page",
+        "firstPrize": "pyony-round-page",
+        "firstWinnerCount": "pyony-round-page",
+        "secondWinnerCount": "pyony-round-page"
+      }
     },
     {
       "round": 1017,
@@ -27488,16 +27558,21 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
-          "winnerCount": null
+          "perGameAmount": 3517684822,
+          "winnerCount": 7
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 70
         },
         "totalSalesAmount": null
       },
       "stores": [],
-      "dataSource": {}
+      "dataSource": {
+        "winning": "pyony-round-page",
+        "firstPrize": "pyony-round-page",
+        "firstWinnerCount": "pyony-round-page",
+        "secondWinnerCount": "pyony-round-page"
+      }
     },
     {
       "round": 1018,
@@ -27515,16 +27590,21 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
-          "winnerCount": null
+          "perGameAmount": 12361744688,
+          "winnerCount": 2
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 62
         },
         "totalSalesAmount": null
       },
       "stores": [],
-      "dataSource": {}
+      "dataSource": {
+        "winning": "pyony-round-page",
+        "firstPrize": "pyony-round-page",
+        "firstWinnerCount": "pyony-round-page",
+        "secondWinnerCount": "pyony-round-page"
+      }
     },
     {
       "round": 1019,
@@ -27542,16 +27622,21 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
-          "winnerCount": null
+          "perGameAmount": 438565140,
+          "winnerCount": 50
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 75
         },
         "totalSalesAmount": null
       },
       "stores": [],
-      "dataSource": {}
+      "dataSource": {
+        "winning": "pyony-round-page",
+        "firstPrize": "pyony-round-page",
+        "firstWinnerCount": "pyony-round-page",
+        "secondWinnerCount": "pyony-round-page"
+      }
     },
     {
       "round": 1020,
@@ -27569,16 +27654,21 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
-          "winnerCount": null
+          "perGameAmount": 1966431520,
+          "winnerCount": 13
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 77
         },
         "totalSalesAmount": null
       },
       "stores": [],
-      "dataSource": {}
+      "dataSource": {
+        "winning": "pyony-round-page",
+        "firstPrize": "pyony-round-page",
+        "firstWinnerCount": "pyony-round-page",
+        "secondWinnerCount": "pyony-round-page"
+      }
     },
     {
       "round": 1021,
@@ -27596,16 +27686,21 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
-          "winnerCount": null
+          "perGameAmount": 2108962250,
+          "winnerCount": 12
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 56
         },
         "totalSalesAmount": null
       },
       "stores": [],
-      "dataSource": {}
+      "dataSource": {
+        "winning": "pyony-round-page",
+        "firstPrize": "pyony-round-page",
+        "firstWinnerCount": "pyony-round-page",
+        "secondWinnerCount": "pyony-round-page"
+      }
     },
     {
       "round": 1022,
@@ -27623,16 +27718,21 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
-          "winnerCount": null
+          "perGameAmount": 4866468075,
+          "winnerCount": 5
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 63
         },
         "totalSalesAmount": null
       },
       "stores": [],
-      "dataSource": {}
+      "dataSource": {
+        "winning": "pyony-round-page",
+        "firstPrize": "pyony-round-page",
+        "firstWinnerCount": "pyony-round-page",
+        "secondWinnerCount": "pyony-round-page"
+      }
     },
     {
       "round": 1023,
@@ -27650,16 +27750,21 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
-          "winnerCount": null
+          "perGameAmount": 2745677875,
+          "winnerCount": 9
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 72
         },
         "totalSalesAmount": null
       },
       "stores": [],
-      "dataSource": {}
+      "dataSource": {
+        "winning": "pyony-round-page",
+        "firstPrize": "pyony-round-page",
+        "firstWinnerCount": "pyony-round-page",
+        "secondWinnerCount": "pyony-round-page"
+      }
     },
     {
       "round": 1024,
@@ -27677,16 +27782,21 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
-          "winnerCount": null
+          "perGameAmount": 3020323500,
+          "winnerCount": 8
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 63
         },
         "totalSalesAmount": null
       },
       "stores": [],
-      "dataSource": {}
+      "dataSource": {
+        "winning": "pyony-round-page",
+        "firstPrize": "pyony-round-page",
+        "firstWinnerCount": "pyony-round-page",
+        "secondWinnerCount": "pyony-round-page"
+      }
     },
     {
       "round": 1025,
@@ -27704,16 +27814,21 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
-          "winnerCount": null
+          "perGameAmount": 6118853344,
+          "winnerCount": 4
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 69
         },
         "totalSalesAmount": null
       },
       "stores": [],
-      "dataSource": {}
+      "dataSource": {
+        "winning": "pyony-round-page",
+        "firstPrize": "pyony-round-page",
+        "firstWinnerCount": "pyony-round-page",
+        "secondWinnerCount": "pyony-round-page"
+      }
     },
     {
       "round": 1026,
@@ -27731,16 +27846,21 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
-          "winnerCount": null
+          "perGameAmount": 1619118475,
+          "winnerCount": 15
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 76
         },
         "totalSalesAmount": null
       },
       "stores": [],
-      "dataSource": {}
+      "dataSource": {
+        "winning": "pyony-round-page",
+        "firstPrize": "pyony-round-page",
+        "firstWinnerCount": "pyony-round-page",
+        "secondWinnerCount": "pyony-round-page"
+      }
     },
     {
       "round": 1027,
@@ -27758,16 +27878,21 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
-          "winnerCount": null
+          "perGameAmount": 2460504338,
+          "winnerCount": 10
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 83
         },
         "totalSalesAmount": null
       },
       "stores": [],
-      "dataSource": {}
+      "dataSource": {
+        "winning": "pyony-round-page",
+        "firstPrize": "pyony-round-page",
+        "firstWinnerCount": "pyony-round-page",
+        "secondWinnerCount": "pyony-round-page"
+      }
     },
     {
       "round": 1028,
@@ -27785,16 +27910,21 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
-          "winnerCount": null
+          "perGameAmount": 1181235132,
+          "winnerCount": 20
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 91
         },
         "totalSalesAmount": null
       },
       "stores": [],
-      "dataSource": {}
+      "dataSource": {
+        "winning": "pyony-round-page",
+        "firstPrize": "pyony-round-page",
+        "firstWinnerCount": "pyony-round-page",
+        "secondWinnerCount": "pyony-round-page"
+      }
     },
     {
       "round": 1029,
@@ -27812,16 +27942,21 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
-          "winnerCount": null
+          "perGameAmount": 2527848450,
+          "winnerCount": 10
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 62
         },
         "totalSalesAmount": null
       },
       "stores": [],
-      "dataSource": {}
+      "dataSource": {
+        "winning": "pyony-round-page",
+        "firstPrize": "pyony-round-page",
+        "firstWinnerCount": "pyony-round-page",
+        "secondWinnerCount": "pyony-round-page"
+      }
     },
     {
       "round": 1030,
@@ -27839,16 +27974,21 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
-          "winnerCount": null
+          "perGameAmount": 1276406507,
+          "winnerCount": 19
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 104
         },
         "totalSalesAmount": null
       },
       "stores": [],
-      "dataSource": {}
+      "dataSource": {
+        "winning": "pyony-round-page",
+        "firstPrize": "pyony-round-page",
+        "firstWinnerCount": "pyony-round-page",
+        "secondWinnerCount": "pyony-round-page"
+      }
     },
     {
       "round": 1031,
@@ -27866,16 +28006,21 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
-          "winnerCount": null
+          "perGameAmount": 3213957563,
+          "winnerCount": 8
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 64
         },
         "totalSalesAmount": null
       },
       "stores": [],
-      "dataSource": {}
+      "dataSource": {
+        "winning": "pyony-round-page",
+        "firstPrize": "pyony-round-page",
+        "firstWinnerCount": "pyony-round-page",
+        "secondWinnerCount": "pyony-round-page"
+      }
     },
     {
       "round": 1032,
@@ -27893,16 +28038,21 @@
       },
       "prize": {
         "first": {
-          "perGameAmount": null,
-          "winnerCount": null
+          "perGameAmount": 2675257538,
+          "winnerCount": 10
         },
         "second": {
-          "winnerCount": null
+          "winnerCount": 90
         },
         "totalSalesAmount": null
       },
       "stores": [],
-      "dataSource": {}
+      "dataSource": {
+        "winning": "pyony-round-page",
+        "firstPrize": "pyony-round-page",
+        "firstWinnerCount": "pyony-round-page",
+        "secondWinnerCount": "pyony-round-page"
+      }
     },
     {
       "round": 1033,
