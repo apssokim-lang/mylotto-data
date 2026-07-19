@@ -7,10 +7,13 @@ from pathlib import Path
 from typing import Any
 
 import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 from bs4 import BeautifulSoup
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA_PATH = ROOT / "data" / "lotto_results.json"
+BACKUP_PATH = ROOT / "data" / "lotto_results_backup.json"
 KST = timezone(timedelta(hours=9))
 
 PYONY_URL = "https://pyony.com/lotto/rounds/{round_no}/"
@@ -24,6 +27,17 @@ CORE_BACKFILL_BATCH = 30
 STORE_BACKFILL_BATCH = 5
 
 SESSION = requests.Session()
+RETRY = Retry(
+    total=3,
+    connect=3,
+    read=3,
+    backoff_factor=1.0,
+    status_forcelist=(429, 500, 502, 503, 504),
+    allowed_methods=frozenset({"GET"}),
+)
+SESSION.mount("https://", HTTPAdapter(max_retries=RETRY))
+SESSION.mount("http://", HTTPAdapter(max_retries=RETRY))
+
 SESSION.headers.update({
     "User-Agent": (
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
@@ -107,6 +121,11 @@ def normalize(item: dict[str, Any]) -> dict[str, Any]:
 
 
 def load_data() -> dict[str, Any]:
+    if not DATA_PATH.exists():
+        raise FileNotFoundError(
+            f"데이터 파일을 찾을 수 없습니다: {DATA_PATH}"
+        )
+
     data = json.loads(DATA_PATH.read_text(encoding="utf-8"))
     data.setdefault("schemaVersion", 2)
     data.setdefault("results", [])
@@ -119,7 +138,7 @@ def load_data() -> dict[str, Any]:
     return data
 
 
-def save_data(data: dict[str, Any]) -> None:
+def save_data(data: dict[str, Any]) -> bool:
     data["results"].sort(key=lambda item: int(item.get("round", 0)))
     data["latestRound"] = max(
         (int(item["round"]) for item in data["results"]),
@@ -127,12 +146,27 @@ def save_data(data: dict[str, Any]) -> None:
     )
     data["updatedAt"] = datetime.now(KST).isoformat(timespec="seconds")
 
-    temporary = DATA_PATH.with_suffix(".json.tmp")
-    temporary.write_text(
-        json.dumps(data, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
+    new_text = json.dumps(data, ensure_ascii=False, indent=2) + "\n"
+    old_text = (
+        DATA_PATH.read_text(encoding="utf-8")
+        if DATA_PATH.exists()
+        else ""
     )
+
+    if new_text == old_text:
+        print("저장할 변경사항이 없습니다.")
+        return False
+
+    DATA_PATH.parent.mkdir(parents=True, exist_ok=True)
+
+    # 새 파일을 덮어쓰기 직전에 직전 정상본을 백업합니다.
+    if old_text:
+        BACKUP_PATH.write_text(old_text, encoding="utf-8")
+
+    temporary = DATA_PATH.with_suffix(".json.tmp")
+    temporary.write_text(new_text, encoding="utf-8")
     temporary.replace(DATA_PATH)
+    return True
 
 
 def core_complete(item: dict[str, Any]) -> bool:
@@ -508,6 +542,13 @@ def main() -> int:
     latest = max(by_round, default=0)
     changed = False
     errors: list[str] = []
+    original_core_cursor = to_int(
+        data["service"].get("coreBackfillCursorRound")
+    )
+    original_store_cursor = to_int(
+        data["service"].get("storeBackfillCursorRound")
+    )
+    original_errors = list(data["service"].get("lastErrors") or [])
 
     # 1) 중간에 빠진 회차 복구
     missing = [
@@ -622,10 +663,18 @@ def main() -> int:
         1 for item in data["results"] if stores_complete(item)
     )
 
+    state_changed = (
+        data["service"].get("collectorVersion")
+        != "4.0-fully-automatic-scheduled-backfill"
+        or original_core_cursor != next_core_cursor
+        or original_store_cursor != next_store_cursor
+        or original_errors != errors[-30:]
+    )
+
     data["service"].update({
-        "collectorVersion": "3.1-new-round-first-core-backfill",
-        "mode": "official-first-pyony-enrichment",
-        "newRoundUpdate": "official-json-immediate",
+        "collectorVersion": "4.0-fully-automatic-scheduled-backfill",
+        "mode": "fully-automatic-official-plus-pyony",
+        "newRoundUpdate": "scheduled-auto-detect-and-commit",
         "recentPriorityCount": RECENT_PRIORITY_COUNT,
         "coreBackfillBatchSize": CORE_BACKFILL_BATCH,
         "coreBackfillCursorRound": next_core_cursor,
@@ -640,13 +689,18 @@ def main() -> int:
         "lastErrors": errors[-30:],
     })
 
-    save_data(data)
+    if changed or state_changed:
+        saved = save_data(data)
+    else:
+        saved = False
+        print("새 회차·보완 데이터·진행 상태 변경이 없어 저장하지 않습니다.")
 
     print(
         f"완료: 최신 {data['latestRound']}회 / "
         f"회차정보 완성 {completed_core}회 / "
         f"회차정보 미완성 {len(data['results']) - completed_core}회 / "
-        f"판매점 완성 {completed_stores}회"
+        f"판매점 완성 {completed_stores}회 / "
+        f"파일 저장 {'완료' if saved else '없음'}"
     )
     return 0
 
