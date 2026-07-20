@@ -14,17 +14,14 @@
     },
     "completedRoundCount": 5,
     "incompleteRoundCount": 1227,
-    "collectorVersion": "4.0-fully-automatic-scheduled-backfill",
+    "collectorVersion": "5.0-official-only-playwright",
     "mode": "fully-automatic-official-plus-pyony",
     "olderBatchSize": 10,
     "incompleteCursor": 12,
-    "lastRunAt": "2026-07-20T06:11:23+09:00",
+    "lastRunAt": "2026-07-20T19:21:39+09:00",
     "lastBrowserErrors": [],
     "recentBatchSize": 10,
-    "lastErrors": [
-      "1233회 회차 당첨 정보 미완성",
-      "1214회 회차 당첨 정보 미완성"
-    ],
+    "lastErrors": [],
     "olderCursor": 20,
     "missingRoundRepair": "enabled",
     "lastRepairAt": "2026-07-17T12:31:04+09:00",
@@ -35,10 +32,15 @@
     "storeBackfillCursorRound": 1107,
     "completedCoreRoundCount": 18,
     "incompleteCoreRoundCount": 1215,
-    "completedStoreRoundCount": 7
+    "completedStoreRoundCount": 7,
+    "sourcePolicy": "official-dhlottery-only",
+    "thirdPartySourceUsed": false,
+    "officialBackfillCursorRound": 580,
+    "coreCompleteCount": 651,
+    "coreIncompleteCount": 582
   },
   "latestRound": 1233,
-  "updatedAt": "2026-07-20T06:11:23+09:00",
+  "updatedAt": "2026-07-20T19:21:39+09:00",
   "results": [
     {
       "round": 1,
@@ -15702,17 +15704,17 @@
     },
     {
       "round": 581,
-      "date": "2014-01-18",
+      "date": "2026-07-11",
       "winning": {
         "numbers": [
-          3,
-          5,
-          14,
-          20,
-          42,
-          44
+          12,
+          15,
+          19,
+          22,
+          24,
+          36
         ],
-        "bonus": 33
+        "bonus": 3
       },
       "prize": {
         "first": {
@@ -15722,24 +15724,44 @@
         "second": {
           "winnerCount": null
         },
-        "totalSalesAmount": null
+        "totalSalesAmount": 116159776000
       },
-      "stores": [],
-      "dataSource": {}
+      "stores": [
+        {
+          "name": "1등",
+          "method": "자동",
+          "address": "로또6/45"
+        },
+        {
+          "name": "1등",
+          "method": "수동",
+          "address": "로또6/45"
+        },
+        {
+          "name": "1등",
+          "method": "반자동",
+          "address": "로또6/45"
+        }
+      ],
+      "dataSource": {
+        "winning": "dhlottery-official-page",
+        "totalSales": "dhlottery-official-page",
+        "stores": "dhlottery-official-page"
+      }
     },
     {
       "round": 582,
-      "date": "2014-01-25",
+      "date": "2026-07-11",
       "winning": {
         "numbers": [
-          2,
           12,
-          14,
-          33,
-          40,
-          41
+          15,
+          19,
+          22,
+          24,
+          36
         ],
-        "bonus": 25
+        "bonus": 3
       },
       "prize": {
         "first": {
@@ -15749,10 +15771,30 @@
         "second": {
           "winnerCount": null
         },
-        "totalSalesAmount": null
+        "totalSalesAmount": 116159776000
       },
-      "stores": [],
-      "dataSource": {}
+      "stores": [
+        {
+          "name": "1등",
+          "method": "자동",
+          "address": "로또6/45"
+        },
+        {
+          "name": "1등",
+          "method": "수동",
+          "address": "로또6/45"
+        },
+        {
+          "name": "1등",
+          "method": "반자동",
+          "address": "로또6/45"
+        }
+      ],
+      "dataSource": {
+        "winning": "dhlottery-official-page",
+        "totalSales": "dhlottery-official-page",
+        "stores": "dhlottery-official-page"
+      }
     },
     {
       "round": 583,
@@ -36790,17 +36832,17 @@
     },
     {
       "round": 1230,
-      "date": "2026-06-27",
+      "date": "2026-07-11",
       "winning": {
         "numbers": [
-          3,
-          8,
-          9,
+          12,
+          15,
+          19,
           22,
-          28,
-          42
+          24,
+          36
         ],
-        "bonus": 45
+        "bonus": 3
       },
       "prize": {
         "first": {
@@ -36810,109 +36852,46 @@
         "second": {
           "winnerCount": 90
         },
-        "totalSalesAmount": 120177677000
+        "totalSalesAmount": 116159776000
       },
       "stores": [
         {
-          "name": "복권만화",
+          "name": "1등",
           "method": "자동",
-          "address": "서울 서초구 사임당로 39 1층 102호"
+          "address": "로또6/45"
         },
         {
-          "name": "스파",
-          "method": "자동",
-          "address": "서울 노원구 동일로 1493 주공10단지종합상가111"
-        },
-        {
-          "name": "행운당",
-          "method": "자동",
-          "address": "서울 노원구 노해로 506 바상가동 106호"
-        },
-        {
-          "name": "대박복권방",
-          "method": "자동",
-          "address": "서울 광진구 면목로 174"
-        },
-        {
-          "name": "천하명당복권방역전점",
-          "method": "자동",
-          "address": "대전 동구 대전로 815"
-        },
-        {
-          "name": "로또기업",
+          "name": "1등",
           "method": "수동",
-          "address": "대전 동구 동서대로 1684 복합터미널 건너편"
+          "address": "로또6/45"
         },
         {
-          "name": "천하명당(염포점)",
-          "method": "자동",
-          "address": "울산 북구 염포로 643"
-        },
-        {
-          "name": "럭키",
-          "method": "자동",
-          "address": "경기 평택시 서동대로 1207 1층"
-        },
-        {
-          "name": "월척복권방",
-          "method": "자동",
-          "address": "경기 용인시 기흥구 강남동로100번길 9 103호"
-        },
-        {
-          "name": "오케이마트",
-          "method": "자동",
-          "address": "경기 성남시 중원구 광명로 80 1층 101호(성남동)"
-        },
-        {
-          "name": "다미 로또",
-          "method": "자동",
-          "address": "경기 김포시 김포대로 2231 1동 1층 102호"
-        },
-        {
-          "name": "마두역상행선 가판대",
-          "method": "자동",
-          "address": "경기 고양시 일산동구 중앙로 1181 마두역 중앙 횡단보도 오른쪽"
-        },
-        {
-          "name": "세명24시로또",
-          "method": "자동",
-          "address": "충북 제천시 바이오밸리로 211 3호"
-        },
-        {
-          "name": "오징어게임복권방",
-          "method": "자동",
-          "address": "충북 음성군 대금로 602 101호"
-        },
-        {
-          "name": "리틀밥독 소이 행운복권",
-          "method": "자동",
-          "address": "경북 구미시 인동35길 9 1층 리틀밥독 소이 행운복권"
-        },
-        {
-          "name": "나누리로또",
-          "method": "자동",
-          "address": "경북 경산시 성암로15길 4 1층"
+          "name": "1등",
+          "method": "반자동",
+          "address": "로또6/45"
         }
       ],
       "dataSource": {
         "prize": "pyony-round-table-verified",
         "rankTable": "pyony-round-page",
-        "totalSales": "verified-public-report"
+        "totalSales": "dhlottery-official-page",
+        "winning": "dhlottery-official-page",
+        "stores": "dhlottery-official-page"
       }
     },
     {
       "round": 1231,
-      "date": "2026-07-04",
+      "date": "2026-07-11",
       "winning": {
         "numbers": [
-          4,
-          13,
-          14,
-          18,
-          31,
-          38
+          12,
+          15,
+          19,
+          22,
+          24,
+          36
         ],
-        "bonus": 15
+        "bonus": 3
       },
       "prize": {
         "first": {
@@ -36922,99 +36901,31 @@
         "second": {
           "winnerCount": 92
         },
-        "totalSalesAmount": 118084580000
+        "totalSalesAmount": 116159776000
       },
       "stores": [
         {
-          "name": "현대비디오",
+          "name": "1등",
           "method": "자동",
-          "address": "서울 동대문구 장한로25길 45"
+          "address": "로또6/45"
         },
         {
-          "name": "가로판매점",
-          "method": "자동",
-          "address": "서울 관악구 과천대로 955"
-        },
-        {
-          "name": "삼정그린환경",
-          "method": "자동",
-          "address": "서울 강동구 양재대로 1355 오스카상가136호"
-        },
-        {
-          "name": "돈벼락 로또 판매점",
-          "method": "자동",
-          "address": "서울 강동구 천호대로159길 43 1층"
-        },
-        {
-          "name": "돈벼락맞는곳",
-          "method": "자동",
-          "address": "부산 동구 조방로49번길 18-1"
-        },
-        {
-          "name": "드림마트",
-          "method": "자동",
-          "address": "인천 미추홀구 인하로 211"
-        },
-        {
-          "name": "복권전문점",
+          "name": "1등",
           "method": "수동",
-          "address": "대전 유성구 유성대로694번길 84"
+          "address": "로또6/45"
         },
         {
-          "name": "복권명당(대청점)",
-          "method": "자동",
-          "address": "대전 동구 용운로 67"
-        },
-        {
-          "name": "복권방",
-          "method": "자동",
-          "address": "울산 울주군 덕남로 87"
-        },
-        {
-          "name": "대박나라",
+          "name": "1등",
           "method": "반자동",
-          "address": "경기 시흥시 함송로 15 111호(정왕동화신프라자)"
-        },
-        {
-          "name": "한아름복권방(매탄점)",
-          "method": "자동",
-          "address": "경기 수원시 영통구 권선로 808"
-        },
-        {
-          "name": "돼지꿈복권",
-          "method": "자동",
-          "address": "경기 고양시 일산서구 덕이로 222-30 1층 105호"
-        },
-        {
-          "name": "비엠복권",
-          "method": "자동",
-          "address": "충북 청주시 흥덕구 대신로 108"
-        },
-        {
-          "name": "통정로또명당마트",
-          "method": "자동",
-          "address": "충남 천안시 동남구 통정4로 49 위너타워 맞은편"
-        },
-        {
-          "name": "터미널복권방",
-          "method": "자동",
-          "address": "전북 정읍시 연지8길 6"
-        },
-        {
-          "name": "구룡포명당",
-          "method": "자동",
-          "address": "경북 포항시 남구 구룡포길 90-3 1층 (대로변0"
-        },
-        {
-          "name": "로또 휴게",
-          "method": "수동",
-          "address": "제주 제주시 연삼로 626"
+          "address": "로또6/45"
         }
       ],
       "dataSource": {
         "prize": "pyony-round-table-verified",
         "rankTable": "pyony-round-page",
-        "totalSales": "verified-public-report"
+        "totalSales": "dhlottery-official-page",
+        "winning": "dhlottery-official-page",
+        "stores": "dhlottery-official-page"
       }
     },
     {
@@ -37039,84 +36950,46 @@
         "second": {
           "winnerCount": 92
         },
-        "totalSalesAmount": 114636304000
+        "totalSalesAmount": 116159776000
       },
       "stores": [
         {
-          "name": "복권판매점",
+          "name": "1등",
+          "method": "자동",
+          "address": "로또6/45"
+        },
+        {
+          "name": "1등",
           "method": "수동",
-          "address": "서울 영등포구 영중로8길 17 1층(영등포동3가)"
+          "address": "로또6/45"
         },
         {
-          "name": "미성복권방",
-          "method": "자동",
-          "address": "서울 마포구 월드컵북로 230 현대상가 안 1층3호"
-        },
-        {
-          "name": "복돼지 복권 판매소",
-          "method": "자동",
-          "address": "서울 관악구 은천로 119-1 1층"
-        },
-        {
-          "name": "여기명당",
-          "method": "자동",
-          "address": "울산 중구 평산1길 2"
-        },
-        {
-          "name": "1등복권방",
-          "method": "자동",
-          "address": "경기 오산시 수청로 201"
-        },
-        {
-          "name": "단대대박복권방",
+          "name": "1등",
           "method": "반자동",
-          "address": "경기 성남시 중원구 산성대로372번길 14 1층"
-        },
-        {
-          "name": "일성능수 복권판매점",
-          "method": "자동",
-          "address": "충남 천안시 서북구 쌍용17길 25 일성능수아파트 상가 102호"
-        },
-        {
-          "name": "행운복권방 보생당건강원",
-          "method": "자동",
-          "address": "전북 익산시 무왕로 1268"
-        },
-        {
-          "name": "창신로또",
-          "method": "반자동",
-          "address": "경북 영천시 언하공단로 83"
-        },
-        {
-          "name": "창신로또",
-          "method": "반자동",
-          "address": "경북 영천시 언하공단로 83"
-        },
-        {
-          "name": "갓바위로또",
-          "method": "수동",
-          "address": "경북 경산시 금송로 474 1층 GS25시 편의점 내"
+          "address": "로또6/45"
         }
       ],
       "dataSource": {
         "prize": "pyony-round-table-verified",
         "rankTable": "pyony-round-page",
-        "totalSales": "verified-public-report"
+        "totalSales": "dhlottery-official-page",
+        "winning": "dhlottery-official-page",
+        "stores": "dhlottery-official-page"
       }
     },
     {
       "round": 1233,
-      "date": "2026-07-18",
+      "date": "2026-07-11",
       "winning": {
         "numbers": [
-          2,
-          7,
-          20,
-          25,
-          37,
-          40
+          12,
+          15,
+          19,
+          22,
+          24,
+          36
         ],
-        "bonus": 29
+        "bonus": 3
       },
       "prize": {
         "first": {
@@ -37126,14 +36999,32 @@
         "second": {
           "winnerCount": 76
         },
-        "totalSalesAmount": null
+        "totalSalesAmount": 116159776000
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "1등",
+          "method": "자동",
+          "address": "로또6/45"
+        },
+        {
+          "name": "1등",
+          "method": "수동",
+          "address": "로또6/45"
+        },
+        {
+          "name": "1등",
+          "method": "반자동",
+          "address": "로또6/45"
+        }
+      ],
       "dataSource": {
-        "winning": "pyony-round-page",
+        "winning": "dhlottery-official-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "totalSales": "dhlottery-official-page",
+        "stores": "dhlottery-official-page"
       }
     }
   ]
