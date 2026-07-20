@@ -23,12 +23,14 @@ KST = timezone(timedelta(hours=9))
 OFFICIAL_RESULTS_API = "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do"
 OFFICIAL_RESULTS_PAGE = "https://www.dhlottery.co.kr/lt645/result"
 OFFICIAL_STORES_PAGE = "https://www.dhlottery.co.kr/wnprchsplcsrch/home"
-COLLECTOR_VERSION = "8.0.3-official-store-parser-safety-fix"
+COLLECTOR_VERSION = "8.1.0-official-store-strict-parser-and-backfill"
 RESULT_SOURCE = "dhlottery-official-internal-json"
 STORE_SOURCE = "dhlottery-official-winning-store-page"
 REQUEST_TIMEOUT = 25
 RECENT_RECONCILE_COUNT = 60
 STORE_RETRY_ROUNDS = 4
+STORE_BACKFILL_BATCH = max(1, int(os.getenv("STORE_BACKFILL_BATCH", "2")))
+STORE_BACKFILL_MIN_ROUND = max(1, int(os.getenv("STORE_BACKFILL_MIN_ROUND", "1")))
 
 
 def now_iso() -> str:
@@ -61,11 +63,17 @@ def is_real_store_name(value: Any) -> bool:
     text = clean_text(value)
     if not text or text in GENERIC_STORE_NAMES:
         return False
+    if re.fullmatch(r"[0-9,.-]+", text):
+        return False
     if re.fullmatch(r"[123]등", text):
         return False
     if re.fullmatch(r"로또\s*6/?45", text, re.I):
         return False
+    # 주소를 상호명으로 오인한 값도 배제합니다.
+    if re.match(r"^(서울|부산|대구|인천|광주|대전|울산|세종|경기|강원|충북|충남|전북|전남|경북|경남|제주)(특별시|광역시|특별자치시|특별자치도|도)?\s", text):
+        return False
     return len(text) >= 2
+
 
 def is_real_store_address(value: Any) -> bool:
     text = clean_text(value)
@@ -73,9 +81,13 @@ def is_real_store_address(value: Any) -> bool:
         return False
     if re.fullmatch(r"로또\s*6/?45", text, re.I):
         return False
-    # 실제 국내 주소는 최소한 행정구역/도로명 단서와 숫자 또는 상세 지명을 포함합니다.
-    has_region = bool(re.search(r"(서울|부산|대구|인천|광주|대전|울산|세종|경기|강원|충북|충남|전북|전남|경북|경남|제주|특별시|광역시|특별자치시|특별자치도|\S+[시도군구읍면동]|\S+(?:로|길))", text))
-    return has_region and len(text) >= 6
+    # 공식 판매점 주소는 광역 시·도명으로 시작하는 국내 주소만 허용합니다.
+    region = r"(?:서울(?:특별시)?|부산(?:광역시)?|대구(?:광역시)?|인천(?:광역시)?|광주(?:광역시)?|대전(?:광역시)?|울산(?:광역시)?|세종(?:특별자치시)?|경기(?:도)?|강원(?:특별자치도|도)?|충북|충청북도|충남|충청남도|전북|전북특별자치도|전라북도|전남|전라남도|경북|경상북도|경남|경상남도|제주|제주특별자치도)"
+    if not re.match(rf"^{region}(?:\s|$)", text):
+        return False
+    has_detail = bool(re.search(r"(?:시|군|구|읍|면|동|로|길)\s*[^ ]*|\d", text))
+    return has_detail and len(text) >= 8
+
 
 def sanitize_stores(stores: Any) -> list[dict[str, str]]:
     if not isinstance(stores, list):
@@ -203,8 +215,8 @@ def merge_official(existing: dict[str, Any] | None, official: dict[str, Any]) ->
     return result
 
 
-NAME_KEYS = ("storeName", "shopName", "stNm", "bsshNm", "prchSplcNm", "storeNm", "name", "상호명")
-ADDRESS_KEYS = ("address", "addr", "roadAddress", "rdnmAdr", "bsshLctn", "prchSplcAdr", "storeAddr", "소재지", "주소")
+NAME_KEYS = ("storeName", "shopName", "stNm", "bsshNm", "prchSplcNm", "storeNm", "상호명")
+ADDRESS_KEYS = ("roadAddress", "rdnmAdr", "bsshLctn", "prchSplcAdr", "storeAddr", "소재지", "주소")
 METHOD_KEYS = ("method", "winType", "ltWnTyNm", "wnTyNm", "gameType", "구분")
 RANK_KEYS = ("rank", "rnk", "winRank", "등위", "등수")
 
@@ -280,41 +292,36 @@ def dedupe_stores(stores: Iterable[dict[str, str]]) -> list[dict[str, str]]:
 
 
 def stores_from_html(html: str) -> list[dict[str, str]]:
+    """공식 결과 표만 엄격하게 읽습니다. 일반 카드/필터 UI는 절대 파싱하지 않습니다."""
     soup = BeautifulSoup(html, "html.parser")
     stores: list[dict[str, str]] = []
-    # 표 구조
-    for row in soup.select("tr"):
-        cells = [clean_text(cell.get_text(" ", strip=True)) for cell in row.select("th,td")]
-        if len(cells) < 3:
+    for table in soup.select("table"):
+        rows = table.select("tr")
+        if not rows:
             continue
-        method_index = next((i for i, text in enumerate(cells) if normalize_method(text) in {"자동", "수동", "반자동"}), None)
-        if method_index is None:
+        header_cells = [clean_text(x.get_text(" ", strip=True)) for x in rows[0].select("th,td")]
+        header_joined = " | ".join(header_cells)
+        if not re.search(r"상호|판매점|복권방", header_joined) or not re.search(r"소재지|주소", header_joined):
             continue
-        method = normalize_method(cells[method_index])
-        # 순번/등위/구분을 제외하고 가장 긴 주소성 문자열과 상호명을 선택
-        address = next((x for x in reversed(cells) if re.search(r"(시|도|군|구|읍|면|동|로|길)\b|\d+-\d+", x) and len(x) >= 6), "")
-        candidates = [x for x in cells if x and x != method and x != address and not re.fullmatch(r"\d+", x) and "등" not in x]
-        name = candidates[0] if candidates else ""
-        parsed = normalize_store_record({"name": name, "method": method, "address": address, "rank": "1등"})
-        if parsed:
-            stores.append(parsed)
-    # 카드 구조: 자동/수동/반자동이 있는 가까운 컨테이너
-    for text_node in soup.find_all(string=re.compile(r"^(자동|수동|반자동)$")):
-        container = text_node.parent
-        for _ in range(5):
-            if container is None:
-                break
-            text = clean_text(container.get_text(" ", strip=True))
-            if len(text) >= 15 and re.search(r"(시|도|군|구|읍|면|동|로|길)", text):
-                parts = [clean_text(x) for x in container.stripped_strings]
-                method = normalize_method(text_node)
-                address = next((x for x in reversed(parts) if len(x) >= 6 and re.search(r"(시|도|군|구|읍|면|동|로|길)", x)), "")
-                name = next((x for x in parts if x not in {method, "1등", "2등", "3등", "지도", "전국", "로또6/45", "로또 6/45"} and x != address and is_real_store_name(x)), "")
-                parsed = normalize_store_record({"name": name, "method": method, "address": address, "rank": "1등"})
-                if parsed:
-                    stores.append(parsed)
-                break
-            container = container.parent
+        name_idx = next((i for i, x in enumerate(header_cells) if re.search(r"상호|판매점", x)), None)
+        method_idx = next((i for i, x in enumerate(header_cells) if re.search(r"구분|구매|자동|수동", x)), None)
+        addr_idx = next((i for i, x in enumerate(header_cells) if re.search(r"소재지|주소", x)), None)
+        rank_idx = next((i for i, x in enumerate(header_cells) if re.search(r"등위|등수|순위", x)), None)
+        if name_idx is None or addr_idx is None:
+            continue
+        for row in rows[1:]:
+            cells = [clean_text(x.get_text(" ", strip=True)) for x in row.select("th,td")]
+            if max(name_idx, addr_idx) >= len(cells):
+                continue
+            record = {
+                "prchSplcNm": cells[name_idx],
+                "prchSplcAdr": cells[addr_idx],
+                "ltWnTyNm": cells[method_idx] if method_idx is not None and method_idx < len(cells) else "",
+                "rnk": cells[rank_idx] if rank_idx is not None and rank_idx < len(cells) else "1",
+            }
+            parsed = normalize_store_record(record)
+            if parsed:
+                stores.append(parsed)
     return dedupe_stores(stores)
 
 
@@ -489,6 +496,38 @@ def validate_dataset(data: dict[str, Any]) -> None:
         raise ValueError(f"latestRound 불일치: {data.get('latestRound')} != {latest}")
 
 
+def choose_backfill_targets(
+    by_round: dict[int, dict[str, Any]],
+    latest_official: int,
+    batch: int,
+    service: dict[str, Any],
+) -> tuple[list[int], int]:
+    """최근 1년 범위에서 판매점이 비어 있는 회차를 커서 기반으로 순환 선택합니다."""
+    lower = max(STORE_BACKFILL_MIN_ROUND, latest_official - 52)
+    upper = max(lower, latest_official - STORE_RETRY_ROUNDS)
+    cursor = to_int(service.get("storeBackfillCursorRound"))
+    if cursor is None or cursor > upper or cursor < lower:
+        cursor = upper
+
+    targets: list[int] = []
+    checked = 0
+    round_no = cursor
+    span = max(1, upper - lower + 1)
+    while checked < span and len(targets) < batch:
+        item = by_round.get(round_no)
+        if (
+            item
+            and not item.get("stores")
+            and to_int(item.get("prize", {}).get("first", {}).get("winnerCount"))
+        ):
+            targets.append(round_no)
+        round_no -= 1
+        if round_no < lower:
+            round_no = upper
+        checked += 1
+    return targets, round_no
+
+
 def update_dataset(data: dict[str, Any], official_items: list[dict[str, Any]]) -> tuple[dict[str, Any], list[int]]:
     result = copy.deepcopy(data)
     by_round: dict[int, dict[str, Any]] = {}
@@ -515,12 +554,16 @@ def update_dataset(data: dict[str, Any], official_items: list[dict[str, Any]]) -
             by_round[round_no] = after
             changed.append(round_no)
 
-    # 최신 회차부터, 판매점이 비어 있는 최근 회차만 공식 페이지에서 재시도합니다.
-    store_targets: list[int] = []
+    # 최신 4회는 매 실행 재시도하고, 과거 미완성 회차는 별도 백필 배치로 조금씩 처리합니다.
+    recent_targets: list[int] = []
     for round_no in range(latest_official, max(0, latest_official - STORE_RETRY_ROUNDS), -1):
         item = by_round.get(round_no)
         if item and not item.get("stores") and to_int(item.get("prize", {}).get("first", {}).get("winnerCount")):
-            store_targets.append(round_no)
+            recent_targets.append(round_no)
+    backfill_targets, next_backfill_cursor = choose_backfill_targets(
+        by_round, latest_official, STORE_BACKFILL_BATCH, result.get("service", {})
+    )
+    store_targets = list(dict.fromkeys([*recent_targets, *backfill_targets]))
 
     store_status: dict[str, str] = {}
     for round_no in store_targets:
@@ -558,6 +601,9 @@ def update_dataset(data: dict[str, Any], official_items: list[dict[str, Any]]) -
         "latestOfficialRound": latest_official,
         "recentReconcileCount": RECENT_RECONCILE_COUNT,
         "storeRetryRounds": STORE_RETRY_ROUNDS,
+        "storeBackfillBatch": STORE_BACKFILL_BATCH,
+        "storeBackfillTargets": backfill_targets,
+        "storeBackfillCursorRound": next_backfill_cursor,
         "storeStatus": store_status,
         "changedRounds": sorted(set(changed), reverse=True),
     })
