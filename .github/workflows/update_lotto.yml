@@ -67,14 +67,47 @@ jobs:
           if-no-files-found: ignore
           retention-days: 7
 
-      - name: Commit changed data
+      - name: Commit changed data safely
+        shell: bash
         run: |
-          if git diff --quiet -- data/lotto_results.json data/lotto_results_backup.json; then
-            echo "No data changes."
-            exit 0
-          fi
+          set -euo pipefail
+
           git config user.name "mylotto-data-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add data/lotto_results.json data/lotto_results_backup.json
-          git commit -m "Auto update official lotto results and winning stores"
-          git push
+
+          commit_and_push() {
+            if git diff --quiet -- data/lotto_results.json data/lotto_results_backup.json; then
+              echo "No data changes."
+              return 0
+            fi
+
+            git add data/lotto_results.json data/lotto_results_backup.json
+            git commit -m "Auto update official lotto results and winning stores"
+            git push origin HEAD:main
+          }
+
+          # A manual edit or another workflow may have updated main while this job was running.
+          # In that case, discard only this job's generated copy, move to the newest main,
+          # regenerate from the newest JSON, validate again, and then push.
+          for attempt in 1 2 3; do
+            git fetch origin main
+
+            if [ "$(git rev-parse HEAD)" != "$(git rev-parse origin/main)" ]; then
+              echo "Remote main changed during this run. Regenerating on latest main (attempt ${attempt})."
+              git reset --hard origin/main
+              python scripts/update_lotto.py
+              python scripts/validate_lotto.py
+            fi
+
+            if commit_and_push; then
+              echo "Data commit completed."
+              exit 0
+            fi
+
+            echo "Push race detected. Retrying with latest main..."
+            git reset --hard origin/main
+            sleep $((attempt * 3))
+          done
+
+          echo "Failed to push after 3 safe retries."
+          exit 1
