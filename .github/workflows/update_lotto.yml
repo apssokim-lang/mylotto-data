@@ -1,20 +1,21 @@
-name: 로또 공식 데이터 완전 자동 업데이트
+name: 로또 공식 데이터 안전 자동 업데이트
 
 on:
   schedule:
-    # GitHub cron은 UTC 기준입니다.
-    # 한국시간 토요일 20:30~23:45: 15분마다 새 회차 확인
+    # UTC 기준: 한국시간 토요일 20:30~23:45, 15분 간격
     - cron: "30,45 11 * * 6"
     - cron: "*/15 12-14 * * 6"
-    # 공식 페이지 반영 지연에 대비해 일요일 00:15, 01:15에 추가 확인
+    # 일요일 00:15, 01:15 재확인
     - cron: "15 15,16 * * 6"
-    # 매일 한국시간 03:20: 기존 미완성 회차 소량 보완
+    # 매일 한국시간 03:20 과거 미완성 회차 보완
     - cron: "20 18 * * *"
   workflow_dispatch:
   push:
     branches: [main]
     paths:
       - "scripts/update_lotto.py"
+      - "scripts/validate_lotto.py"
+      - "tests/**"
       - ".github/workflows/update_lotto.yml"
       - "requirements.txt"
 
@@ -22,17 +23,18 @@ permissions:
   contents: write
 
 concurrency:
-  group: lotto-official-data-update
+  group: lotto-official-safe-update
   cancel-in-progress: false
 
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
-
+    timeout-minutes: 60
     steps:
       - name: 저장소 가져오기
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
 
       - name: Python 설정
         uses: actions/setup-python@v5
@@ -46,34 +48,33 @@ jobs:
           pip install -r requirements.txt
           python -m playwright install --with-deps chromium
 
-      - name: 동행복권 공식 데이터 수집 및 검증
+      - name: 데이터 엔진 단위 테스트
+        run: python -m unittest discover -s tests -v
+
+      - name: 기존 JSON 사전 백업
+        run: cp data/lotto_results.json /tmp/lotto_results_before.json
+
+      - name: 동행복권 공식 데이터 수집
         run: python scripts/update_lotto.py
 
       - name: JSON 최종 검증
+        run: python scripts/validate_lotto.py
+
+      - name: 기존 회차 보호 검증
         run: |
           python - <<'PY'
           import json
-          from pathlib import Path
-
-          path = Path("data/lotto_results.json")
-          data = json.loads(path.read_text(encoding="utf-8"))
-          results = data.get("results")
-          assert isinstance(results, list) and results, "results가 비었습니다."
-          service = data.get("service", {})
-          assert service.get("collectorVersion") == "5.0-official-only-playwright"
-          assert service.get("sourcePolicy") == "official-dhlottery-only"
-          assert service.get("thirdPartySourceUsed") is False
-          latest_round = int(data["latestRound"])
-          latest = next(x for x in results if int(x["round"]) == latest_round)
-          numbers = latest["winning"]["numbers"]
-          bonus = latest["winning"]["bonus"]
-          assert len(numbers) == 6 and len(set(numbers)) == 6
-          assert all(1 <= int(v) <= 45 for v in numbers)
-          assert 1 <= int(bonus) <= 45 and bonus not in numbers
-          assert latest["prize"]["first"]["perGameAmount"]
-          assert latest["prize"]["first"]["winnerCount"] is not None
-          assert latest["prize"]["second"]["winnerCount"] is not None
-          print("공식 데이터 JSON 검증 완료:", latest_round, "회")
+          before = json.load(open('/tmp/lotto_results_before.json', encoding='utf-8'))
+          after = json.load(open('data/lotto_results.json', encoding='utf-8'))
+          b = {int(x['round']): x for x in before['results']}
+          a = {int(x['round']): x for x in after['results']}
+          repaired = set(after.get('service', {}).get('repairedDuplicateRounds', []))
+          for r, old in b.items():
+              if r in repaired:
+                  continue
+              assert r in a, f'{r}회가 삭제되었습니다.'
+              assert a[r].get('winning') == old.get('winning'), f'보호된 {r}회 번호가 변경되었습니다.'
+          print('기존 회차 번호 보호 검증 통과')
           PY
 
       - name: 변경사항 자동 커밋
@@ -85,8 +86,6 @@ jobs:
           git config user.name "mylotto-data-bot"
           git config user.email "actions@users.noreply.github.com"
           git add data/lotto_results.json
-          if [ -f data/lotto_results_backup.json ]; then
-            git add data/lotto_results_backup.json
-          fi
-          git commit -m "자동 갱신: 동행복권 공식 데이터"
+          [ -f data/lotto_results_backup.json ] && git add data/lotto_results_backup.json
+          git commit -m "자동 갱신: 공식 로또 데이터 안전 업데이트"
           git push
