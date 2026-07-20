@@ -23,12 +23,12 @@ KST = timezone(timedelta(hours=9))
 OFFICIAL_RESULTS_API = "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do"
 OFFICIAL_RESULTS_PAGE = "https://www.dhlottery.co.kr/lt645/result"
 OFFICIAL_STORES_PAGE = "https://www.dhlottery.co.kr/wnprchsplcsrch/home"
-COLLECTOR_VERSION = "8.0-official-results-and-winning-stores"
+COLLECTOR_VERSION = "8.0.3-official-store-parser-safety-fix"
 RESULT_SOURCE = "dhlottery-official-internal-json"
 STORE_SOURCE = "dhlottery-official-winning-store-page"
 REQUEST_TIMEOUT = 25
 RECENT_RECONCILE_COUNT = 60
-STORE_RETRY_ROUNDS = 12
+STORE_RETRY_ROUNDS = 4
 
 
 def now_iso() -> str:
@@ -47,6 +47,56 @@ def to_int(value: Any) -> int | None:
 def clean_text(value: Any) -> str:
     return re.sub(r"\s+", " ", str(value or "")).strip()
 
+
+
+GENERIC_STORE_NAMES = {
+    "1등", "2등", "3등", "판매점", "상호명", "조회된 내역이 없습니다.",
+    "자동", "수동", "반자동", "전국", "지도", "로또6/45", "로또 6/45",
+}
+GENERIC_STORE_ADDRESSES = {
+    "전국", "지도", "로또6/45", "로또 6/45", "주소", "소재지",
+}
+
+def is_real_store_name(value: Any) -> bool:
+    text = clean_text(value)
+    if not text or text in GENERIC_STORE_NAMES:
+        return False
+    if re.fullmatch(r"[123]등", text):
+        return False
+    if re.fullmatch(r"로또\s*6/?45", text, re.I):
+        return False
+    return len(text) >= 2
+
+def is_real_store_address(value: Any) -> bool:
+    text = clean_text(value)
+    if not text or text in GENERIC_STORE_ADDRESSES:
+        return False
+    if re.fullmatch(r"로또\s*6/?45", text, re.I):
+        return False
+    # 실제 국내 주소는 최소한 행정구역/도로명 단서와 숫자 또는 상세 지명을 포함합니다.
+    has_region = bool(re.search(r"(서울|부산|대구|인천|광주|대전|울산|세종|경기|강원|충북|충남|전북|전남|경북|경남|제주|특별시|광역시|특별자치시|특별자치도|\S+[시도군구읍면동]|\S+(?:로|길))", text))
+    return has_region and len(text) >= 6
+
+def sanitize_stores(stores: Any) -> list[dict[str, str]]:
+    if not isinstance(stores, list):
+        return []
+    cleaned: list[dict[str, str]] = []
+    seen: set[tuple[str, str, str]] = set()
+    for raw in stores:
+        if not isinstance(raw, dict):
+            continue
+        name = clean_text(raw.get("name"))
+        address = clean_text(raw.get("address"))
+        method = clean_text(raw.get("method"))
+        if not is_real_store_name(name) or not is_real_store_address(address):
+            continue
+        if method not in {"자동", "수동", "반자동"}:
+            method = ""
+        key = (name, address, method)
+        if key not in seen:
+            seen.add(key)
+            cleaned.append({"name": name, "method": method, "address": address})
+    return cleaned
 
 def valid_numbers(numbers: Any, bonus: Any) -> bool:
     if not isinstance(numbers, list) or len(numbers) != 6:
@@ -132,7 +182,7 @@ def normalize_existing(raw: dict[str, Any]) -> dict[str, Any]:
     if not isinstance(item.get("winning"), dict):
         item["winning"] = {"numbers": item.pop("numbers", []), "bonus": item.pop("bonus", None)}
     stores = item.get("stores", item.pop("firstPrizeStores", []) if "firstPrizeStores" in item else [])
-    item["stores"] = [s for s in stores if isinstance(s, dict)] if isinstance(stores, list) else []
+    item["stores"] = sanitize_stores(stores)
     item.setdefault("prize", {})
     item.setdefault("dataSource", {})
     return item
@@ -187,7 +237,7 @@ def normalize_store_record(record: dict[str, Any]) -> dict[str, str] | None:
     rank = clean_text(first_value(record, RANK_KEYS))
     if rank and "1" not in rank and "일" not in rank:
         return None
-    if not name or not address or name in {"상호명", "판매점", "조회된 내역이 없습니다."}:
+    if not is_real_store_name(name) or not is_real_store_address(address):
         return None
     if method not in {"자동", "수동", "반자동"}:
         method = ""
@@ -220,7 +270,7 @@ def dedupe_stores(stores: Iterable[dict[str, str]]) -> list[dict[str, str]]:
         name = clean_text(raw.get("name"))
         address = clean_text(raw.get("address"))
         method = normalize_method(raw.get("method"))
-        if not name or not address:
+        if not is_real_store_name(name) or not is_real_store_address(address):
             continue
         key = (name, address, method)
         if key not in seen:
@@ -259,7 +309,7 @@ def stores_from_html(html: str) -> list[dict[str, str]]:
                 parts = [clean_text(x) for x in container.stripped_strings]
                 method = normalize_method(text_node)
                 address = next((x for x in reversed(parts) if len(x) >= 6 and re.search(r"(시|도|군|구|읍|면|동|로|길)", x)), "")
-                name = next((x for x in parts if x not in {method, "1등", "지도"} and x != address and len(x) >= 2), "")
+                name = next((x for x in parts if x not in {method, "1등", "2등", "3등", "지도", "전국", "로또6/45", "로또 6/45"} and x != address and is_real_store_name(x)), "")
                 parsed = normalize_store_record({"name": name, "method": method, "address": address, "rank": "1등"})
                 if parsed:
                     stores.append(parsed)
@@ -395,8 +445,9 @@ def fetch_official_stores(round_no: int, expected_winners: int | None) -> tuple[
         stores = [s for s in stores if "동행복권" not in s["address"] and "인터넷" not in s["name"]]
         # 당첨 게임 수보다 판매점 행이 많을 수는 없습니다. 과도한 결과는 다른 표를 잘못 읽은 것입니다.
         if expected_winners and len(stores) > expected_winners:
+            bad_count = len(stores)
             stores = []
-            status = f"invalid-too-many:{len(stores)}/{expected_winners}"
+            status = f"invalid-too-many:{bad_count}/{expected_winners}"
         else:
             status = "ok" if stores else "pending"
 
