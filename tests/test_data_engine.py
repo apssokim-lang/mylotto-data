@@ -21,7 +21,7 @@ def official(round_no, nums, bonus, stores=None):
             "third": {"perGameAmount": 1000000, "winnerCount": 3000},
             "totalSalesAmount": 120000000000,
         },
-        "stores": stores if stores is not None else [{"name": "테스트복권", "method": "자동", "address": "서울시 테스트로 1"}],
+        "stores": stores if stores is not None else [{"name": "테스트복권", "method": "자동", "address": "서울특별시 강남구 테스트로 1"}],
         "dataSource": {"winning": mod.RESULT_SOURCE, "prize": mod.RESULT_SOURCE},
     }
 
@@ -72,7 +72,8 @@ class DataEngineTest(unittest.TestCase):
 
     def test_store_html_parser(self):
         html = """
-        <table><tbody><tr><td>1</td><td>행운복권</td><td>자동</td><td>광주 광산구 테스트로 1</td></tr></tbody></table>
+        <table><thead><tr><th>순번</th><th>상호명</th><th>구분</th><th>소재지</th></tr></thead>
+        <tbody><tr><td>1</td><td>행운복권</td><td>자동</td><td>광주 광산구 테스트로 1</td></tr></tbody></table>
         """
         self.assertEqual(mod.stores_from_html(html), [{"name": "행운복권", "method": "자동", "address": "광주 광산구 테스트로 1"}])
 
@@ -82,6 +83,22 @@ class DataEngineTest(unittest.TestCase):
             out, _ = mod.update_dataset(data, [official(1, [1,2,3,4,5,6], 7, stores=[])])
         self.assertEqual(out["results"][0]["stores"], [])
         self.assertEqual(out["results"][0]["dataSource"]["storesStatus"], "pending-official-page")
+
+    def test_numeric_store_name_rejected(self):
+        payload = {"data": {"list": [{"prchSplcNm": "104", "prchSplcAdr": "부산 북구 만덕대로 166", "ltWnTyNm": "자동", "rnk": "1"}]}}
+        self.assertEqual(mod.stores_from_json_payload(payload), [])
+
+    def test_shop_name_is_not_accepted_as_address(self):
+        self.assertFalse(mod.is_real_store_address("대륭로또판매점"))
+
+    def test_backfill_cursor_advances(self):
+        by_round = {}
+        for r in range(1181, 1234):
+            item = official(r, [1,2,3,4,5,6], 7, stores=[])
+            by_round[r] = item
+        targets, cursor = mod.choose_backfill_targets(by_round, 1233, 2, {"storeBackfillCursorRound": 1229})
+        self.assertEqual(targets, [1229, 1228])
+        self.assertEqual(cursor, 1227)
 
 
 if __name__ == "__main__":
