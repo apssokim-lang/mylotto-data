@@ -23,7 +23,7 @@ KST = timezone(timedelta(hours=9))
 OFFICIAL_RESULTS_API = "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do"
 OFFICIAL_RESULTS_PAGE = "https://www.dhlottery.co.kr/lt645/result"
 OFFICIAL_STORES_PAGE = "https://www.dhlottery.co.kr/wnprchsplcsrch/home"
-COLLECTOR_VERSION = "8.1.0-official-store-strict-parser-and-backfill"
+COLLECTOR_VERSION = "8.1.1-deterministic-tests-store-backfill"
 RESULT_SOURCE = "dhlottery-official-internal-json"
 STORE_SOURCE = "dhlottery-official-winning-store-page"
 REQUEST_TIMEOUT = 25
@@ -528,7 +528,12 @@ def choose_backfill_targets(
     return targets, round_no
 
 
-def update_dataset(data: dict[str, Any], official_items: list[dict[str, Any]]) -> tuple[dict[str, Any], list[int]]:
+def update_dataset(
+    data: dict[str, Any],
+    official_items: list[dict[str, Any]],
+    *,
+    collect_stores: bool = True,
+) -> tuple[dict[str, Any], list[int]]:
     result = copy.deepcopy(data)
     by_round: dict[int, dict[str, Any]] = {}
     for raw in result["results"]:
@@ -566,27 +571,31 @@ def update_dataset(data: dict[str, Any], official_items: list[dict[str, Any]]) -
     store_targets = list(dict.fromkeys([*recent_targets, *backfill_targets]))
 
     store_status: dict[str, str] = {}
-    for round_no in store_targets:
-        item = by_round[round_no]
-        winner_count = to_int(item.get("prize", {}).get("first", {}).get("winnerCount"))
-        try:
-            stores, status = fetch_official_stores(round_no, winner_count)
-            store_status[str(round_no)] = status
-            if stores:
-                before_stores = item.get("stores", [])
-                item["stores"] = stores
-                item.setdefault("dataSource", {})["stores"] = STORE_SOURCE
-                item["dataSource"]["storesVerifiedAt"] = now_iso()
-                if before_stores != stores:
-                    changed.append(round_no)
-                print(f"[{round_no}] 공식 1등 오프라인 판매점 {len(stores)}곳 수집")
-            else:
-                item.setdefault("dataSource", {})["storesStatus"] = "pending-official-page"
-                print(f"[{round_no}] 판매점 공식 화면 반영 대기 - 기존 데이터 유지")
-        except Exception as exc:
-            store_status[str(round_no)] = f"retry:{type(exc).__name__}"
-            item.setdefault("dataSource", {})["storesStatus"] = "retry-next-schedule"
-            print(f"[{round_no}] 판매점 수집 일시 실패 - 다음 예약 실행에서 재시도: {exc}")
+    if collect_stores:
+        for round_no in store_targets:
+            item = by_round[round_no]
+            winner_count = to_int(item.get("prize", {}).get("first", {}).get("winnerCount"))
+            try:
+                stores, status = fetch_official_stores(round_no, winner_count)
+                store_status[str(round_no)] = status
+                if stores:
+                    before_stores = item.get("stores", [])
+                    item["stores"] = stores
+                    item.setdefault("dataSource", {})["stores"] = STORE_SOURCE
+                    item["dataSource"]["storesVerifiedAt"] = now_iso()
+                    item["dataSource"].pop("storesStatus", None)
+                    if before_stores != stores:
+                        changed.append(round_no)
+                    print(f"[{round_no}] 공식 1등 오프라인 판매점 {len(stores)}곳 수집")
+                else:
+                    item.setdefault("dataSource", {})["storesStatus"] = "pending-official-page"
+                    print(f"[{round_no}] 판매점 공식 화면 반영 대기 - 기존 데이터 유지")
+            except Exception as exc:
+                store_status[str(round_no)] = f"retry:{type(exc).__name__}"
+                item.setdefault("dataSource", {})["storesStatus"] = "retry-next-schedule"
+                print(f"[{round_no}] 판매점 수집 일시 실패 - 다음 예약 실행에서 재시도: {exc}")
+    else:
+        store_status["testMode"] = "store-network-skipped"
 
     result["results"] = [by_round[r] for r in sorted(by_round, reverse=True)]
     result["latestRound"] = max(by_round)
