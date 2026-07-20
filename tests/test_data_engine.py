@@ -21,7 +21,7 @@ def official(round_no, nums, bonus, stores=None):
             "third": {"perGameAmount": 1000000, "winnerCount": 3000},
             "totalSalesAmount": 120000000000,
         },
-        "stores": stores if stores is not None else [{"name": "테스트복권", "method": "자동", "address": "서울특별시 강남구 테스트로 1"}],
+        "stores": stores if stores is not None else [{"name": "행운로또", "method": "자동", "address": "서울특별시 강남구 테헤란로 123"}],
         "dataSource": {"winning": mod.RESULT_SOURCE, "prize": mod.RESULT_SOURCE},
     }
 
@@ -31,7 +31,7 @@ class DataEngineTest(unittest.TestCase):
         old = official(1, [1,2,3,4,5,6], 7)
         data = {"schemaVersion": 2, "latestRound": 1, "results": [old], "service": {}}
         new = official(2, [8,9,10,11,12,13], 14)
-        out, changed = mod.update_dataset(data, [new, old])
+        out, changed = mod.update_dataset(data, [new, old], collect_stores=False)
         self.assertEqual(out["latestRound"], 2)
         self.assertIn(2, changed)
         self.assertEqual(next(x for x in out["results"] if x["round"] == 1)["winning"], old["winning"])
@@ -41,7 +41,7 @@ class DataEngineTest(unittest.TestCase):
         corrupted2 = official(2, [1,2,3,4,5,6], 7)
         data = {"schemaVersion": 2, "latestRound": 2, "results": [corrupted2, good1], "service": {}}
         good2 = official(2, [8,9,10,11,12,13], 14)
-        out, changed = mod.update_dataset(data, [good2, good1])
+        out, changed = mod.update_dataset(data, [good2, good1], collect_stores=False)
         self.assertIn(2, changed)
         self.assertEqual(out["results"][0]["winning"], good2["winning"])
 
@@ -67,15 +67,15 @@ class DataEngineTest(unittest.TestCase):
         self.assertEqual(item["date"], "2026-07-18")
 
     def test_store_json_parser(self):
-        payload = {"data": {"list": [{"prchSplcNm": "행운복권", "prchSplcAdr": "광주 광산구 테스트로 1", "ltWnTyNm": "자동", "rnk": "1"}]}}
-        self.assertEqual(mod.stores_from_json_payload(payload), [{"name": "행운복권", "method": "자동", "address": "광주 광산구 테스트로 1"}])
+        payload = {"data": {"list": [{"prchSplcNm": "행운복권", "prchSplcAdr": "광주광역시 광산구 무진대로 123", "ltWnTyNm": "자동", "rnk": "1"}]}}
+        self.assertEqual(mod.stores_from_json_payload(payload), [{"name": "행운복권", "method": "자동", "address": "광주광역시 광산구 무진대로 123"}])
 
     def test_store_html_parser(self):
         html = """
         <table><thead><tr><th>순번</th><th>상호명</th><th>구분</th><th>소재지</th></tr></thead>
-        <tbody><tr><td>1</td><td>행운복권</td><td>자동</td><td>광주 광산구 테스트로 1</td></tr></tbody></table>
+        <tbody><tr><td>1</td><td>행운복권</td><td>자동</td><td>광주광역시 광산구 무진대로 123</td></tr></tbody></table>
         """
-        self.assertEqual(mod.stores_from_html(html), [{"name": "행운복권", "method": "자동", "address": "광주 광산구 테스트로 1"}])
+        self.assertEqual(mod.stores_from_html(html), [{"name": "행운복권", "method": "자동", "address": "광주광역시 광산구 무진대로 123"}])
 
     def test_empty_store_is_never_written(self):
         data = {"schemaVersion": 2, "latestRound": 1, "results": [official(1, [1,2,3,4,5,6], 7, stores=[])], "service": {}}
