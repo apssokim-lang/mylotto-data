@@ -39,7 +39,7 @@
     "coreCompleteCount": 651,
     "coreIncompleteCount": 582,
     "officialApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
-    "lastCheckedAt": "2026-07-21T20:42:49+09:00",
+    "lastCheckedAt": "2026-07-21T20:43:13+09:00",
     "latestOfficialRound": 1233,
     "recentReconcileCount": 60,
     "changedRounds": [
@@ -294,7 +294,7 @@
         "totalSales": "dhlottery-official-page",
         "stores": "dhlottery-official-winning-store-json-api",
         "prize": "dhlottery-official-internal-json",
-        "verifiedAt": "2026-07-21T20:42:49+09:00",
+        "verifiedAt": "2026-07-21T20:43:13+09:00",
         "storesVerifiedAt": "2026-07-21T20:42:18+09:00",
         "storesParserVersion": "8.4.0-direct-selectLtWnShp-json"
       }
@@ -386,7 +386,7 @@
         "totalSales": "dhlottery-official-page",
         "winning": "dhlottery-official-internal-json",
         "stores": "dhlottery-official-winning-store-json-api",
-        "verifiedAt": "2026-07-21T20:42:49+09:00",
+        "verifiedAt": "2026-07-21T20:43:13+09:00",
         "storesVerifiedAt": "2026-07-21T20:42:18+09:00",
         "storesParserVersion": "8.4.0-direct-selectLtWnShp-json"
       }
@@ -513,7 +513,7 @@
         "totalSales": "dhlottery-official-page",
         "winning": "dhlottery-official-internal-json",
         "stores": "dhlottery-official-winning-store-json-api",
-        "verifiedAt": "2026-07-21T20:42:49+09:00",
+        "verifiedAt": "2026-07-21T20:43:13+09:00",
         "storesVerifiedAt": "2026-07-21T20:42:19+09:00",
         "storesParserVersion": "8.4.0-direct-selectLtWnShp-json"
       }
@@ -635,7 +635,7 @@
         "totalSales": "dhlottery-official-page",
         "winning": "dhlottery-official-internal-json",
         "stores": "dhlottery-official-winning-store-json-api",
-        "verifiedAt": "2026-07-21T20:42:49+09:00",
+        "verifiedAt": "2026-07-21T20:43:13+09:00",
         "storesVerifiedAt": "2026-07-21T20:42:19+09:00",
         "storesParserVersion": "8.4.0-direct-selectLtWnShp-json"
       }
@@ -716,7 +716,7 @@
         "rankTable": "pyony-round-page",
         "totalSales": "verified-public-report",
         "winning": "dhlottery-official-internal-json",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -810,7 +810,7 @@
         "prize": "dhlottery-official-internal-json",
         "totalSales": "verified-public-report",
         "stores": "verified-pyony",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -851,7 +851,7 @@
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
-        "verifiedAt": "2026-07-21T20:42:49+09:00",
+        "verifiedAt": "2026-07-21T20:43:13+09:00",
         "storesStatus": "retry-next-schedule"
       }
     },
@@ -893,7 +893,7 @@
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
-        "verifiedAt": "2026-07-21T20:42:49+09:00",
+        "verifiedAt": "2026-07-21T20:43:13+09:00",
         "storesStatus": "pending-official-page"
       }
     },
@@ -935,7 +935,7 @@
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
-        "verifiedAt": "2026-07-21T20:42:49+09:00",
+        "verifiedAt": "2026-07-21T20:43:13+09:00",
         "storesStatus": "retry-next-schedule"
       }
     },
@@ -977,7 +977,7 @@
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
-        "verifiedAt": "2026-07-21T20:42:49+09:00",
+        "verifiedAt": "2026-07-21T20:43:13+09:00",
         "storesStatus": "retry-next-schedule"
       }
     },
@@ -1019,7 +1019,7 @@
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
-        "verifiedAt": "2026-07-21T20:42:49+09:00",
+        "verifiedAt": "2026-07-21T20:43:13+09:00",
         "storesStatus": "pending-official-page"
       }
     },
@@ -1072,7 +1072,7 @@
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
-        "verifiedAt": "2026-07-21T20:42:49+09:00",
+        "verifiedAt": "2026-07-21T20:43:13+09:00",
         "storesVerifiedAt": "2026-07-20T21:37:16+09:00"
       }
     },
@@ -1114,7 +1114,7 @@
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
-        "verifiedAt": "2026-07-21T20:42:49+09:00",
+        "verifiedAt": "2026-07-21T20:43:13+09:00",
         "storesStatus": "pending-official-page"
       }
     },
@@ -1156,7 +1156,7 @@
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
-        "verifiedAt": "2026-07-21T20:42:49+09:00",
+        "verifiedAt": "2026-07-21T20:43:13+09:00",
         "storesStatus": "retry-next-schedule"
       }
     },
@@ -1198,7 +1198,7 @@
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
-        "verifiedAt": "2026-07-21T20:42:49+09:00",
+        "verifiedAt": "2026-07-21T20:43:13+09:00",
         "storesStatus": "retry-next-schedule"
       }
     },
@@ -1240,7 +1240,7 @@
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
-        "verifiedAt": "2026-07-21T20:42:49+09:00",
+        "verifiedAt": "2026-07-21T20:43:13+09:00",
         "storesStatus": "retry-next-schedule"
       }
     },
@@ -1353,7 +1353,7 @@
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
-        "verifiedAt": "2026-07-21T20:42:49+09:00",
+        "verifiedAt": "2026-07-21T20:43:13+09:00",
         "storesVerifiedAt": "2026-07-21T20:42:20+09:00",
         "storesParserVersion": "8.4.0-direct-selectLtWnShp-json"
       }
@@ -1452,8 +1452,8 @@
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
-        "verifiedAt": "2026-07-21T20:42:49+09:00",
-        "storesVerifiedAt": "2026-07-21T20:42:49+09:00",
+        "verifiedAt": "2026-07-21T20:43:13+09:00",
+        "storesVerifiedAt": "2026-07-21T20:43:13+09:00",
         "storesParserVersion": "8.4.0-direct-selectLtWnShp-json"
       }
     },
@@ -1495,7 +1495,7 @@
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -1587,7 +1587,7 @@
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -1714,7 +1714,7 @@
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -1754,7 +1754,7 @@
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -1794,7 +1794,7 @@
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -1834,7 +1834,7 @@
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -1874,7 +1874,7 @@
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -1914,7 +1914,7 @@
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -1954,7 +1954,7 @@
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -1994,7 +1994,7 @@
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -2034,7 +2034,7 @@
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -2074,7 +2074,7 @@
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -2114,7 +2114,7 @@
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -2154,7 +2154,7 @@
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -2194,7 +2194,7 @@
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -2234,7 +2234,7 @@
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -2274,7 +2274,7 @@
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -2314,7 +2314,7 @@
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -2354,7 +2354,7 @@
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -2394,7 +2394,7 @@
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -2434,7 +2434,7 @@
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -2474,7 +2474,7 @@
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -2514,7 +2514,7 @@
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -2553,7 +2553,7 @@
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -2592,7 +2592,7 @@
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -2631,7 +2631,7 @@
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
         "prize": "dhlottery-official-internal-json",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -2670,7 +2670,7 @@
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
         "prize": "dhlottery-official-internal-json",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -2709,7 +2709,7 @@
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
         "prize": "dhlottery-official-internal-json",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -2748,7 +2748,7 @@
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
         "prize": "dhlottery-official-internal-json",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -2787,7 +2787,7 @@
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
         "prize": "dhlottery-official-internal-json",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -2826,7 +2826,7 @@
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
         "prize": "dhlottery-official-internal-json",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -2865,7 +2865,7 @@
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
         "prize": "dhlottery-official-internal-json",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -2904,7 +2904,7 @@
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
         "prize": "dhlottery-official-internal-json",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -2943,7 +2943,7 @@
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
         "prize": "dhlottery-official-internal-json",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -2982,7 +2982,7 @@
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
         "prize": "dhlottery-official-internal-json",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -3021,7 +3021,7 @@
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
         "prize": "dhlottery-official-internal-json",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -3060,7 +3060,7 @@
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
         "prize": "dhlottery-official-internal-json",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -3099,7 +3099,7 @@
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
         "prize": "dhlottery-official-internal-json",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -3138,7 +3138,7 @@
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
         "prize": "dhlottery-official-internal-json",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -3177,7 +3177,7 @@
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
         "prize": "dhlottery-official-internal-json",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -3216,7 +3216,7 @@
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
         "prize": "dhlottery-official-internal-json",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
@@ -3255,7 +3255,7 @@
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
         "prize": "dhlottery-official-internal-json",
-        "verifiedAt": "2026-07-21T20:42:49+09:00"
+        "verifiedAt": "2026-07-21T20:43:13+09:00"
       }
     },
     {
