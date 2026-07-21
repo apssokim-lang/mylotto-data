@@ -77,37 +77,42 @@ jobs:
           git config user.name "mylotto-data-bot"
           git config user.email "actions@users.noreply.github.com"
 
-          commit_and_push() {
+          # Preserve the already collected and validated files. Do not call the
+          # official site again during push-conflict handling; that previously
+          # caused a second network timeout even though collection had succeeded.
+          tmp_dir="$(mktemp -d)"
+          cp data/lotto_results.json "$tmp_dir/lotto_results.json"
+          if [ -f data/lotto_results_backup.json ]; then
+            cp data/lotto_results_backup.json "$tmp_dir/lotto_results_backup.json"
+          fi
+
+          restore_generated_data() {
+            cp "$tmp_dir/lotto_results.json" data/lotto_results.json
+            if [ -f "$tmp_dir/lotto_results_backup.json" ]; then
+              cp "$tmp_dir/lotto_results_backup.json" data/lotto_results_backup.json
+            fi
+          }
+
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git reset --hard origin/main
+            restore_generated_data
+            python scripts/validate_lotto.py
+
             if git diff --quiet -- data/lotto_results.json data/lotto_results_backup.json; then
               echo "No data changes."
-              return 0
+              exit 0
             fi
 
             git add data/lotto_results.json data/lotto_results_backup.json
             git commit -m "Auto update official lotto results and winning stores"
-            git push origin HEAD:main
-          }
 
-          # A manual edit or another workflow may have updated main while this job was running.
-          # In that case, discard only this job's generated copy, move to the newest main,
-          # regenerate from the newest JSON, validate again, and then push.
-          for attempt in 1 2 3; do
-            git fetch origin main
-
-            if [ "$(git rev-parse HEAD)" != "$(git rev-parse origin/main)" ]; then
-              echo "Remote main changed during this run. Regenerating on latest main (attempt ${attempt})."
-              git reset --hard origin/main
-              python scripts/update_lotto.py
-              python scripts/validate_lotto.py
-            fi
-
-            if commit_and_push; then
+            if git push origin HEAD:main; then
               echo "Data commit completed."
               exit 0
             fi
 
-            echo "Push race detected. Retrying with latest main..."
-            git reset --hard origin/main
+            echo "Push race detected. Restoring the validated result on latest main (attempt ${attempt}/3)."
             sleep $((attempt * 3))
           done
 
