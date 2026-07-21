@@ -23,8 +23,8 @@ KST = timezone(timedelta(hours=9))
 OFFICIAL_RESULTS_API = "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do"
 OFFICIAL_RESULTS_PAGE = "https://www.dhlottery.co.kr/lt645/result"
 OFFICIAL_STORES_PAGE = "https://www.dhlottery.co.kr/wnprchsplcsrch/home"
-COLLECTOR_VERSION = "8.2.0-correlated-official-store-response"
-STORE_PARSER_VERSION = "8.2.0-xhr-correlated"
+COLLECTOR_VERSION = "8.3.0-official-store-custom-controls"
+STORE_PARSER_VERSION = "8.3.0-custom-controls-and-search-response"
 RESULT_SOURCE = "dhlottery-official-internal-json"
 STORE_SOURCE = "dhlottery-official-winning-store-page"
 REQUEST_TIMEOUT = 25
@@ -359,31 +359,139 @@ def _request_has_round(request: Any, round_no: int) -> bool:
     return bool(re.search(rf"(?<!\d){round_no}(?!\d)", haystack))
 
 
-def _response_to_stores(response: Any) -> list[dict[str, str]]:
+def _payload_has_round(value: Any, round_no: int) -> bool:
+    try:
+        text = value if isinstance(value, str) else json.dumps(value, ensure_ascii=False)
+    except Exception:
+        return False
+    return bool(re.search(rf"(?<!\d){round_no}(?!\d)", text))
+
+
+def _response_to_stores_and_text(response: Any) -> tuple[list[dict[str, str]], str]:
     try:
         content_type = (response.headers.get("content-type") or "").lower()
     except Exception:
         content_type = ""
     try:
         if "json" in content_type:
-            return stores_from_json_payload(response.json())
+            payload = response.json()
+            return stores_from_json_payload(payload), json.dumps(payload, ensure_ascii=False)
         text = response.text()
         if text.lstrip().startswith(("{", "[")):
             try:
-                return stores_from_json_payload(json.loads(text))
+                payload = json.loads(text)
+                return stores_from_json_payload(payload), text
             except Exception:
                 pass
         if "<table" in text.lower() or "상호명" in text or "소재지" in text:
-            return stores_from_html(text)
+            return stores_from_html(text), text
+        return [], text
     except Exception:
-        return []
-    return []
+        return [], ""
+
+
+def _click_first_visible(page: Any, selectors: Iterable[str]) -> bool:
+    for selector in selectors:
+        loc = page.locator(selector)
+        try:
+            count = loc.count()
+        except Exception:
+            continue
+        for i in range(count):
+            item = loc.nth(i)
+            try:
+                if item.is_visible():
+                    item.click(timeout=4000)
+                    return True
+            except Exception:
+                continue
+    return False
+
+
+def _select_round_control(page: Any, round_no: int) -> tuple[bool, str]:
+    # 1) 실제 <select>가 있는 경우
+    ok, selected = _select_exact_option(page, re.compile(rf"^\s*{round_no}\s*회?\s*$"))
+    if ok:
+        return True, selected
+
+    # 2) 커스텀 드롭다운: '선택' 버튼/combobox를 하나씩 열어 원하는 회차를 찾는다.
+    triggers = page.locator('[role="combobox"], button:has-text("선택"), [aria-haspopup="listbox"]')
+    try:
+        trigger_count = triggers.count()
+    except Exception:
+        trigger_count = 0
+    target_patterns = [
+        re.compile(rf"^\s*{round_no}\s*회\s*$"),
+        re.compile(rf"^\s*{round_no}\s*$"),
+    ]
+    for i in range(trigger_count):
+        trigger = triggers.nth(i)
+        try:
+            if not trigger.is_visible():
+                continue
+            trigger.click(timeout=3000)
+            page.wait_for_timeout(300)
+            for pattern in target_patterns:
+                candidate = page.get_by_text(pattern, exact=False)
+                for j in range(candidate.count()):
+                    item = candidate.nth(j)
+                    try:
+                        text = clean_text(item.inner_text())
+                        if item.is_visible() and pattern.search(text):
+                            item.click(timeout=3000)
+                            return True, text
+                    except Exception:
+                        continue
+            page.keyboard.press("Escape")
+        except Exception:
+            try:
+                page.keyboard.press("Escape")
+            except Exception:
+                pass
+    return False, ""
+
+
+def _choose_first_rank(page: Any) -> bool:
+    # radio/label/button/tab 등 실제 UI 구조를 모두 지원한다.
+    selectors = [
+        'label:has-text("1등")',
+        'button:has-text("1등")',
+        '[role="tab"]:has-text("1등")',
+        '[role="radio"]:has-text("1등")',
+        'input[type="radio"][value="1"]',
+        'input[type="radio"][value="01"]',
+    ]
+    if _click_first_visible(page, selectors):
+        return True
+    # 텍스트 노드 직접 클릭 fallback
+    text = page.get_by_text(re.compile(r"^\s*1등\s*$"), exact=False)
+    for i in range(text.count()):
+        try:
+            if text.nth(i).is_visible():
+                text.nth(i).click(timeout=3000)
+                return True
+        except Exception:
+            continue
+    return False
+
+
+def _choose_lotto645(page: Any) -> bool:
+    selectors = [
+        'label:has-text("로또6/45")',
+        'button:has-text("로또6/45")',
+        '[role="tab"]:has-text("로또6/45")',
+        'a:has-text("로또6/45")',
+    ]
+    return _click_first_visible(page, selectors)
 
 
 def fetch_official_stores(round_no: int, expected_winners: int | None) -> tuple[list[dict[str, str]], str]:
-    """공식 검색 요청과 정확히 연결된 응답만 사용합니다.
+    """동행복권 공식 '당첨 판매점 조회' 화면의 실제 검색 결과만 수집합니다.
 
-    화면 전체 DOM, 추천 판매점, 샘플 카드, 필터 문구는 절대 판매점 데이터로 읽지 않습니다.
+    페이지는 기본 HTML select가 아니라 radio/tab/custom combobox를 혼용하므로
+    특정 태그에 의존하지 않고 실제 보이는 컨트롤을 조작합니다. 검색 버튼 클릭 이후에
+    발생한 응답만 수집하며, 요청/응답에 회차가 있거나 UI에서 회차 선택이 검증된 경우만
+    결과를 허용합니다.
     """
     from playwright.sync_api import sync_playwright
 
@@ -391,6 +499,7 @@ def fetch_official_stores(round_no: int, expected_winners: int | None) -> tuple[
     captured: list[dict[str, str]] = []
     response_notes: list[str] = []
     search_started = False
+    round_selected = False
 
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True, args=["--disable-dev-shm-usage", "--no-sandbox"])
@@ -402,53 +511,45 @@ def fetch_official_stores(round_no: int, expected_winners: int | None) -> tuple[
         page = context.new_page()
 
         def on_response(response: Any) -> None:
-            if not search_started or not _request_has_round(response.request, round_no):
+            if not search_started:
                 return
-            found = _response_to_stores(response)
-            if found:
+            found, raw_text = _response_to_stores_and_text(response)
+            if not found:
+                return
+            correlated = _request_has_round(response.request, round_no) or _payload_has_round(raw_text, round_no)
+            # 공식 UI에서 정확한 회차를 선택한 뒤 검색한 응답은 회차를 echo하지 않을 수 있다.
+            if correlated or round_selected:
                 captured.extend(found)
-                response_notes.append(f"{response.request.method} {response.url}")
+                response_notes.append(f"{response.request.method} {response.url} stores={len(found)} correlated={correlated}")
 
         page.on("response", on_response)
-        page.goto(OFFICIAL_STORES_PAGE, wait_until="domcontentloaded", timeout=45000)
-        page.wait_for_timeout(1200)
+        page.goto(OFFICIAL_STORES_PAGE, wait_until="domcontentloaded", timeout=60000)
+        page.wait_for_timeout(1800)
         body = clean_text(page.locator("body").inner_text())
         if any(x in body for x in ("서비스 접근 대기", "접속이 차단", "접속이 불가")):
             raise RuntimeError("official-store-page-access-wait-or-blocked")
 
-        round_ok, selected_round = _select_exact_option(page, re.compile(rf"^\s*{round_no}\s*회?\s*$"))
-        rank_ok, selected_rank = _select_exact_option(page, re.compile(r"^\s*1등\s*$"))
-        product_ok, selected_product = _select_exact_option(page, re.compile(r"^\s*로또\s*6/?45\s*$", re.I))
+        _choose_lotto645(page)  # 기본 탭이면 클릭 실패해도 무방
+        rank_ok = _choose_first_rank(page)
+        round_ok, selected_round = _select_round_control(page, round_no)
+        round_selected = round_ok
 
-        if not round_ok:
-            raise RuntimeError(f"requested-round-option-not-found:{round_no};selected={selected_round!r}")
         if not rank_ok:
-            raise RuntimeError(f"first-rank-option-not-found:selected={selected_rank!r}")
-        # 상품이 select가 아닌 탭으로 고정된 화면도 있으므로, 본문에 로또6/45가 있으면 허용합니다.
-        if not product_ok and not re.search(r"로또\s*6/?45", body, re.I):
-            raise RuntimeError(f"lotto645-option-not-found:selected={selected_product!r}")
+            raise RuntimeError("first-rank-control-not-clicked")
+        if not round_ok:
+            raise RuntimeError(f"requested-round-control-not-selected:{round_no};selected={selected_round!r}")
 
         search_started = True
-        clicked = False
-        for selector in [
+        clicked = _click_first_visible(page, [
             'button:has-text("검색")', 'button:has-text("조회")',
             'input[type="submit"][value*="검색"]', 'input[type="button"][value*="검색"]',
-        ]:
-            loc = page.locator(selector)
-            for i in reversed(range(loc.count())):
-                try:
-                    if loc.nth(i).is_visible():
-                        loc.nth(i).click(timeout=3000)
-                        clicked = True
-                        break
-                except Exception:
-                    continue
-            if clicked:
-                break
+            '[role="button"]:has-text("검색")',
+        ])
         if not clicked:
             raise RuntimeError("official-search-button-not-clicked")
 
-        page.wait_for_timeout(7000)
+        # 네트워크 응답과 렌더링을 모두 기다린다.
+        page.wait_for_timeout(9000)
         stores = dedupe_stores(captured)
         stores = [s for s in stores if "인터넷" not in s["name"] and "동행복권" not in s["address"]]
 
@@ -456,9 +557,9 @@ def fetch_official_stores(round_no: int, expected_winners: int | None) -> tuple[
             status = f"invalid-too-many:{len(stores)}/{expected_winners}"
             stores = []
         elif stores:
-            status = "ok-correlated-official-response"
+            status = "ok-official-search-response"
         else:
-            status = "pending-no-correlated-response"
+            status = "pending-no-valid-official-search-response"
 
         if not stores:
             page.screenshot(path=str(DEBUG_DIR / f"stores_{round_no}.png"), full_page=True)
