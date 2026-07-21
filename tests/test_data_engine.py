@@ -100,6 +100,24 @@ class DataEngineTest(unittest.TestCase):
         self.assertEqual(targets, [1229, 1228])
         self.assertEqual(cursor, 1227)
 
+    def test_legacy_recent_store_data_is_cleared_before_retry(self):
+        item = official(1233, [2,7,20,25,37,40], 29, stores=[
+            {"name": "진양호", "method": "반자동", "address": "경상남도 진주시 남강로 58 1층"}
+        ])
+        item["dataSource"]["stores"] = mod.STORE_SOURCE
+        data = {"schemaVersion": 2, "latestRound": 1233, "results": [item], "service": {}}
+        with patch.object(mod, "fetch_official_stores", return_value=([], "pending-no-correlated-response")):
+            out, changed = mod.update_dataset(data, [official(1233, [2,7,20,25,37,40], 29, stores=[])])
+        self.assertEqual(out["results"][0]["stores"], [])
+        self.assertIn(1233, changed)
+
+    def test_store_data_trusted_only_with_current_parser_version(self):
+        item = official(1233, [2,7,20,25,37,40], 29)
+        item["dataSource"]["stores"] = mod.STORE_SOURCE
+        self.assertFalse(mod.store_data_is_trusted(item))
+        item["dataSource"]["storesParserVersion"] = mod.STORE_PARSER_VERSION
+        self.assertTrue(mod.store_data_is_trusted(item))
+
 
 if __name__ == "__main__":
     unittest.main()
