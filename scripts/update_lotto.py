@@ -23,10 +23,11 @@ KST = timezone(timedelta(hours=9))
 OFFICIAL_RESULTS_API = "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do"
 OFFICIAL_RESULTS_PAGE = "https://www.dhlottery.co.kr/lt645/result"
 OFFICIAL_STORES_PAGE = "https://www.dhlottery.co.kr/wnprchsplcsrch/home"
-COLLECTOR_VERSION = "8.3.0-official-store-custom-controls"
-STORE_PARSER_VERSION = "8.3.0-custom-controls-and-search-response"
+OFFICIAL_STORES_API = "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do"
+COLLECTOR_VERSION = "8.4.0-official-store-json-api-direct"
+STORE_PARSER_VERSION = "8.4.0-direct-selectLtWnShp-json"
 RESULT_SOURCE = "dhlottery-official-internal-json"
-STORE_SOURCE = "dhlottery-official-winning-store-page"
+STORE_SOURCE = "dhlottery-official-winning-store-json-api"
 REQUEST_TIMEOUT = 25
 RECENT_RECONCILE_COUNT = 60
 STORE_RETRY_ROUNDS = 4
@@ -486,91 +487,60 @@ def _choose_lotto645(page: Any) -> bool:
 
 
 def fetch_official_stores(round_no: int, expected_winners: int | None) -> tuple[list[dict[str, str]], str]:
-    """동행복권 공식 '당첨 판매점 조회' 화면의 실제 검색 결과만 수집합니다.
+    """HAR에서 확인한 동행복권 공식 판매점 JSON API를 직접 호출합니다."""
+    session = make_session()
+    session.headers.update({
+        "Referer": OFFICIAL_STORES_PAGE,
+        "Accept": "application/json, text/javascript, */*; q=0.01",
+        "X-Requested-With": "XMLHttpRequest",
+    })
+    params = {
+        "srchWnShpRnk": "1",
+        "srchLtEpsd": str(round_no),
+        "srchShpLctn": "",
+        "_": str(int(time.time() * 1000)),
+    }
+    response = session.get(OFFICIAL_STORES_API, params=params, timeout=REQUEST_TIMEOUT)
+    response.raise_for_status()
+    content_type = (response.headers.get("content-type") or "").lower()
+    if "json" not in content_type and not response.text.lstrip().startswith("{"):
+        raise RuntimeError(f"공식 판매점 API가 JSON이 아닌 응답을 반환했습니다: {content_type or 'unknown'}")
+    try:
+        payload = response.json()
+    except ValueError as exc:
+        raise RuntimeError("공식 판매점 API JSON 해석에 실패했습니다.") from exc
 
-    페이지는 기본 HTML select가 아니라 radio/tab/custom combobox를 혼용하므로
-    특정 태그에 의존하지 않고 실제 보이는 컨트롤을 조작합니다. 검색 버튼 클릭 이후에
-    발생한 응답만 수집하며, 요청/응답에 회차가 있거나 UI에서 회차 선택이 검증된 경우만
-    결과를 허용합니다.
-    """
-    from playwright.sync_api import sync_playwright
+    data = payload.get("data", {}) if isinstance(payload, dict) else {}
+    rows = data.get("list", []) if isinstance(data, dict) else []
+    total = to_int(data.get("total")) if isinstance(data, dict) else None
+    if not isinstance(rows, list):
+        raise RuntimeError("공식 판매점 API의 data.list 형식이 올바르지 않습니다.")
 
-    DEBUG_DIR.mkdir(parents=True, exist_ok=True)
-    captured: list[dict[str, str]] = []
-    response_notes: list[str] = []
-    search_started = False
-    round_selected = False
+    stores: list[dict[str, str]] = []
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+        name = clean_text(row.get("shpNm"))
+        method = normalize_method(row.get("atmtPsvYnTxt"))
+        address = clean_text(row.get("shpAddr"))
+        if not address:
+            address = clean_text(" ".join(str(row.get(k) or "") for k in (
+                "tm1ShpLctnAddr", "tm2ShpLctnAddr", "tm3ShpLctnAddr", "tm4ShpLctnAddr"
+            )))
+        # 앱은 오프라인 판매점만 표시합니다.
+        if "인터넷" in name or "동행복권" in name or "인터넷" in address:
+            continue
+        if is_real_store_name(name) and is_real_store_address(address):
+            stores.append({"name": name, "method": method if method in {"자동", "수동", "반자동"} else "", "address": address})
 
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True, args=["--disable-dev-shm-usage", "--no-sandbox"])
-        context = browser.new_context(
-            locale="ko-KR", timezone_id="Asia/Seoul",
-            user_agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/126 Safari/537.36",
-            viewport={"width": 1440, "height": 1200},
-        )
-        page = context.new_page()
-
-        def on_response(response: Any) -> None:
-            if not search_started:
-                return
-            found, raw_text = _response_to_stores_and_text(response)
-            if not found:
-                return
-            correlated = _request_has_round(response.request, round_no) or _payload_has_round(raw_text, round_no)
-            # 공식 UI에서 정확한 회차를 선택한 뒤 검색한 응답은 회차를 echo하지 않을 수 있다.
-            if correlated or round_selected:
-                captured.extend(found)
-                response_notes.append(f"{response.request.method} {response.url} stores={len(found)} correlated={correlated}")
-
-        page.on("response", on_response)
-        page.goto(OFFICIAL_STORES_PAGE, wait_until="domcontentloaded", timeout=60000)
-        page.wait_for_timeout(1800)
-        body = clean_text(page.locator("body").inner_text())
-        if any(x in body for x in ("서비스 접근 대기", "접속이 차단", "접속이 불가")):
-            raise RuntimeError("official-store-page-access-wait-or-blocked")
-
-        _choose_lotto645(page)  # 기본 탭이면 클릭 실패해도 무방
-        rank_ok = _choose_first_rank(page)
-        round_ok, selected_round = _select_round_control(page, round_no)
-        round_selected = round_ok
-
-        if not rank_ok:
-            raise RuntimeError("first-rank-control-not-clicked")
-        if not round_ok:
-            raise RuntimeError(f"requested-round-control-not-selected:{round_no};selected={selected_round!r}")
-
-        search_started = True
-        clicked = _click_first_visible(page, [
-            'button:has-text("검색")', 'button:has-text("조회")',
-            'input[type="submit"][value*="검색"]', 'input[type="button"][value*="검색"]',
-            '[role="button"]:has-text("검색")',
-        ])
-        if not clicked:
-            raise RuntimeError("official-search-button-not-clicked")
-
-        # 네트워크 응답과 렌더링을 모두 기다린다.
-        page.wait_for_timeout(9000)
-        stores = dedupe_stores(captured)
-        stores = [s for s in stores if "인터넷" not in s["name"] and "동행복권" not in s["address"]]
-
-        if expected_winners and len(stores) > expected_winners:
-            status = f"invalid-too-many:{len(stores)}/{expected_winners}"
-            stores = []
-        elif stores:
-            status = "ok-official-search-response"
-        else:
-            status = "pending-no-valid-official-search-response"
-
-        if not stores:
-            page.screenshot(path=str(DEBUG_DIR / f"stores_{round_no}.png"), full_page=True)
-            (DEBUG_DIR / f"stores_{round_no}.html").write_text(page.content(), encoding="utf-8")
-            (DEBUG_DIR / f"stores_{round_no}_selects.json").write_text(
-                json.dumps(_option_snapshot(page), ensure_ascii=False, indent=2), encoding="utf-8"
-            )
-            (DEBUG_DIR / f"stores_{round_no}_responses.txt").write_text("\n".join(response_notes), encoding="utf-8")
-        context.close()
-        browser.close()
-    return stores, status
+    stores = dedupe_stores(stores)
+    if total == 0:
+        return [], "pending-official-api-empty"
+    if not stores:
+        return [], "pending-no-valid-offline-store"
+    if expected_winners and len(stores) > expected_winners:
+        return [], f"invalid-too-many:{len(stores)}/{expected_winners}"
+    return stores, f"ok-official-json-api:{len(stores)}"
 
 def load_dataset() -> dict[str, Any]:
     if not DATA_PATH.exists():
@@ -722,6 +692,7 @@ def update_dataset(
         "thirdPartySourceUsed": False,
         "officialResultsApi": OFFICIAL_RESULTS_API,
         "officialWinningStoresPage": OFFICIAL_STORES_PAGE,
+        "officialWinningStoresApi": OFFICIAL_STORES_API,
         "storesParserVersion": STORE_PARSER_VERSION,
         "lastCheckedAt": now_iso(),
         "latestOfficialRound": latest_official,
