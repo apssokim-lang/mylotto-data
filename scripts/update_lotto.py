@@ -23,13 +23,14 @@ KST = timezone(timedelta(hours=9))
 OFFICIAL_RESULTS_API = "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do"
 OFFICIAL_RESULTS_PAGE = "https://www.dhlottery.co.kr/lt645/result"
 OFFICIAL_STORES_PAGE = "https://www.dhlottery.co.kr/wnprchsplcsrch/home"
-COLLECTOR_VERSION = "8.1.1-deterministic-tests-store-backfill"
+COLLECTOR_VERSION = "8.2.0-correlated-official-store-response"
+STORE_PARSER_VERSION = "8.2.0-xhr-correlated"
 RESULT_SOURCE = "dhlottery-official-internal-json"
 STORE_SOURCE = "dhlottery-official-winning-store-page"
 REQUEST_TIMEOUT = 25
 RECENT_RECONCILE_COUNT = 60
 STORE_RETRY_ROUNDS = 4
-STORE_BACKFILL_BATCH = max(1, int(os.getenv("STORE_BACKFILL_BATCH", "2")))
+STORE_BACKFILL_BATCH = max(1, int(os.getenv("STORE_BACKFILL_BATCH", "1")))
 STORE_BACKFILL_MIN_ROUND = max(1, int(os.getenv("STORE_BACKFILL_MIN_ROUND", "1")))
 
 
@@ -54,6 +55,12 @@ def clean_text(value: Any) -> str:
 GENERIC_STORE_NAMES = {
     "1등", "2등", "3등", "판매점", "상호명", "조회된 내역이 없습니다.",
     "자동", "수동", "반자동", "전국", "지도", "로또6/45", "로또 6/45",
+    "서울", "서울특별시", "부산", "부산광역시", "대구", "대구광역시",
+    "인천", "인천광역시", "광주", "광주광역시", "대전", "대전광역시",
+    "울산", "울산광역시", "세종", "세종특별자치시", "경기", "경기도",
+    "강원", "강원특별자치도", "충북", "충청북도", "충남", "충청남도",
+    "전북", "전북특별자치도", "전남", "전라남도", "경북", "경상북도",
+    "경남", "경상남도", "제주", "제주특별자치도",
 }
 GENERIC_STORE_ADDRESSES = {
     "전국", "지도", "로또6/45", "로또 6/45", "주소", "소재지",
@@ -325,147 +332,144 @@ def stores_from_html(html: str) -> list[dict[str, str]]:
     return dedupe_stores(stores)
 
 
-def _select_option_semantic(page: Any, patterns: list[re.Pattern[str]], desired: re.Pattern[str]) -> bool:
-    selects = page.locator("select")
-    for i in range(selects.count()):
-        select = selects.nth(i)
-        texts = [clean_text(x) for x in select.locator("option").all_inner_texts()]
-        joined = " | ".join(texts)
-        if not any(p.search(joined) for p in patterns):
-            continue
-        options = select.locator("option")
-        for j in range(options.count()):
-            option = options.nth(j)
-            text = clean_text(option.inner_text())
-            if desired.search(text):
-                value = option.get_attribute("value")
-                if value is not None:
-                    select.select_option(value=value)
-                else:
-                    select.select_option(label=text)
-                return True
-    return False
+def _option_snapshot(page: Any) -> list[dict[str, Any]]:
+    return page.locator("select").evaluate_all(
+        """els => els.map((el, index) => ({
+            index, name: el.name || '', id: el.id || '',
+            options: Array.from(el.options).map(o => ({text: (o.textContent || '').trim(), value: o.value, selected: o.selected}))
+        }))"""
+    )
 
 
-def _click_text_option(page: Any, trigger_patterns: list[str], desired_pattern: re.Pattern[str]) -> bool:
-    for trigger in trigger_patterns:
-        loc = page.get_by_text(re.compile(trigger), exact=False)
-        if loc.count() == 0:
+def _select_exact_option(page: Any, matcher: re.Pattern[str]) -> tuple[bool, str]:
+    for info in _option_snapshot(page):
+        matches = [o for o in info["options"] if matcher.search(clean_text(o.get("text")))]
+        if len(matches) != 1:
             continue
-        try:
-            loc.first.click(timeout=2500)
-            page.wait_for_timeout(300)
-            option = page.get_by_text(desired_pattern, exact=False)
-            if option.count():
-                option.last.click(timeout=2500)
-                return True
-        except Exception:
-            continue
-    return False
+        option = matches[0]
+        select = page.locator("select").nth(info["index"])
+        select.select_option(value=str(option.get("value", "")))
+        selected = clean_text(select.locator("option:checked").inner_text())
+        return bool(matcher.search(selected)), selected
+    return False, ""
+
+
+def _request_has_round(request: Any, round_no: int) -> bool:
+    haystack = " ".join([str(getattr(request, "url", "") or ""), str(getattr(request, "post_data", "") or "")])
+    return bool(re.search(rf"(?<!\d){round_no}(?!\d)", haystack))
+
+
+def _response_to_stores(response: Any) -> list[dict[str, str]]:
+    try:
+        content_type = (response.headers.get("content-type") or "").lower()
+    except Exception:
+        content_type = ""
+    try:
+        if "json" in content_type:
+            return stores_from_json_payload(response.json())
+        text = response.text()
+        if text.lstrip().startswith(("{", "[")):
+            try:
+                return stores_from_json_payload(json.loads(text))
+            except Exception:
+                pass
+        if "<table" in text.lower() or "상호명" in text or "소재지" in text:
+            return stores_from_html(text)
+    except Exception:
+        return []
+    return []
 
 
 def fetch_official_stores(round_no: int, expected_winners: int | None) -> tuple[list[dict[str, str]], str]:
-    """공식 당첨 판매점 화면을 브라우저로 조작하고 XHR/DOM 양쪽에서 결과를 읽습니다.
+    """공식 검색 요청과 정확히 연결된 응답만 사용합니다.
 
-    실패는 당첨번호 업데이트를 막지 않습니다. 다음 예약 실행에서 다시 시도합니다.
+    화면 전체 DOM, 추천 판매점, 샘플 카드, 필터 문구는 절대 판매점 데이터로 읽지 않습니다.
     """
     from playwright.sync_api import sync_playwright
 
     DEBUG_DIR.mkdir(parents=True, exist_ok=True)
     captured: list[dict[str, str]] = []
     response_notes: list[str] = []
+    search_started = False
+
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True, args=["--disable-dev-shm-usage", "--no-sandbox"])
         context = browser.new_context(
-            locale="ko-KR",
-            timezone_id="Asia/Seoul",
+            locale="ko-KR", timezone_id="Asia/Seoul",
             user_agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/126 Safari/537.36",
             viewport={"width": 1440, "height": 1200},
         )
         page = context.new_page()
 
         def on_response(response: Any) -> None:
-            try:
-                content_type = (response.headers.get("content-type") or "").lower()
-                if "json" not in content_type:
-                    return
-                payload = response.json()
-                found = stores_from_json_payload(payload)
-                if found:
-                    captured.extend(found)
-                    response_notes.append(response.url)
-            except Exception:
+            if not search_started or not _request_has_round(response.request, round_no):
                 return
+            found = _response_to_stores(response)
+            if found:
+                captured.extend(found)
+                response_notes.append(f"{response.request.method} {response.url}")
 
         page.on("response", on_response)
-        page.goto(OFFICIAL_STORES_PAGE, wait_until="domcontentloaded", timeout=60000)
-        page.wait_for_timeout(2500)
-
-        # 기본 HTML에 대기/차단 문구가 있으면 한 번 새로고침합니다.
+        page.goto(OFFICIAL_STORES_PAGE, wait_until="domcontentloaded", timeout=45000)
+        page.wait_for_timeout(1200)
         body = clean_text(page.locator("body").inner_text())
-        if "서비스 접근 대기" in body or "접속이 차단" in body:
-            page.wait_for_timeout(4000)
-            page.reload(wait_until="domcontentloaded", timeout=60000)
-            page.wait_for_timeout(2500)
+        if any(x in body for x in ("서비스 접근 대기", "접속이 차단", "접속이 불가")):
+            raise RuntimeError("official-store-page-access-wait-or-blocked")
 
-        round_pattern = re.compile(rf"(^|\D){round_no}\s*회?(\D|$)")
-        # 실제 select가 있으면 우선 사용합니다.
-        _select_option_semantic(page, [re.compile(r"\d{3,4}\s*회")], round_pattern)
-        _select_option_semantic(page, [re.compile(r"전체.*1등.*2등|1등.*2등")], re.compile(r"^\s*1등\s*$"))
-        _select_option_semantic(page, [re.compile(r"로또\s*6/?45")], re.compile(r"로또\s*6/?45"))
+        round_ok, selected_round = _select_exact_option(page, re.compile(rf"^\s*{round_no}\s*회?\s*$"))
+        rank_ok, selected_rank = _select_exact_option(page, re.compile(r"^\s*1등\s*$"))
+        product_ok, selected_product = _select_exact_option(page, re.compile(r"^\s*로또\s*6/?45\s*$", re.I))
 
-        # 커스텀 셀렉트 보완
-        _click_text_option(page, [r"회차", r"선택"], round_pattern)
-        _click_text_option(page, [r"전체", r"등위", r"등수"], re.compile(r"^\s*1등\s*$"))
+        if not round_ok:
+            raise RuntimeError(f"requested-round-option-not-found:{round_no};selected={selected_round!r}")
+        if not rank_ok:
+            raise RuntimeError(f"first-rank-option-not-found:selected={selected_rank!r}")
+        # 상품이 select가 아닌 탭으로 고정된 화면도 있으므로, 본문에 로또6/45가 있으면 허용합니다.
+        if not product_ok and not re.search(r"로또\s*6/?45", body, re.I):
+            raise RuntimeError(f"lotto645-option-not-found:selected={selected_product!r}")
 
-        # 검색/조회 버튼 중 화면 아래쪽의 마지막 유효 버튼을 누릅니다.
+        search_started = True
         clicked = False
-        for pattern in [re.compile(r"^검색$"), re.compile(r"^조회$")]:
-            buttons = page.get_by_role("button", name=pattern)
-            for i in reversed(range(buttons.count())):
+        for selector in [
+            'button:has-text("검색")', 'button:has-text("조회")',
+            'input[type="submit"][value*="검색"]', 'input[type="button"][value*="검색"]',
+        ]:
+            loc = page.locator(selector)
+            for i in reversed(range(loc.count())):
                 try:
-                    buttons.nth(i).click(timeout=3000)
-                    clicked = True
-                    break
+                    if loc.nth(i).is_visible():
+                        loc.nth(i).click(timeout=3000)
+                        clicked = True
+                        break
                 except Exception:
                     continue
             if clicked:
                 break
         if not clicked:
-            candidates = page.locator("button, input[type=submit], a")
-            for i in range(candidates.count()):
-                candidate = candidates.nth(i)
-                if clean_text(candidate.inner_text() if candidate.evaluate("el => el.innerText || el.value || ''") else "") in {"검색", "조회"}:
-                    try:
-                        candidate.click(timeout=2500)
-                        clicked = True
-                        break
-                    except Exception:
-                        pass
+            raise RuntimeError("official-search-button-not-clicked")
 
-        page.wait_for_timeout(4500)
-        html = page.content()
-        dom_stores = stores_from_html(html)
-        stores = dedupe_stores([*captured, *dom_stores])
+        page.wait_for_timeout(7000)
+        stores = dedupe_stores(captured)
+        stores = [s for s in stores if "인터넷" not in s["name"] and "동행복권" not in s["address"]]
 
-        # 공식 결과에서 인터넷 판매사이트는 앱의 '오프라인 판매점' 목록에서 제외합니다.
-        stores = [s for s in stores if "동행복권" not in s["address"] and "인터넷" not in s["name"]]
-        # 당첨 게임 수보다 판매점 행이 많을 수는 없습니다. 과도한 결과는 다른 표를 잘못 읽은 것입니다.
         if expected_winners and len(stores) > expected_winners:
-            bad_count = len(stores)
+            status = f"invalid-too-many:{len(stores)}/{expected_winners}"
             stores = []
-            status = f"invalid-too-many:{bad_count}/{expected_winners}"
+        elif stores:
+            status = "ok-correlated-official-response"
         else:
-            status = "ok" if stores else "pending"
+            status = "pending-no-correlated-response"
 
         if not stores:
-            (DEBUG_DIR / f"stores_{round_no}.html").write_text(html, encoding="utf-8")
             page.screenshot(path=str(DEBUG_DIR / f"stores_{round_no}.png"), full_page=True)
+            (DEBUG_DIR / f"stores_{round_no}.html").write_text(page.content(), encoding="utf-8")
+            (DEBUG_DIR / f"stores_{round_no}_selects.json").write_text(
+                json.dumps(_option_snapshot(page), ensure_ascii=False, indent=2), encoding="utf-8"
+            )
             (DEBUG_DIR / f"stores_{round_no}_responses.txt").write_text("\n".join(response_notes), encoding="utf-8")
         context.close()
         browser.close()
     return stores, status
-
 
 def load_dataset() -> dict[str, Any]:
     if not DATA_PATH.exists():
@@ -496,6 +500,11 @@ def validate_dataset(data: dict[str, Any]) -> None:
         raise ValueError(f"latestRound 불일치: {data.get('latestRound')} != {latest}")
 
 
+def store_data_is_trusted(item: dict[str, Any]) -> bool:
+    source = item.get("dataSource", {}) if isinstance(item.get("dataSource"), dict) else {}
+    return bool(item.get("stores")) and source.get("storesParserVersion") == STORE_PARSER_VERSION
+
+
 def choose_backfill_targets(
     by_round: dict[int, dict[str, Any]],
     latest_official: int,
@@ -517,7 +526,7 @@ def choose_backfill_targets(
         item = by_round.get(round_no)
         if (
             item
-            and not item.get("stores")
+            and not store_data_is_trusted(item)
             and to_int(item.get("prize", {}).get("first", {}).get("winnerCount"))
         ):
             targets.append(round_no)
@@ -563,7 +572,12 @@ def update_dataset(
     recent_targets: list[int] = []
     for round_no in range(latest_official, max(0, latest_official - STORE_RETRY_ROUNDS), -1):
         item = by_round.get(round_no)
-        if item and not item.get("stores") and to_int(item.get("prize", {}).get("first", {}).get("winnerCount")):
+        if item and not store_data_is_trusted(item) and to_int(item.get("prize", {}).get("first", {}).get("winnerCount")):
+            # 이전 DOM 파서가 저장한 회차 불일치 데이터는 최신 회차에서 즉시 제거합니다.
+            if item.get("stores"):
+                item["stores"] = []
+                item.setdefault("dataSource", {})["storesStatus"] = "cleared-untrusted-legacy-store-data"
+                changed.append(round_no)
             recent_targets.append(round_no)
     backfill_targets, next_backfill_cursor = choose_backfill_targets(
         by_round, latest_official, STORE_BACKFILL_BATCH, result.get("service", {})
@@ -583,6 +597,7 @@ def update_dataset(
                     item["stores"] = stores
                     item.setdefault("dataSource", {})["stores"] = STORE_SOURCE
                     item["dataSource"]["storesVerifiedAt"] = now_iso()
+                    item["dataSource"]["storesParserVersion"] = STORE_PARSER_VERSION
                     item["dataSource"].pop("storesStatus", None)
                     if before_stores != stores:
                         changed.append(round_no)
@@ -606,6 +621,7 @@ def update_dataset(
         "thirdPartySourceUsed": False,
         "officialResultsApi": OFFICIAL_RESULTS_API,
         "officialWinningStoresPage": OFFICIAL_STORES_PAGE,
+        "storesParserVersion": STORE_PARSER_VERSION,
         "lastCheckedAt": now_iso(),
         "latestOfficialRound": latest_official,
         "recentReconcileCount": RECENT_RECONCILE_COUNT,
