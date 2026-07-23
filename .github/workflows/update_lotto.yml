@@ -9,7 +9,7 @@ on:
     - cron: "20 15-18 * * 6"
     # Sunday daytime retries for delayed store publication
     - cron: "0 3,6,9 * * 0"
-    # Daily 03:30 KST: slowly backfill past winning-store data
+    # Daily 03:30 KST: backfill 2 past rounds, continuing toward round 1
     - cron: "30 18 * * *"
   workflow_dispatch:
   push:
@@ -32,6 +32,9 @@ jobs:
   update:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    env:
+      STORE_BACKFILL_BATCH: "2"
+      STORE_BACKFILL_MIN_ROUND: "1"
 
     steps:
       - name: Checkout repository
