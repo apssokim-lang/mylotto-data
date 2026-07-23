@@ -24,14 +24,14 @@ OFFICIAL_RESULTS_API = "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do"
 OFFICIAL_RESULTS_PAGE = "https://www.dhlottery.co.kr/lt645/result"
 OFFICIAL_STORES_PAGE = "https://www.dhlottery.co.kr/wnprchsplcsrch/home"
 OFFICIAL_STORES_API = "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do"
-COLLECTOR_VERSION = "8.4.0-official-store-json-api-direct"
-STORE_PARSER_VERSION = "8.4.0-direct-selectLtWnShp-json"
+COLLECTOR_VERSION = "8.5.0-official-store-full-history-backfill"
+STORE_PARSER_VERSION = "8.5.0-direct-api-full-history-backfill"
 RESULT_SOURCE = "dhlottery-official-internal-json"
 STORE_SOURCE = "dhlottery-official-winning-store-json-api"
 REQUEST_TIMEOUT = 25
 RECENT_RECONCILE_COUNT = 60
 STORE_RETRY_ROUNDS = 4
-STORE_BACKFILL_BATCH = max(1, int(os.getenv("STORE_BACKFILL_BATCH", "1")))
+STORE_BACKFILL_BATCH = max(1, int(os.getenv("STORE_BACKFILL_BATCH", "2")))
 STORE_BACKFILL_MIN_ROUND = max(1, int(os.getenv("STORE_BACKFILL_MIN_ROUND", "1")))
 
 
@@ -193,7 +193,7 @@ def official_row_to_item(row: dict[str, Any]) -> dict[str, Any]:
             "third": {"perGameAmount": to_int(row.get("rnk3WnAmt")), "winnerCount": to_int(row.get("rnk3WnNope"))},
             "totalSalesAmount": to_int(row.get("wholEpsdSumNtslAmt")) or to_int(row.get("rlvtEpsdSumNtslAmt")),
         },
-        "dataSource": {"winning": RESULT_SOURCE, "prize": RESULT_SOURCE, "verifiedAt": now_iso()},
+        "dataSource": {"winning": RESULT_SOURCE, "prize": RESULT_SOURCE},
     }
 
 
@@ -215,11 +215,23 @@ def merge_official(existing: dict[str, Any] | None, official: dict[str, Any]) ->
         result = normalize_existing(existing)
     if int(result.get("round", official["round"])) != int(official["round"]):
         raise ValueError("서로 다른 회차를 병합하려고 했습니다.")
+    before_core = {
+        "date": result.get("date"),
+        "winning": copy.deepcopy(result.get("winning")),
+        "prize": copy.deepcopy(result.get("prize")),
+    }
     result["round"] = int(official["round"])
     result["date"] = official.get("date") or result.get("date")
     result["winning"] = copy.deepcopy(official["winning"])
     result["prize"] = copy.deepcopy(official["prize"])
     result.setdefault("dataSource", {}).update(copy.deepcopy(official.get("dataSource", {})))
+    after_core = {
+        "date": result.get("date"),
+        "winning": copy.deepcopy(result.get("winning")),
+        "prize": copy.deepcopy(result.get("prize")),
+    }
+    if existing is None or before_core != after_core:
+        result["dataSource"]["verifiedAt"] = now_iso()
     return result
 
 
@@ -582,8 +594,13 @@ def choose_backfill_targets(
     batch: int,
     service: dict[str, Any],
 ) -> tuple[list[int], int]:
-    """최근 1년 범위에서 판매점이 비어 있는 회차를 커서 기반으로 순환 선택합니다."""
-    lower = max(STORE_BACKFILL_MIN_ROUND, latest_official - 52)
+    """1회부터 최신 회차까지 판매점이 비어 있는 회차를 커서 기반으로 순환 선택합니다.
+
+    최신 회차는 별도의 재시도 목록에서 우선 처리하고, 이 함수는 그 아래 과거 회차를
+    매 실행마다 소량씩 내려가며 확인합니다. 커서는 service에 저장되므로 다음 실행에서
+    이어서 진행하고, 1회까지 도달하면 다시 위에서 실패 회차를 재확인합니다.
+    """
+    lower = max(1, STORE_BACKFILL_MIN_ROUND)
     upper = max(lower, latest_official - STORE_RETRY_ROUNDS)
     cursor = to_int(service.get("storeBackfillCursorRound"))
     if cursor is None or cursor > upper or cursor < lower:
@@ -639,7 +656,8 @@ def update_dataset(
             by_round[round_no] = after
             changed.append(round_no)
 
-    # 최신 4회는 매 실행 재시도하고, 과거 미완성 회차는 별도 백필 배치로 조금씩 처리합니다.
+    # 최신 회차는 매 실행 우선 재시도하고, 1회까지의 과거 미완성 회차는
+    # 저장된 커서를 따라 매 실행 소량씩 내려가며 장기적으로 보완합니다.
     recent_targets: list[int] = []
     for round_no in range(latest_official, max(0, latest_official - STORE_RETRY_ROUNDS), -1):
         item = by_round.get(round_no)
@@ -701,6 +719,8 @@ def update_dataset(
         "storeBackfillBatch": STORE_BACKFILL_BATCH,
         "storeBackfillTargets": backfill_targets,
         "storeBackfillCursorRound": next_backfill_cursor,
+        "storeBackfillMinimumRound": STORE_BACKFILL_MIN_ROUND,
+        "storeBackfillMode": "full-history-cursor",
         "storeStatus": store_status,
         "changedRounds": sorted(set(changed), reverse=True),
     })
