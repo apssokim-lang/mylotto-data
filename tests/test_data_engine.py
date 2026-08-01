@@ -93,7 +93,7 @@ class DataEngineTest(unittest.TestCase):
 
     def test_backfill_cursor_advances(self):
         by_round = {}
-        for r in range(1181, 1234):
+        for r in range(1, 1234):
             item = official(r, [1,2,3,4,5,6], 7, stores=[])
             by_round[r] = item
         targets, cursor = mod.choose_backfill_targets(by_round, 1233, 2, {"storeBackfillCursorRound": 1229})
@@ -117,6 +117,24 @@ class DataEngineTest(unittest.TestCase):
         self.assertFalse(mod.store_data_is_trusted(item))
         item["dataSource"]["storesParserVersion"] = mod.STORE_PARSER_VERSION
         self.assertTrue(mod.store_data_is_trusted(item))
+
+    def test_backfill_can_continue_below_recent_60_rounds(self):
+        by_round = {}
+        for r in range(1, 1234):
+            item = official(r, [1,2,3,4,5,6], 7, stores=[])
+            by_round[r] = item
+        targets, cursor = mod.choose_backfill_targets(
+            by_round, 1233, 2, {"storeBackfillCursorRound": 1173}
+        )
+        self.assertEqual(targets, [1173, 1172])
+        self.assertEqual(cursor, 1171)
+
+    def test_unchanged_official_data_does_not_change_verified_timestamp(self):
+        old = official(1233, [2,7,20,25,37,40], 29, stores=[])
+        old["dataSource"]["verifiedAt"] = "2026-07-01T00:00:00+09:00"
+        incoming = official(1233, [2,7,20,25,37,40], 29, stores=[])
+        merged = mod.merge_official(old, incoming)
+        self.assertEqual(merged["dataSource"]["verifiedAt"], "2026-07-01T00:00:00+09:00")
 
 
 if __name__ == "__main__":
