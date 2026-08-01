@@ -2,14 +2,14 @@ name: Lotto Official Data Auto Update
 
 on:
   schedule:
-    # Saturday 20:35-23:50 KST, every 15 minutes
-    - cron: "35,50 11 * * 6"
-    - cron: "5,20,35,50 12-14 * * 6"
-    # Sunday 00:20-03:20 KST, hourly
-    - cron: "20 15-18 * * 6"
-    # Sunday daytime retries for delayed store publication
+    # 토요일 추첨 직후: 한국시간 20:35~23:55, 10분 간격 자동 확인
+    - cron: "35,45,55 11 * * 6"
+    - cron: "5,15,25,35,45,55 12-14 * * 6"
+    # 공식 반영 지연 대비: 일요일 00:05~03:55, 10분 간격 재확인
+    - cron: "5,15,25,35,45,55 15-18 * * 6"
+    # 일요일 낮 추가 확인
     - cron: "0 3,6,9 * * 0"
-    # Daily 03:30 KST: backfill 2 past rounds, continuing toward round 1
+    # 매일 03:30 KST: 과거 판매점 2회차씩 순차 백필
     - cron: "30 18 * * *"
   workflow_dispatch:
   push:
