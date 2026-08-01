@@ -24,8 +24,8 @@ OFFICIAL_RESULTS_API = "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do"
 OFFICIAL_RESULTS_PAGE = "https://www.dhlottery.co.kr/lt645/result"
 OFFICIAL_STORES_PAGE = "https://www.dhlottery.co.kr/wnprchsplcsrch/home"
 OFFICIAL_STORES_API = "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do"
-COLLECTOR_VERSION = "8.5.0-official-store-full-history-backfill"
-STORE_PARSER_VERSION = "8.5.0-direct-api-full-history-backfill"
+COLLECTOR_VERSION = "8.6.0-auto-draw-update-and-safe-backfill"
+STORE_PARSER_VERSION = "8.6.0-direct-api-safe-backfill"
 RESULT_SOURCE = "dhlottery-official-internal-json"
 STORE_SOURCE = "dhlottery-official-winning-store-json-api"
 REQUEST_TIMEOUT = 25
@@ -554,13 +554,43 @@ def fetch_official_stores(round_no: int, expected_winners: int | None) -> tuple[
         return [], f"invalid-too-many:{len(stores)}/{expected_winners}"
     return stores, f"ok-official-json-api:{len(stores)}"
 
-def load_dataset() -> dict[str, Any]:
-    if not DATA_PATH.exists():
-        raise FileNotFoundError(f"데이터 파일이 없습니다: {DATA_PATH}")
-    data = json.loads(DATA_PATH.read_text(encoding="utf-8"))
+def _read_valid_dataset(path: Path) -> dict[str, Any]:
+    text = path.read_text(encoding="utf-8").strip()
+    if not text:
+        raise ValueError(f"{path.name} 파일이 비어 있습니다.")
+    data = json.loads(text)
     if not isinstance(data, dict) or not isinstance(data.get("results"), list):
-        raise ValueError("lotto_results.json 형식이 올바르지 않습니다.")
+        raise ValueError(f"{path.name} 형식이 올바르지 않습니다.")
     return data
+
+
+def load_dataset() -> dict[str, Any]:
+    """주 데이터가 비었거나 손상되면 마지막 정상 백업으로 자동 복구합니다."""
+    primary_error: Exception | None = None
+    if DATA_PATH.exists():
+        try:
+            return _read_valid_dataset(DATA_PATH)
+        except Exception as exc:
+            primary_error = exc
+
+    if BACKUP_PATH.exists():
+        try:
+            backup = _read_valid_dataset(BACKUP_PATH)
+            DATA_PATH.parent.mkdir(parents=True, exist_ok=True)
+            DATA_PATH.write_text(
+                json.dumps(backup, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+            print(f"경고: 손상된 lotto_results.json을 정상 백업에서 복구했습니다: {primary_error}")
+            return backup
+        except Exception as backup_error:
+            raise RuntimeError(
+                f"주 데이터와 백업을 모두 읽지 못했습니다. 주 데이터 오류={primary_error}, 백업 오류={backup_error}"
+            ) from backup_error
+
+    if primary_error is not None:
+        raise RuntimeError(f"lotto_results.json을 읽지 못했고 복구용 백업도 없습니다: {primary_error}") from primary_error
+    raise FileNotFoundError(f"데이터 파일이 없습니다: {DATA_PATH}")
 
 
 def validate_dataset(data: dict[str, Any]) -> None:
