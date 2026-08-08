@@ -24,8 +24,8 @@ OFFICIAL_RESULTS_API = "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do"
 OFFICIAL_RESULTS_PAGE = "https://www.dhlottery.co.kr/lt645/result"
 OFFICIAL_STORES_PAGE = "https://www.dhlottery.co.kr/wnprchsplcsrch/home"
 OFFICIAL_STORES_API = "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do"
-COLLECTOR_VERSION = "8.6.0-auto-draw-update-and-safe-backfill"
-STORE_PARSER_VERSION = "8.6.0-direct-api-safe-backfill"
+COLLECTOR_VERSION = "8.6.1-auto-draw-probe-and-schedule-watchdog"
+STORE_PARSER_VERSION = "8.6.1-direct-api-safe-backfill"
 RESULT_SOURCE = "dhlottery-official-internal-json"
 STORE_SOURCE = "dhlottery-official-winning-store-json-api"
 REQUEST_TIMEOUT = 25
@@ -760,16 +760,46 @@ def update_dataset(
 def main() -> int:
     data = load_dataset()
     validate_dataset(data)
-    rows = fetch_official_rows(make_session(), "all")
+    session = make_session()
+
+    # 전체 목록 API가 추첨 직후 CDN/서버 캐시 때문에 한 회차 늦게 보이는 경우가 있어
+    # 저장된 최신 회차의 +1, +2 회차를 공식 API에 직접 추가 조회합니다.
+    # 직접 조회 결과의 ltEpsd가 요청 회차와 정확히 일치할 때만 채택합니다.
+    rows = fetch_official_rows(session, "all")
+    stored_latest = to_int(data.get("latestRound")) or 0
+    probe_rounds = [stored_latest + 1, stored_latest + 2]
+    direct_probe_hits: list[int] = []
+
+    for candidate in probe_rounds:
+        try:
+            probe_rows = fetch_official_rows(session, candidate)
+            for row in probe_rows:
+                if to_int(row.get("ltEpsd")) == candidate:
+                    rows.append(row)
+                    direct_probe_hits.append(candidate)
+        except Exception as exc:
+            # 전체 목록 조회가 정상이라면 직접 probe 실패는 치명적이지 않습니다.
+            print(f"[{candidate}] 신규 회차 직접 확인 실패(다음 예약에서 재시도): {exc}")
+
+    # 같은 회차가 전체 목록 + 직접 조회 양쪽에서 들어와도 최신 직접 조회 값을 우선합니다.
+    rows_by_round: dict[int, dict[str, Any]] = {}
+    for row in rows:
+        round_no = to_int(row.get("ltEpsd"))
+        if round_no is not None:
+            rows_by_round[round_no] = row
+
     official_items: list[dict[str, Any]] = []
     parse_errors: list[str] = []
-    for row in rows:
+    for round_no in sorted(rows_by_round, reverse=True):
         try:
-            official_items.append(official_row_to_item(row))
+            official_items.append(official_row_to_item(rows_by_round[round_no]))
         except Exception as exc:
             parse_errors.append(str(exc))
     if not official_items:
         raise RuntimeError("공식 API 응답에서 유효한 회차를 하나도 읽지 못했습니다.")
+
+    if direct_probe_hits:
+        print(f"신규 회차 직접 확인 성공: {sorted(set(direct_probe_hits))}")
 
     updated, changed = update_dataset(data, official_items)
     validate_dataset(updated)
