@@ -29,7 +29,7 @@
     "coreBackfillBatchSize": 30,
     "coreBackfillCursorRound": 582,
     "storeBackfillBatchSize": 5,
-    "storeBackfillCursorRound": 1147,
+    "storeBackfillCursorRound": 1145,
     "completedCoreRoundCount": 18,
     "incompleteCoreRoundCount": 1215,
     "completedStoreRoundCount": 7,
@@ -39,26 +39,24 @@
     "coreCompleteCount": 651,
     "coreIncompleteCount": 582,
     "officialApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
-    "lastCheckedAt": "2026-08-08T22:58:24+09:00",
+    "lastCheckedAt": "2026-08-08T23:08:33+09:00",
     "latestOfficialRound": 1236,
     "recentReconcileCount": 60,
     "changedRounds": [
-      1236,
-      1149,
-      1148
+      1147,
+      1146
     ],
     "officialResultsApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
     "officialWinningStoresPage": "https://www.dhlottery.co.kr/wnprchsplcsrch/home",
     "storeRetryRounds": 4,
     "storeStatus": {
-      "1236": "ok-official-json-api:11",
-      "1149": "ok-official-json-api:13",
-      "1148": "ok-official-json-api:13"
+      "1147": "ok-official-json-api:8",
+      "1146": "ok-official-json-api:11"
     },
     "storeBackfillBatch": 2,
     "storeBackfillTargets": [
-      1149,
-      1148
+      1147,
+      1146
     ],
     "storesParserVersion": "8.6.0-direct-api-safe-backfill",
     "officialWinningStoresApi": "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do",
@@ -9364,12 +9362,56 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "크로바쎄븐",
+          "method": "자동",
+          "address": "서울 송파구 법원로11길 7 1층 128호"
+        },
+        {
+          "name": "가로판매점",
+          "method": "자동",
+          "address": "서울 관악구 과천대로 955"
+        },
+        {
+          "name": "부일카서비스",
+          "method": "자동",
+          "address": "부산 동구 자성로133번길 35"
+        },
+        {
+          "name": "현대설비 / 영종하늘 로또",
+          "method": "자동",
+          "address": "인천 중구 하늘달빛로 70 114호"
+        },
+        {
+          "name": "대동슈퍼",
+          "method": "자동",
+          "address": "인천 남동구 만수로 81"
+        },
+        {
+          "name": "오천억복권방",
+          "method": "자동",
+          "address": "광주 서구 상무대로 1087"
+        },
+        {
+          "name": "도일복권방",
+          "method": "수동",
+          "address": "경기 시흥시 도일로 111"
+        },
+        {
+          "name": "도고로또판매점",
+          "method": "수동",
+          "address": "충남 아산시 온천대로 170 이마트24시편의점"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-08-08T23:08:33+09:00",
+        "storesParserVersion": "8.6.0-direct-api-safe-backfill"
       }
     },
     {
@@ -9396,12 +9438,71 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "민영슈퍼",
+          "method": "자동",
+          "address": "서울 서대문구 응암로 104"
+        },
+        {
+          "name": "스파",
+          "method": "수동",
+          "address": "서울 노원구 동일로 1493 주공10단지종합상가111"
+        },
+        {
+          "name": "로또 천왕점",
+          "method": "자동",
+          "address": "서울 구로구 오리로 1097-7 (천왕동)"
+        },
+        {
+          "name": "새상무복권",
+          "method": "자동",
+          "address": "광주 서구 치평로 30 수암빌딩 1층 102호"
+        },
+        {
+          "name": "안성휴게소 복권판매점(부산방향)",
+          "method": "자동",
+          "address": "경기 안성시 경부고속도로 365 안성휴게소 하행선 내"
+        },
+        {
+          "name": "비엠복권",
+          "method": "자동",
+          "address": "충북 청주시 흥덕구 대신로 108"
+        },
+        {
+          "name": "행운복권방",
+          "method": "반자동",
+          "address": "충남 천안시 서북구 불당대로 269 1층 121호"
+        },
+        {
+          "name": "영광믿음복권",
+          "method": "자동",
+          "address": "전남 영광군 신남로 169 1층 101호"
+        },
+        {
+          "name": "명품복권방",
+          "method": "자동",
+          "address": "전남 목포시 섶나루길 122 상가 123호"
+        },
+        {
+          "name": "북마산복권전문점",
+          "method": "수동",
+          "address": "경남 창원시 마산합포구 북성로 98"
+        },
+        {
+          "name": "씨유 (CU) 거창대동점",
+          "method": "자동",
+          "address": "경남 거창군 거창대로 93"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-08-08T23:08:33+09:00",
+        "storesParserVersion": "8.6.0-direct-api-safe-backfill"
       }
     },
     {
