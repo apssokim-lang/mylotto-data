@@ -137,5 +137,10 @@ class DataEngineTest(unittest.TestCase):
         self.assertEqual(merged["dataSource"]["verifiedAt"], "2026-07-01T00:00:00+09:00")
 
 
+    def test_collector_version_is_861(self):
+        self.assertTrue(mod.COLLECTOR_VERSION.startswith("8.6.1"))
+
+
+
 if __name__ == "__main__":
     unittest.main()
