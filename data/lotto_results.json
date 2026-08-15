@@ -29,7 +29,7 @@
     "coreBackfillBatchSize": 30,
     "coreBackfillCursorRound": 582,
     "storeBackfillBatchSize": 5,
-    "storeBackfillCursorRound": 1083,
+    "storeBackfillCursorRound": 1081,
     "completedCoreRoundCount": 18,
     "incompleteCoreRoundCount": 1215,
     "completedStoreRoundCount": 7,
@@ -39,24 +39,24 @@
     "coreCompleteCount": 651,
     "coreIncompleteCount": 582,
     "officialApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
-    "lastCheckedAt": "2026-08-16T01:44:16+09:00",
+    "lastCheckedAt": "2026-08-16T02:01:06+09:00",
     "latestOfficialRound": 1237,
     "recentReconcileCount": 60,
     "changedRounds": [
-      1085,
-      1084
+      1083,
+      1082
     ],
     "officialResultsApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
     "officialWinningStoresPage": "https://www.dhlottery.co.kr/wnprchsplcsrch/home",
     "storeRetryRounds": 4,
     "storeStatus": {
-      "1085": "ok-official-json-api:21",
-      "1084": "ok-official-json-api:15"
+      "1083": "ok-official-json-api:12",
+      "1082": "ok-official-json-api:7"
     },
     "storeBackfillBatch": 2,
     "storeBackfillTargets": [
-      1085,
-      1084
+      1083,
+      1082
     ],
     "storesParserVersion": "8.6.1-direct-api-safe-backfill",
     "officialWinningStoresApi": "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do",
@@ -15921,12 +15921,76 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "동성당",
+          "method": "수동",
+          "address": "서울 종로구 청계천로 261"
+        },
+        {
+          "name": "로또 골드 뱅크",
+          "method": "수동",
+          "address": "서울 은평구 진관3로 77 916동 1층상가 111호"
+        },
+        {
+          "name": "G마트",
+          "method": "자동",
+          "address": "부산 북구 백양대로 1024"
+        },
+        {
+          "name": "뉴빅마트",
+          "method": "자동",
+          "address": "부산 기장군 정관중앙로 48 106호"
+        },
+        {
+          "name": "토토복권",
+          "method": "수동",
+          "address": "대구 서구 달서로12길 9"
+        },
+        {
+          "name": "타임마트",
+          "method": "자동",
+          "address": "대전 서구 동서대로 696 프라임빌딩2차 1층 102호"
+        },
+        {
+          "name": "씨유 파주운천점",
+          "method": "자동",
+          "address": "경기 파주시 통일로 2038-2 씨유 파주운천점"
+        },
+        {
+          "name": "로또통신",
+          "method": "자동",
+          "address": "경기 안성시 장기로 36"
+        },
+        {
+          "name": "로또대박",
+          "method": "수동",
+          "address": "경기 부천시 석천로177번길 11 제이클래스중동 1층 105호"
+        },
+        {
+          "name": "디딤슈퍼",
+          "method": "자동",
+          "address": "경기 부천시 도약로 279"
+        },
+        {
+          "name": "씨유 트윈시티",
+          "method": "자동",
+          "address": "경기 고양시 일산동구 위시티로 75 113호"
+        },
+        {
+          "name": "구담쌀슈퍼",
+          "method": "자동",
+          "address": "경북 안동시 경동로 908"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-08-16T02:01:05+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
@@ -15953,12 +16017,51 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "지원물산",
+          "method": "자동",
+          "address": "서울 노원구 공릉로 108"
+        },
+        {
+          "name": "복권방",
+          "method": "자동",
+          "address": "부산 사하구 낙동대로 332"
+        },
+        {
+          "name": "무궁화슈퍼",
+          "method": "수동",
+          "address": "인천 남동구 남동대로 702 1층 1호"
+        },
+        {
+          "name": "오케이마트",
+          "method": "자동",
+          "address": "경기 성남시 중원구 광명로 80 1층 101호(성남동)"
+        },
+        {
+          "name": "심마니대박복권방",
+          "method": "자동",
+          "address": "충북 충주시 국원대로 68"
+        },
+        {
+          "name": "남해공인중개사",
+          "method": "수동",
+          "address": "전남 목포시 용당로 59 A08호"
+        },
+        {
+          "name": "행운복권방/해피하우스",
+          "method": "자동",
+          "address": "경남 양산시 덕계로 27"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-08-16T02:01:06+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
