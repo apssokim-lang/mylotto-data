@@ -29,7 +29,7 @@
     "coreBackfillBatchSize": 30,
     "coreBackfillCursorRound": 582,
     "storeBackfillBatchSize": 5,
-    "storeBackfillCursorRound": 1097,
+    "storeBackfillCursorRound": 1095,
     "completedCoreRoundCount": 18,
     "incompleteCoreRoundCount": 1215,
     "completedStoreRoundCount": 7,
@@ -39,24 +39,24 @@
     "coreCompleteCount": 651,
     "coreIncompleteCount": 582,
     "officialApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
-    "lastCheckedAt": "2026-08-15T23:02:22+09:00",
+    "lastCheckedAt": "2026-08-15T23:33:19+09:00",
     "latestOfficialRound": 1237,
     "recentReconcileCount": 60,
     "changedRounds": [
-      1099,
-      1098
+      1097,
+      1096
     ],
     "officialResultsApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
     "officialWinningStoresPage": "https://www.dhlottery.co.kr/wnprchsplcsrch/home",
     "storeRetryRounds": 4,
     "storeStatus": {
-      "1099": "ok-official-json-api:9",
-      "1098": "ok-official-json-api:13"
+      "1097": "ok-official-json-api:6",
+      "1096": "ok-official-json-api:10"
     },
     "storeBackfillBatch": 2,
     "storeBackfillTargets": [
-      1099,
-      1098
+      1097,
+      1096
     ],
     "storesParserVersion": "8.6.1-direct-api-safe-backfill",
     "officialWinningStoresApi": "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do",
@@ -14547,12 +14547,46 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "자갈치 도깨비명당",
+          "method": "자동",
+          "address": "부산 중구 자갈치로 33 501502호"
+        },
+        {
+          "name": "NBA(엔비에이)",
+          "method": "자동",
+          "address": "인천 중구 신도시남로142번길 6 1동 1층 128호"
+        },
+        {
+          "name": "백송마트",
+          "method": "자동",
+          "address": "광주 광산구 월계로 110 104호"
+        },
+        {
+          "name": "세븐일레븐화성봉담수기점",
+          "method": "자동",
+          "address": "경기 화성시 세자로 358"
+        },
+        {
+          "name": "용이복권방",
+          "method": "자동",
+          "address": "경기 평택시 현신3길 44"
+        },
+        {
+          "name": "용꿈돼지꿈복권방",
+          "method": "자동",
+          "address": "경기 시흥시 하중로 235 법조타운103호"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-08-15T23:33:19+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
@@ -14579,12 +14613,66 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "또와식품",
+          "method": "자동",
+          "address": "서울 강서구 양천로 694"
+        },
+        {
+          "name": "알리바이",
+          "method": "자동",
+          "address": "광주 광산구 수등로 253 1층 알리바이"
+        },
+        {
+          "name": "씨유 대전반석역점",
+          "method": "자동",
+          "address": "대전 유성구 반석로 10 반석역프라자"
+        },
+        {
+          "name": "주몽동명",
+          "method": "자동",
+          "address": "경기 용인시 수지구 포은대로 319 중앙빌딩 104호"
+        },
+        {
+          "name": "횡성터미널로또",
+          "method": "자동",
+          "address": "강원 횡성군 앞들서로19번길 10 1층 101호"
+        },
+        {
+          "name": "용꿈돼지꿈복권전문점",
+          "method": "자동",
+          "address": "강원 동해시 중앙로 234 이주민상가1층15호"
+        },
+        {
+          "name": "여기있었네복권방",
+          "method": "자동",
+          "address": "전북 김제시 남북로 171"
+        },
+        {
+          "name": "로그인복권방",
+          "method": "자동",
+          "address": "경북 구미시 상사동로 149-4 사곡동"
+        },
+        {
+          "name": "진우복권명당",
+          "method": "자동",
+          "address": "경북 경산시 경산로15길 1-11"
+        },
+        {
+          "name": "로또GS송림점",
+          "method": "자동",
+          "address": "경남 밀양시 삼문중앙로 48 GS편의점 내"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-08-15T23:33:19+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
