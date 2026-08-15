@@ -29,7 +29,7 @@
     "coreBackfillBatchSize": 30,
     "coreBackfillCursorRound": 582,
     "storeBackfillBatchSize": 5,
-    "storeBackfillCursorRound": 1099,
+    "storeBackfillCursorRound": 1097,
     "completedCoreRoundCount": 18,
     "incompleteCoreRoundCount": 1215,
     "completedStoreRoundCount": 7,
@@ -39,24 +39,24 @@
     "coreCompleteCount": 651,
     "coreIncompleteCount": 582,
     "officialApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
-    "lastCheckedAt": "2026-08-15T22:46:46+09:00",
+    "lastCheckedAt": "2026-08-15T23:02:22+09:00",
     "latestOfficialRound": 1237,
     "recentReconcileCount": 60,
     "changedRounds": [
-      1101,
-      1100
+      1099,
+      1098
     ],
     "officialResultsApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
     "officialWinningStoresPage": "https://www.dhlottery.co.kr/wnprchsplcsrch/home",
     "storeRetryRounds": 4,
     "storeStatus": {
-      "1101": "ok-official-json-api:12",
-      "1100": "ok-official-json-api:13"
+      "1099": "ok-official-json-api:9",
+      "1098": "ok-official-json-api:13"
     },
     "storeBackfillBatch": 2,
     "storeBackfillTargets": [
-      1101,
-      1100
+      1099,
+      1098
     ],
     "storesParserVersion": "8.6.1-direct-api-safe-backfill",
     "officialWinningStoresApi": "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do",
@@ -14365,12 +14365,61 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "삼성열쇠공사",
+          "method": "자동",
+          "address": "서울 동작구 만양로 90-1"
+        },
+        {
+          "name": "대박유통",
+          "method": "자동",
+          "address": "부산 중구 구덕로 80 1층"
+        },
+        {
+          "name": "팡팡복권",
+          "method": "자동",
+          "address": "부산 중구 보수대로 134 1층"
+        },
+        {
+          "name": "메트로센터점",
+          "method": "자동",
+          "address": "대구 중구 달구벌대로 지하 2100 메트로센터C412호"
+        },
+        {
+          "name": "가람",
+          "method": "자동",
+          "address": "울산 중구 병영로 28-1 1층 부동산"
+        },
+        {
+          "name": "보람복권방",
+          "method": "자동",
+          "address": "울산 남구 화합로194번길 18-1 18-1"
+        },
+        {
+          "name": "잘찍어로또방",
+          "method": "자동",
+          "address": "경기 평택시 안현로서5길 62"
+        },
+        {
+          "name": "베스트 로또",
+          "method": "수동",
+          "address": "경기 광명시 하안로 168-11 1층 105호(소하동 외1필지)"
+        },
+        {
+          "name": "설악슈퍼",
+          "method": "수동",
+          "address": "강원 속초시 중앙시장로 116 중앙시장내 설악슈퍼"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-08-15T23:02:22+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
@@ -14397,12 +14446,81 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "월드24시",
+          "method": "자동",
+          "address": "서울 은평구 통일로 855-15"
+        },
+        {
+          "name": "이마트24 서울고속터미널4호점",
+          "method": "자동",
+          "address": "서울 서초구 신반포로 194 본관1층 쇼케이스4호"
+        },
+        {
+          "name": "로또복권신매점",
+          "method": "자동",
+          "address": "대구 수성구 달구벌대로 3233 신매동 효성백년가약상가 401동7호"
+        },
+        {
+          "name": "동아",
+          "method": "수동",
+          "address": "대구 북구 칠곡중앙대로 385-1"
+        },
+        {
+          "name": "잉크션",
+          "method": "자동",
+          "address": "대전 서구 도산로 310"
+        },
+        {
+          "name": "복권백화점",
+          "method": "자동",
+          "address": "울산 남구 수암로 52"
+        },
+        {
+          "name": "팡팡복권방",
+          "method": "자동",
+          "address": "충북 진천군 장기길 102"
+        },
+        {
+          "name": "콘테인복권판매점",
+          "method": "수동",
+          "address": "충남 천안시 동남구 청수11로 13-11 건물 뒤편 콘테인커피숍 내"
+        },
+        {
+          "name": "테크노벨리복권",
+          "method": "자동",
+          "address": "충남 아산시 아산밸리중앙로 102 1층 102호"
+        },
+        {
+          "name": "내가오늘주인공",
+          "method": "자동",
+          "address": "전북 순창군 금산로 8-30"
+        },
+        {
+          "name": "이마트24 순천산단점",
+          "method": "수동",
+          "address": "전남 순천시 산단1길 6"
+        },
+        {
+          "name": "이마트24포항신덕로점",
+          "method": "수동",
+          "address": "경북 포항시 북구 신덕로 215 이마트24신덕로점"
+        },
+        {
+          "name": "안동슈퍼",
+          "method": "자동",
+          "address": "경북 안동시 경동로 669-3"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-08-15T23:02:22+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
