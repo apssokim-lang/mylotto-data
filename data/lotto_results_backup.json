@@ -29,7 +29,7 @@
     "coreBackfillBatchSize": 30,
     "coreBackfillCursorRound": 582,
     "storeBackfillBatchSize": 5,
-    "storeBackfillCursorRound": 993,
+    "storeBackfillCursorRound": 991,
     "completedCoreRoundCount": 18,
     "incompleteCoreRoundCount": 1215,
     "completedStoreRoundCount": 7,
@@ -39,24 +39,24 @@
     "coreCompleteCount": 651,
     "coreIncompleteCount": 582,
     "officialApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
-    "lastCheckedAt": "2026-08-23T04:12:09+09:00",
+    "lastCheckedAt": "2026-08-23T04:26:05+09:00",
     "latestOfficialRound": 1238,
     "recentReconcileCount": 60,
     "changedRounds": [
-      995,
-      994
+      993,
+      992
     ],
     "officialResultsApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
     "officialWinningStoresPage": "https://www.dhlottery.co.kr/wnprchsplcsrch/home",
     "storeRetryRounds": 4,
     "storeStatus": {
-      "995": "ok-official-json-api:7",
-      "994": "ok-official-json-api:12"
+      "993": "ok-official-json-api:6",
+      "992": "ok-official-json-api:12"
     },
     "storeBackfillBatch": 2,
     "storeBackfillTargets": [
-      995,
-      994
+      993,
+      992
     ],
     "storesParserVersion": "8.6.1-direct-api-safe-backfill",
     "officialWinningStoresApi": "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do",
@@ -24521,12 +24521,46 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "일등대박복권",
+          "method": "자동",
+          "address": "경기 화성시 효행로 1363"
+        },
+        {
+          "name": "공원슈퍼",
+          "method": "자동",
+          "address": "경기 수원시 장안구 팔달로 257-1 1층(영화동)"
+        },
+        {
+          "name": "영광로또",
+          "method": "자동",
+          "address": "충북 충주시 충청대로 2220-2 1층"
+        },
+        {
+          "name": "위앤조이",
+          "method": "반자동",
+          "address": "충남 천안시 서북구 천안대로 1391"
+        },
+        {
+          "name": "세븐일레븐아산용화성지점",
+          "method": "자동",
+          "address": "충남 아산시 시민로 292 성지빌딩 세븐일레븐 편의점내"
+        },
+        {
+          "name": "GS25(경산정평점)",
+          "method": "수동",
+          "address": "경북 경산시 강변서로51길 18"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-08-23T04:26:05+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
@@ -24553,12 +24587,76 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "로또",
+          "method": "자동",
+          "address": "서울 중구 퇴계로86길 42"
+        },
+        {
+          "name": "우일",
+          "method": "수동",
+          "address": "서울 송파구 마천로 235"
+        },
+        {
+          "name": "성공복권방",
+          "method": "수동",
+          "address": "경기 여주시 청심로 96 장터마트 1층"
+        },
+        {
+          "name": "이마트24백석동문점",
+          "method": "자동",
+          "address": "경기 고양시 일산동구 호수로 358-26 203동1층 101호"
+        },
+        {
+          "name": "복권나라",
+          "method": "자동",
+          "address": "강원 원주시 평원로 23 1층"
+        },
+        {
+          "name": "나래복권",
+          "method": "자동",
+          "address": "충북 충주시 충원대로 952 1층"
+        },
+        {
+          "name": "해적책대여점 복권방",
+          "method": "자동",
+          "address": "충북 청주시 서원구 대원로 28"
+        },
+        {
+          "name": "황실복권방",
+          "method": "자동",
+          "address": "충남 천안시 동남구 충절로 799"
+        },
+        {
+          "name": "로또복권판매도통점",
+          "method": "자동",
+          "address": "전북 남원시 용성로 232"
+        },
+        {
+          "name": "나이스로또복권",
+          "method": "자동",
+          "address": "전남 여수시 이순신광장로 210"
+        },
+        {
+          "name": "CU(통영북신에이스점)",
+          "method": "수동",
+          "address": "경남 통영시 무전8길 14-12"
+        },
+        {
+          "name": "삼삼마트",
+          "method": "자동",
+          "address": "경남 진주시 진주대로 1165-1"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-08-23T04:26:05+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
