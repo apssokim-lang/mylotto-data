@@ -29,7 +29,7 @@
     "coreBackfillBatchSize": 30,
     "coreBackfillCursorRound": 582,
     "storeBackfillBatchSize": 5,
-    "storeBackfillCursorRound": 1013,
+    "storeBackfillCursorRound": 1011,
     "completedCoreRoundCount": 18,
     "incompleteCoreRoundCount": 1215,
     "completedStoreRoundCount": 7,
@@ -39,24 +39,24 @@
     "coreCompleteCount": 651,
     "coreIncompleteCount": 582,
     "officialApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
-    "lastCheckedAt": "2026-08-23T00:17:23+09:00",
+    "lastCheckedAt": "2026-08-23T00:34:36+09:00",
     "latestOfficialRound": 1238,
     "recentReconcileCount": 60,
     "changedRounds": [
-      1015,
-      1014
+      1013,
+      1012
     ],
     "officialResultsApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
     "officialWinningStoresPage": "https://www.dhlottery.co.kr/wnprchsplcsrch/home",
     "storeRetryRounds": 4,
     "storeStatus": {
-      "1015": "ok-official-json-api:8",
-      "1014": "ok-official-json-api:10"
+      "1013": "ok-official-json-api:5",
+      "1012": "ok-official-json-api:12"
     },
     "storeBackfillBatch": 2,
     "storeBackfillTargets": [
-      1015,
-      1014
+      1013,
+      1012
     ],
     "storesParserVersion": "8.6.1-direct-api-safe-backfill",
     "officialWinningStoresApi": "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do",
@@ -22651,12 +22651,41 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "가로가판대제57호(구)",
+          "method": "자동",
+          "address": "서울 중구 세종대로14길 6-2"
+        },
+        {
+          "name": "스파",
+          "method": "자동",
+          "address": "서울 노원구 동일로 1493 상계주공아파트(10단지) 주공10단지종합상가111"
+        },
+        {
+          "name": "삼성마트",
+          "method": "자동",
+          "address": "서울 강남구 선릉로 628"
+        },
+        {
+          "name": "부일카서비스",
+          "method": "자동",
+          "address": "부산 동구 자성로133번길 35"
+        },
+        {
+          "name": "장원로또",
+          "method": "자동",
+          "address": "경기 수원시 영통구 중부대로246번길 10 1층 3호"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-08-23T00:34:36+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
@@ -22683,12 +22712,76 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "복권천국",
+          "method": "자동",
+          "address": "서울 서초구 서초대로 97 1층"
+        },
+        {
+          "name": "세계로생활가전",
+          "method": "수동",
+          "address": "서울 동작구 보라매로 104 1층"
+        },
+        {
+          "name": "노다지",
+          "method": "자동",
+          "address": "서울 동대문구 한천로 55"
+        },
+        {
+          "name": "복권천하",
+          "method": "자동",
+          "address": "서울 강북구 월계로7나길 23"
+        },
+        {
+          "name": "이마트24 대구북구매천점",
+          "method": "자동",
+          "address": "대구 북구 매전로4길 22 1층(매천동)"
+        },
+        {
+          "name": "종국이두마리치킨불로점",
+          "method": "자동",
+          "address": "대구 동구 팔공로30길 6"
+        },
+        {
+          "name": "명당로또",
+          "method": "자동",
+          "address": "울산 남구 팔등로 65"
+        },
+        {
+          "name": "천하명당",
+          "method": "자동",
+          "address": "경기 평택시 탄현로 224"
+        },
+        {
+          "name": "명당슈퍼",
+          "method": "자동",
+          "address": "경기 수원시 영통구 중부대로 285 김환규산부인과"
+        },
+        {
+          "name": "차암일등로또",
+          "method": "자동",
+          "address": "충남 천안시 서북구 밤개울1길 1-5"
+        },
+        {
+          "name": "복권명당",
+          "method": "자동",
+          "address": "충남 공주시 번영1로 41"
+        },
+        {
+          "name": "로또복권판매점",
+          "method": "자동",
+          "address": "전북 남원시 가방뜰길 57 상가"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-08-23T00:34:36+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
