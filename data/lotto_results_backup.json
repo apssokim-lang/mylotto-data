@@ -29,7 +29,7 @@
     "coreBackfillBatchSize": 30,
     "coreBackfillCursorRound": 582,
     "storeBackfillBatchSize": 5,
-    "storeBackfillCursorRound": 989,
+    "storeBackfillCursorRound": 987,
     "completedCoreRoundCount": 18,
     "incompleteCoreRoundCount": 1215,
     "completedStoreRoundCount": 7,
@@ -39,24 +39,24 @@
     "coreCompleteCount": 651,
     "coreIncompleteCount": 582,
     "officialApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
-    "lastCheckedAt": "2026-08-23T04:48:17+09:00",
+    "lastCheckedAt": "2026-08-23T05:28:14+09:00",
     "latestOfficialRound": 1238,
     "recentReconcileCount": 60,
     "changedRounds": [
-      991,
-      990
+      989,
+      988
     ],
     "officialResultsApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
     "officialWinningStoresPage": "https://www.dhlottery.co.kr/wnprchsplcsrch/home",
     "storeRetryRounds": 4,
     "storeStatus": {
-      "991": "ok-official-json-api:7",
-      "990": "ok-official-json-api:13"
+      "989": "ok-official-json-api:4",
+      "988": "ok-official-json-api:9"
     },
     "storeBackfillBatch": 2,
     "storeBackfillTargets": [
-      991,
-      990
+      989,
+      988
     ],
     "storesParserVersion": "8.6.1-direct-api-safe-backfill",
     "officialWinningStoresApi": "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do",
@@ -24855,12 +24855,36 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "로또픽",
+          "method": "자동",
+          "address": "서울 양천구 지양로 62 1층 일부"
+        },
+        {
+          "name": "명당마트",
+          "method": "자동",
+          "address": "서울 강서구 양천로 91"
+        },
+        {
+          "name": "태안로또명당",
+          "method": "자동",
+          "address": "충남 태안군 샘골로 12-1 구)등대식관"
+        },
+        {
+          "name": "진양상회",
+          "method": "자동",
+          "address": "경북 영주시 선비로 68"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-08-23T05:28:13+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
@@ -24887,12 +24911,61 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "로또복권판매",
+          "method": "자동",
+          "address": "서울 강북구 솔샘로67길 71"
+        },
+        {
+          "name": "GS25(수성시지점)",
+          "method": "자동",
+          "address": "대구 수성구 고산로18길 9"
+        },
+        {
+          "name": "지에스25 신매태왕점로또",
+          "method": "자동",
+          "address": "대구 수성구 욱수천로 70 편의점_GS25"
+        },
+        {
+          "name": "행운생활건강",
+          "method": "수동",
+          "address": "인천 서구 고래울로 42"
+        },
+        {
+          "name": "맑은샘",
+          "method": "자동",
+          "address": "광주 동구 중앙로 163 밀리오레앞도로 가판"
+        },
+        {
+          "name": "복권나라",
+          "method": "자동",
+          "address": "경기 포천시 소흘읍 죽엽산로35번길 1"
+        },
+        {
+          "name": "금손로또",
+          "method": "자동",
+          "address": "경기 의왕시 부곡중앙남1길 37"
+        },
+        {
+          "name": "로데오복권방",
+          "method": "자동",
+          "address": "경기 고양시 일산동구 무궁화로 40 우림보보카운티108"
+        },
+        {
+          "name": "나나 복권판매소",
+          "method": "자동",
+          "address": "경남 양산시 상북중앙로 319 엘지홈장식"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-08-23T05:28:14+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
