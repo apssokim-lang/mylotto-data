@@ -29,7 +29,7 @@
     "coreBackfillBatchSize": 30,
     "coreBackfillCursorRound": 582,
     "storeBackfillBatchSize": 5,
-    "storeBackfillCursorRound": 1017,
+    "storeBackfillCursorRound": 1015,
     "completedCoreRoundCount": 18,
     "incompleteCoreRoundCount": 1215,
     "completedStoreRoundCount": 7,
@@ -39,24 +39,24 @@
     "coreCompleteCount": 651,
     "coreIncompleteCount": 582,
     "officialApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
-    "lastCheckedAt": "2026-08-22T23:54:55+09:00",
+    "lastCheckedAt": "2026-08-23T00:12:35+09:00",
     "latestOfficialRound": 1238,
     "recentReconcileCount": 60,
     "changedRounds": [
-      1019,
-      1018
+      1017,
+      1016
     ],
     "officialResultsApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
     "officialWinningStoresPage": "https://www.dhlottery.co.kr/wnprchsplcsrch/home",
     "storeRetryRounds": 4,
     "storeStatus": {
-      "1019": "ok-official-json-api:41",
-      "1018": "ok-official-json-api:2"
+      "1017": "ok-official-json-api:7",
+      "1016": "ok-official-json-api:10"
     },
     "storeBackfillBatch": 2,
     "storeBackfillTargets": [
-      1019,
-      1018
+      1017,
+      1016
     ],
     "storesParserVersion": "8.6.1-direct-api-safe-backfill",
     "officialWinningStoresApi": "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do",
@@ -22332,12 +22332,51 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "복권명당",
+          "method": "자동",
+          "address": "서울 동작구 국사봉길 26"
+        },
+        {
+          "name": "대박복권방",
+          "method": "수동",
+          "address": "서울 구로구 개봉로17길 18"
+        },
+        {
+          "name": "베네시티앞가판",
+          "method": "자동",
+          "address": "서울 강동구 올림픽로 664 대우베네시티cafe7gram앞"
+        },
+        {
+          "name": "SK 복권방",
+          "method": "자동",
+          "address": "인천 미추홀구 용정공원로 33 인천SKSkyVIEW 상가 A-2동 1층 104호"
+        },
+        {
+          "name": "로또판매점",
+          "method": "자동",
+          "address": "경기 김포시 김포한강2로 208 고창마을케이시시스위첸아파트 스웨첸아파트상가1동101호씨유kcc점"
+        },
+        {
+          "name": "슈퍼맨편의점",
+          "method": "자동",
+          "address": "강원 강릉시 경강로 2113 꽃사슴복권방"
+        },
+        {
+          "name": "행운복권",
+          "method": "자동",
+          "address": "충북 제천시 명륜로 67 1층"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-08-23T00:12:34+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
@@ -22364,12 +22403,66 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "가판14호",
+          "method": "자동",
+          "address": "서울 중구 퇴계로 37"
+        },
+        {
+          "name": "나눔로또 석촌점",
+          "method": "수동",
+          "address": "서울 송파구 백제고분로27길 34 1층"
+        },
+        {
+          "name": "희망복권방",
+          "method": "자동",
+          "address": "부산 동래구 명장로20번길 26"
+        },
+        {
+          "name": "운수대통",
+          "method": "자동",
+          "address": "인천 부평구 동암광장로 6 1층 A호"
+        },
+        {
+          "name": "우두로또",
+          "method": "자동",
+          "address": "강원 춘천시 영서로 2786 1층"
+        },
+        {
+          "name": "국영슈퍼",
+          "method": "자동",
+          "address": "충남 아산시 시민로 366"
+        },
+        {
+          "name": "종합복권방",
+          "method": "자동",
+          "address": "전남 해남군 해남로 34 종합복권방편의점"
+        },
+        {
+          "name": "지에스(GS25)뉴양산혜인점",
+          "method": "자동",
+          "address": "경남 양산시 웅상대로 955"
+        },
+        {
+          "name": "호박넝쿨복권방",
+          "method": "자동",
+          "address": "경남 김해시 여래로20번길 50-7 103호"
+        },
+        {
+          "name": "고현시장만남의광장복권방",
+          "method": "자동",
+          "address": "경남 거제시 거제중앙로19길 8 102호"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-08-23T00:12:35+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
