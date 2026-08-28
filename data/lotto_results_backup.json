@@ -29,7 +29,7 @@
     "coreBackfillBatchSize": 30,
     "coreBackfillCursorRound": 582,
     "storeBackfillBatchSize": 5,
-    "storeBackfillCursorRound": 965,
+    "storeBackfillCursorRound": 963,
     "completedCoreRoundCount": 18,
     "incompleteCoreRoundCount": 1215,
     "completedStoreRoundCount": 7,
@@ -39,24 +39,24 @@
     "coreCompleteCount": 651,
     "coreIncompleteCount": 582,
     "officialApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
-    "lastCheckedAt": "2026-08-25T04:09:14+09:00",
+    "lastCheckedAt": "2026-08-26T04:07:56+09:00",
     "latestOfficialRound": 1238,
     "recentReconcileCount": 60,
     "changedRounds": [
-      967,
-      966
+      965,
+      964
     ],
     "officialResultsApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
     "officialWinningStoresPage": "https://www.dhlottery.co.kr/wnprchsplcsrch/home",
     "storeRetryRounds": 4,
     "storeStatus": {
-      "967": "ok-official-json-api:4",
-      "966": "ok-official-json-api:9"
+      "965": "ok-official-json-api:7",
+      "964": "ok-official-json-api:10"
     },
     "storeBackfillBatch": 2,
     "storeBackfillTargets": [
-      967,
-      966
+      965,
+      964
     ],
     "storesParserVersion": "8.6.1-direct-api-safe-backfill",
     "officialWinningStoresApi": "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do",
@@ -26914,12 +26914,51 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "Proto샵종암점",
+          "method": "수동",
+          "address": "서울 성북구 종암로19길 7 큰 길쪽 복권방"
+        },
+        {
+          "name": "GS25(사당역점)",
+          "method": "자동",
+          "address": "서울 동작구 동작대로1길 27"
+        },
+        {
+          "name": "GS25(역삼대홍점)",
+          "method": "자동",
+          "address": "서울 강남구 논현로63길 19"
+        },
+        {
+          "name": "행복이가득한집",
+          "method": "자동",
+          "address": "부산 영도구 동삼로 89 1층 복권방"
+        },
+        {
+          "name": "장군슈퍼",
+          "method": "반자동",
+          "address": "경기 부천시 소사로 837"
+        },
+        {
+          "name": "차암일등로또",
+          "method": "자동",
+          "address": "충남 천안시 서북구 밤개울1길 1-5"
+        },
+        {
+          "name": "이마트24문경로또명당점",
+          "method": "자동",
+          "address": "경북 문경시 당교로 175 이마트24문경로또명당점"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-08-26T04:07:55+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
@@ -26946,12 +26985,66 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "왕자사진관",
+          "method": "수동",
+          "address": "서울 중랑구 양원역로 2 일흥빌딩1층12호"
+        },
+        {
+          "name": "대박종합복권가로판매점",
+          "method": "자동",
+          "address": "서울 서대문구 신촌로 75"
+        },
+        {
+          "name": "GS25 뉴강서역점",
+          "method": "자동",
+          "address": "부산 강서구 대저로 275 1층"
+        },
+        {
+          "name": "세븐일레븐 현풍대로점",
+          "method": "자동",
+          "address": "대구 달성군 비슬로 581 세븐일레븐현풍대로점"
+        },
+        {
+          "name": "대박복권방",
+          "method": "자동",
+          "address": "인천 서구 대평로 3"
+        },
+        {
+          "name": "하늘바다 편의점 복권방",
+          "method": "자동",
+          "address": "인천 부평구 부흥로 389 백산빌딩 1층 102호"
+        },
+        {
+          "name": "용꿈돼지꿈복권방",
+          "method": "자동",
+          "address": "경기 시흥시 하중로 235 법조타운103호"
+        },
+        {
+          "name": "성명전력",
+          "method": "수동",
+          "address": "경기 동두천시 큰시장로 43"
+        },
+        {
+          "name": "태금편의점",
+          "method": "자동",
+          "address": "경남 창원시 마산회원구 옥정3길 25 신축건물1층"
+        },
+        {
+          "name": "대박로또방",
+          "method": "자동",
+          "address": "경남 양산시 삼호로 71 1층 2호"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-08-26T04:07:56+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
