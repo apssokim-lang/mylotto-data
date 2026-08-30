@@ -29,7 +29,7 @@
     "coreBackfillBatchSize": 30,
     "coreBackfillCursorRound": 582,
     "storeBackfillBatchSize": 5,
-    "storeBackfillCursorRound": 947,
+    "storeBackfillCursorRound": 945,
     "completedCoreRoundCount": 18,
     "incompleteCoreRoundCount": 1215,
     "completedStoreRoundCount": 7,
@@ -39,24 +39,24 @@
     "coreCompleteCount": 651,
     "coreIncompleteCount": 582,
     "officialApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
-    "lastCheckedAt": "2026-08-30T08:58:47+09:00",
+    "lastCheckedAt": "2026-08-30T14:01:39+09:00",
     "latestOfficialRound": 1239,
     "recentReconcileCount": 60,
     "changedRounds": [
-      949,
-      948
+      947,
+      946
     ],
     "officialResultsApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
     "officialWinningStoresPage": "https://www.dhlottery.co.kr/wnprchsplcsrch/home",
     "storeRetryRounds": 4,
     "storeStatus": {
-      "949": "ok-official-json-api:10",
-      "948": "ok-official-json-api:11"
+      "947": "ok-official-json-api:18",
+      "946": "ok-official-json-api:11"
     },
     "storeBackfillBatch": 2,
     "storeBackfillTargets": [
-      949,
-      948
+      947,
+      946
     ],
     "storesParserVersion": "8.6.1-direct-api-safe-backfill",
     "officialWinningStoresApi": "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do",
@@ -28612,12 +28612,106 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "양광마트",
+          "method": "반자동",
+          "address": "서울 은평구 응암로 173-1"
+        },
+        {
+          "name": "버스판매소",
+          "method": "자동",
+          "address": "서울 영등포구 영중로 13 신세계앞"
+        },
+        {
+          "name": "다담",
+          "method": "자동",
+          "address": "서울 동대문구 장한로18길 50"
+        },
+        {
+          "name": "복권명당",
+          "method": "수동",
+          "address": "대구 수성구 들안로 243"
+        },
+        {
+          "name": "복권마트",
+          "method": "자동",
+          "address": "광주 북구 북문대로 89 벽산메가시티상가 101동 116호"
+        },
+        {
+          "name": "운수대통",
+          "method": "자동",
+          "address": "광주 광산구 어등대로 581-1 1층 운수대통"
+        },
+        {
+          "name": "복권나라",
+          "method": "자동",
+          "address": "대전 대덕구 신탄진동로 1"
+        },
+        {
+          "name": "로또휴게실",
+          "method": "수동",
+          "address": "경기 용인시 기흥구 용구대로 1885"
+        },
+        {
+          "name": "대성기획",
+          "method": "자동",
+          "address": "경기 용인시 기흥구 구성로 75-1"
+        },
+        {
+          "name": "1등복권방",
+          "method": "자동",
+          "address": "경기 오산시 수청로 201 센타프라자"
+        },
+        {
+          "name": "로또또",
+          "method": "자동",
+          "address": "경기 김포시 봉수대로 1704 102호"
+        },
+        {
+          "name": "일산복권",
+          "method": "자동",
+          "address": "경기 고양시 일산동구 무궁화로 31-16 남정시티프라자8차 103호"
+        },
+        {
+          "name": "버스표판매소",
+          "method": "자동",
+          "address": "경기 고양시 덕양구 화신로 76 샘터마을1단지아파트 971번지선"
+        },
+        {
+          "name": "썬마트",
+          "method": "자동",
+          "address": "충북 청주시 흥덕구 진재로23번길 25"
+        },
+        {
+          "name": "위드미청주예체로점",
+          "method": "자동",
+          "address": "충북 청주시 서원구 예체로19번길 3"
+        },
+        {
+          "name": "행운복권",
+          "method": "자동",
+          "address": "충북 제천시 명륜로 67 1층"
+        },
+        {
+          "name": "나눔로또",
+          "method": "자동",
+          "address": "충남 논산시 중앙로 201"
+        },
+        {
+          "name": "안계 나눔로또",
+          "method": "반자동",
+          "address": "경북 의성군 안계시장길 43"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-08-30T14:01:39+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
@@ -28644,12 +28738,71 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "묵동식품",
+          "method": "수동",
+          "address": "서울 중랑구 동일로 919"
+        },
+        {
+          "name": "문구뱅크",
+          "method": "자동",
+          "address": "서울 은평구 서오릉로 71 영화마스타골프랜드 문구뱅크"
+        },
+        {
+          "name": "홈플러스앞가로판매점",
+          "method": "자동",
+          "address": "서울 양천구 등촌로 172 등촌빌딩"
+        },
+        {
+          "name": "GS25(반포중앙점)",
+          "method": "수동",
+          "address": "서울 서초구 사평대로55길 37 1층"
+        },
+        {
+          "name": "내복권방",
+          "method": "자동",
+          "address": "서울 노원구 노원로1나길 5 1층"
+        },
+        {
+          "name": "복터졌네 대박로또",
+          "method": "수동",
+          "address": "부산 사상구 광장로21번길 46"
+        },
+        {
+          "name": "태수상사",
+          "method": "자동",
+          "address": "대구 달서구 월배로39길 30 이마트24달서월배로점"
+        },
+        {
+          "name": "용두천하",
+          "method": "자동",
+          "address": "광주 북구 하서로 373"
+        },
+        {
+          "name": "파크애비뉴",
+          "method": "자동",
+          "address": "경기 화성시 동탄공원로3길 40-6 102호"
+        },
+        {
+          "name": "Letsgo복권방",
+          "method": "수동",
+          "address": "전북 전주시 완산구 평화로 190"
+        },
+        {
+          "name": "스마일복권방",
+          "method": "수동",
+          "address": "경북 김천시 영남대로 2087 101호"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-08-30T14:01:39+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
