@@ -29,7 +29,7 @@
     "coreBackfillBatchSize": 30,
     "coreBackfillCursorRound": 582,
     "storeBackfillBatchSize": 5,
-    "storeBackfillCursorRound": 943,
+    "storeBackfillCursorRound": 941,
     "completedCoreRoundCount": 18,
     "incompleteCoreRoundCount": 1215,
     "completedStoreRoundCount": 7,
@@ -39,24 +39,24 @@
     "coreCompleteCount": 651,
     "coreIncompleteCount": 582,
     "officialApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
-    "lastCheckedAt": "2026-08-30T20:44:17+09:00",
+    "lastCheckedAt": "2026-08-31T06:20:51+09:00",
     "latestOfficialRound": 1239,
     "recentReconcileCount": 60,
     "changedRounds": [
-      945,
-      944
+      943,
+      942
     ],
     "officialResultsApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
     "officialWinningStoresPage": "https://www.dhlottery.co.kr/wnprchsplcsrch/home",
     "storeRetryRounds": 4,
     "storeStatus": {
-      "945": "ok-official-json-api:12",
-      "944": "ok-official-json-api:13"
+      "943": "ok-official-json-api:7",
+      "942": "ok-official-json-api:6"
     },
     "storeBackfillBatch": 2,
     "storeBackfillTargets": [
-      945,
-      944
+      943,
+      942
     ],
     "storesParserVersion": "8.6.1-direct-api-safe-backfill",
     "officialWinningStoresApi": "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do",
@@ -29026,12 +29026,51 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "스파",
+          "method": "자동",
+          "address": "서울 노원구 동일로 1493 상계주공아파트(10단지) 주공10단지종합상가111"
+        },
+        {
+          "name": "로또수락산점",
+          "method": "수동",
+          "address": "서울 노원구 동일로 1689 대덕하이베라스101호"
+        },
+        {
+          "name": "천하명당복권방",
+          "method": "자동",
+          "address": "인천 계양구 안남로 466 1층"
+        },
+        {
+          "name": "동행행운lotto방",
+          "method": "자동",
+          "address": "경기 화성시 한절이1길 6-13"
+        },
+        {
+          "name": "관촌방",
+          "method": "수동",
+          "address": "경기 이천시 경충대로 2241 1층 상가"
+        },
+        {
+          "name": "GMART",
+          "method": "자동",
+          "address": "경북 구미시 구미중앙로 57-3"
+        },
+        {
+          "name": "GS25(양산신평점)",
+          "method": "수동",
+          "address": "경남 양산시 신평중앙길 1 GS25"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-08-31T06:20:50+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
@@ -29058,12 +29097,46 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "미니24시",
+          "method": "자동",
+          "address": "인천 미추홀구 경인로 437"
+        },
+        {
+          "name": "행복한삼남매",
+          "method": "자동",
+          "address": "경기 양평군 강남로 689 1층"
+        },
+        {
+          "name": "진우행운복권방",
+          "method": "수동",
+          "address": "경기 광주시 도척로 327 1층"
+        },
+        {
+          "name": "서울로또방",
+          "method": "수동",
+          "address": "충북 옥천군 옥천읍 삼금로 8"
+        },
+        {
+          "name": "팡팡복권방",
+          "method": "자동",
+          "address": "전북 익산시 인북로 99"
+        },
+        {
+          "name": "로또명당 중리점",
+          "method": "자동",
+          "address": "경남 창원시 마산회원구 옥정1길 21 수미산장 1층"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-08-31T06:20:51+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
