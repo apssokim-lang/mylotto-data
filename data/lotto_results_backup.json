@@ -29,7 +29,7 @@
     "coreBackfillBatchSize": 30,
     "coreBackfillCursorRound": 582,
     "storeBackfillBatchSize": 5,
-    "storeBackfillCursorRound": 935,
+    "storeBackfillCursorRound": 933,
     "completedCoreRoundCount": 18,
     "incompleteCoreRoundCount": 1215,
     "completedStoreRoundCount": 7,
@@ -39,24 +39,24 @@
     "coreCompleteCount": 651,
     "coreIncompleteCount": 582,
     "officialApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
-    "lastCheckedAt": "2026-09-03T06:11:14+09:00",
+    "lastCheckedAt": "2026-09-04T06:12:04+09:00",
     "latestOfficialRound": 1239,
     "recentReconcileCount": 60,
     "changedRounds": [
-      937,
-      936
+      935,
+      934
     ],
     "officialResultsApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
     "officialWinningStoresPage": "https://www.dhlottery.co.kr/wnprchsplcsrch/home",
     "storeRetryRounds": 4,
     "storeStatus": {
-      "937": "ok-official-json-api:11",
-      "936": "ok-official-json-api:14"
+      "935": "ok-official-json-api:13",
+      "934": "ok-official-json-api:4"
     },
     "storeBackfillBatch": 2,
     "storeBackfillTargets": [
-      937,
-      936
+      935,
+      934
     ],
     "storesParserVersion": "8.6.1-direct-api-safe-backfill",
     "officialWinningStoresApi": "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do",
@@ -29739,12 +29739,81 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "CU(망우점)",
+          "method": "수동",
+          "address": "서울 중랑구 망우로 410"
+        },
+        {
+          "name": "중구-가로가판대-37",
+          "method": "자동",
+          "address": "서울 중구 남대문로 20-2"
+        },
+        {
+          "name": "통일마트",
+          "method": "수동",
+          "address": "서울 종로구 종로 19 르메이에르종로타운 110-1호"
+        },
+        {
+          "name": "대박로또",
+          "method": "수동",
+          "address": "서울 송파구 마천로57길 5 마천빌딩"
+        },
+        {
+          "name": "행운마트",
+          "method": "수동",
+          "address": "서울 노원구 중계로 96"
+        },
+        {
+          "name": "교통카드충전소",
+          "method": "자동",
+          "address": "서울 강남구 선릉로 309"
+        },
+        {
+          "name": "장군슈퍼",
+          "method": "수동",
+          "address": "인천 연수구 청량로 104"
+        },
+        {
+          "name": "정다운복권 조이마트",
+          "method": "자동",
+          "address": "인천 부평구 충선로 171 1층"
+        },
+        {
+          "name": "오천억복권방",
+          "method": "수동",
+          "address": "광주 서구 상무대로 1087"
+        },
+        {
+          "name": "율암25시편의점",
+          "method": "수동",
+          "address": "경기 화성시 시청로 822-10"
+        },
+        {
+          "name": "스마일로또복권",
+          "method": "수동",
+          "address": "경기 평택시 탄현1로 104 104호"
+        },
+        {
+          "name": "행운복권",
+          "method": "자동",
+          "address": "경기 성남시 중원구 시민로 120"
+        },
+        {
+          "name": "복드림로또판매점",
+          "method": "자동",
+          "address": "충북 충주시 첨단산업9로 13 1충"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-09-04T06:12:03+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
@@ -29771,12 +29840,36 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "당산로또명당점",
+          "method": "자동",
+          "address": "서울 영등포구 양평로 52"
+        },
+        {
+          "name": "대박복권마을",
+          "method": "자동",
+          "address": "서울 영등포구 당산로 140"
+        },
+        {
+          "name": "운수대통복권방",
+          "method": "수동",
+          "address": "전북 익산시 무왕로23길 3"
+        },
+        {
+          "name": "CU(포항오거리점)",
+          "method": "자동",
+          "address": "경북 포항시 북구 죽도로 33"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-09-04T06:12:04+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
