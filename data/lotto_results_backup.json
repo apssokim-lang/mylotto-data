@@ -29,7 +29,7 @@
     "coreBackfillBatchSize": 30,
     "coreBackfillCursorRound": 582,
     "storeBackfillBatchSize": 5,
-    "storeBackfillCursorRound": 927,
+    "storeBackfillCursorRound": 925,
     "completedCoreRoundCount": 18,
     "incompleteCoreRoundCount": 1215,
     "completedStoreRoundCount": 7,
@@ -39,24 +39,24 @@
     "coreCompleteCount": 651,
     "coreIncompleteCount": 582,
     "officialApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
-    "lastCheckedAt": "2026-09-06T01:16:36+09:00",
+    "lastCheckedAt": "2026-09-06T02:02:43+09:00",
     "latestOfficialRound": 1240,
     "recentReconcileCount": 60,
     "changedRounds": [
-      929,
-      928
+      927,
+      926
     ],
     "officialResultsApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
     "officialWinningStoresPage": "https://www.dhlottery.co.kr/wnprchsplcsrch/home",
     "storeRetryRounds": 4,
     "storeStatus": {
-      "929": "ok-official-json-api:13",
-      "928": "ok-official-json-api:7"
+      "927": "ok-official-json-api:6",
+      "926": "ok-official-json-api:10"
     },
     "storeBackfillBatch": 2,
     "storeBackfillTargets": [
-      929,
-      928
+      927,
+      926
     ],
     "storesParserVersion": "8.6.1-direct-api-safe-backfill",
     "officialWinningStoresApi": "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do",
@@ -30482,12 +30482,46 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "씨유역삼에클라트로또판매점",
+          "method": "반자동",
+          "address": "서울 강남구 역삼동 736-24 1층 씨유역삼에클라트점"
+        },
+        {
+          "name": "복권명당",
+          "method": "자동",
+          "address": "대전 서구 만년동 112번지"
+        },
+        {
+          "name": "행운플러스",
+          "method": "수동",
+          "address": "대전 대덕구 덕암동 53-14"
+        },
+        {
+          "name": "노다지복권방",
+          "method": "자동",
+          "address": "경기 시흥시 대야동 345-16번지 1층상가"
+        },
+        {
+          "name": "행운복권방",
+          "method": "자동",
+          "address": "경기 수원시 영통구 영통동 998-1 평익칼라스위트110호"
+        },
+        {
+          "name": "복권명당",
+          "method": "자동",
+          "address": "경북 구미시 원평동 123-18번지"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-09-06T02:02:43+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
@@ -30514,12 +30548,66 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "행운복권마트",
+          "method": "수동",
+          "address": "서울 종로구 숭인동 65-22"
+        },
+        {
+          "name": "헬로마트",
+          "method": "자동",
+          "address": "서울 도봉구 도봉2동 89-148번지"
+        },
+        {
+          "name": "뉴빅마트",
+          "method": "자동",
+          "address": "부산 기장군 정관읍 매학리 748-5 106호"
+        },
+        {
+          "name": "명당일세",
+          "method": "자동",
+          "address": "경기 평택시 평택동 71-6"
+        },
+        {
+          "name": "대박복권",
+          "method": "자동",
+          "address": "충남 홍성군 구항면 마온리 135-4 이마트24시편의점내"
+        },
+        {
+          "name": "로또방양덕점",
+          "method": "수동",
+          "address": "경북 포항시 북구 양덕동 1751 포항시 북구 양덕동1751 이마트24포항양덕점"
+        },
+        {
+          "name": "로또복권 황성점",
+          "method": "수동",
+          "address": "경북 경주시 황성동 472-8 4호"
+        },
+        {
+          "name": "나눔로또",
+          "method": "자동",
+          "address": "경남 함안군 칠원읍 구성리 650-8 1층"
+        },
+        {
+          "name": "씨유(거창대동점)",
+          "method": "자동",
+          "address": "경남 거창군 거창읍 대동리 702번지"
+        },
+        {
+          "name": "성자점빵",
+          "method": "자동",
+          "address": "제주 제주시 이도이동 1080-9 1층"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-09-06T02:02:43+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
