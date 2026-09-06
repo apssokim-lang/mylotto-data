@@ -29,7 +29,7 @@
     "coreBackfillBatchSize": 30,
     "coreBackfillCursorRound": 582,
     "storeBackfillBatchSize": 5,
-    "storeBackfillCursorRound": 913,
+    "storeBackfillCursorRound": 911,
     "completedCoreRoundCount": 18,
     "incompleteCoreRoundCount": 1215,
     "completedStoreRoundCount": 7,
@@ -39,24 +39,24 @@
     "coreCompleteCount": 651,
     "coreIncompleteCount": 582,
     "officialApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
-    "lastCheckedAt": "2026-09-06T13:13:22+09:00",
+    "lastCheckedAt": "2026-09-06T19:43:43+09:00",
     "latestOfficialRound": 1240,
     "recentReconcileCount": 60,
     "changedRounds": [
-      915,
-      914
+      913,
+      912
     ],
     "officialResultsApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
     "officialWinningStoresPage": "https://www.dhlottery.co.kr/wnprchsplcsrch/home",
     "storeRetryRounds": 4,
     "storeStatus": {
-      "915": "ok-official-json-api:6",
-      "914": "ok-official-json-api:10"
+      "913": "ok-official-json-api:15",
+      "912": "ok-official-json-api:14"
     },
     "storeBackfillBatch": 2,
     "storeBackfillTargets": [
-      915,
-      914
+      913,
+      912
     ],
     "storesParserVersion": "8.6.1-direct-api-safe-backfill",
     "officialWinningStoresApi": "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do",
@@ -31646,12 +31646,91 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "9스토아",
+          "method": "자동",
+          "address": "서울 용산구 이태원동 130-43"
+        },
+        {
+          "name": "가로매점",
+          "method": "자동",
+          "address": "서울 마포구 도화동 174-5"
+        },
+        {
+          "name": "GS25(구로미성점)",
+          "method": "자동",
+          "address": "서울 구로구 신도림동 399번지 기임빌딩101호"
+        },
+        {
+          "name": "진영슈퍼",
+          "method": "자동",
+          "address": "서울 강서구 등촌동 565-6번지"
+        },
+        {
+          "name": "뉴빅마트",
+          "method": "자동",
+          "address": "부산 기장군 정관읍 매학리 748-5 106호"
+        },
+        {
+          "name": "토토죤",
+          "method": "수동",
+          "address": "광주 광산구 비아동 90-1 1층"
+        },
+        {
+          "name": "한방복권방",
+          "method": "자동",
+          "address": "경기 화성시 안녕동 19-6"
+        },
+        {
+          "name": "로또마트",
+          "method": "자동",
+          "address": "경기 하남시 풍산동 565 미사강변 아란티움 상가 내"
+        },
+        {
+          "name": "해피타임",
+          "method": "자동",
+          "address": "경기 평택시 오성면 죽리 7-15"
+        },
+        {
+          "name": "배곧로또판매점",
+          "method": "자동",
+          "address": "경기 시흥시 정왕동 1771-24"
+        },
+        {
+          "name": "도래울 행운로또",
+          "method": "자동",
+          "address": "경기 고양시 덕양구 도내동 958 파리바게뜨 왼쪽"
+        },
+        {
+          "name": "대박복권",
+          "method": "자동",
+          "address": "충남 홍성군 구항면 마온리 135-4 이마트24시편의점내"
+        },
+        {
+          "name": "왔다복권",
+          "method": "자동",
+          "address": "충남 천안시 서북구 성정동 646-12번지"
+        },
+        {
+          "name": "효자로또판매점",
+          "method": "자동",
+          "address": "전북 전주시 완산구 효자동3가 1626-11 103호"
+        },
+        {
+          "name": "티켓코리아",
+          "method": "자동",
+          "address": "제주 제주시 이도일동 1354-1"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-09-06T19:43:42+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
@@ -31678,12 +31757,86 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "가로판매점",
+          "method": "자동",
+          "address": "서울 용산구 원효로2가 94-2번지"
+        },
+        {
+          "name": "씨스페이스(동작점)",
+          "method": "수동",
+          "address": "서울 동작구 신대방동 690-20"
+        },
+        {
+          "name": "가로판매소",
+          "method": "수동",
+          "address": "서울 구로구 구로동 3-25 신도림역배수펌프장앞"
+        },
+        {
+          "name": "뉴빅마트",
+          "method": "반자동",
+          "address": "부산 기장군 정관읍 매학리 748-5 106호"
+        },
+        {
+          "name": "토토복권",
+          "method": "반자동",
+          "address": "대구 서구 비산동 286-6번지"
+        },
+        {
+          "name": "행복세상",
+          "method": "자동",
+          "address": "대전 대덕구 중리동 385-29번지"
+        },
+        {
+          "name": "(I.A) 로또마트",
+          "method": "자동",
+          "address": "경기 안산시 단원구 신길동 1633"
+        },
+        {
+          "name": "태양정보통신",
+          "method": "자동",
+          "address": "경기 광주시 중대동 17-12 상가1층"
+        },
+        {
+          "name": "노다지복권방",
+          "method": "수동",
+          "address": "경기 광명시 하안동 34-10번지 원촌빌딩1층"
+        },
+        {
+          "name": "복권가판",
+          "method": "자동",
+          "address": "강원 춘천시 조양동 6-227 1층 이마트 24"
+        },
+        {
+          "name": "복권왕국",
+          "method": "자동",
+          "address": "충북 제천시 중앙로1가 77 지하145"
+        },
+        {
+          "name": "대박마트복권방",
+          "method": "수동",
+          "address": "충남 아산시 음봉면 산동리 431-10 태화상가1층103호"
+        },
+        {
+          "name": "영건",
+          "method": "수동",
+          "address": "경남 양산시 물금읍 가촌리 1280-4 A동113호 복권판매점"
+        },
+        {
+          "name": "나눔로또 씨유거제사등대로점",
+          "method": "자동",
+          "address": "경남 거제시 사등면 사등리 1954-2 CU편의점 내"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-09-06T19:43:43+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
