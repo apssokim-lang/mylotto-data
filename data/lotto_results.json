@@ -29,7 +29,7 @@
     "coreBackfillBatchSize": 30,
     "coreBackfillCursorRound": 582,
     "storeBackfillBatchSize": 5,
-    "storeBackfillCursorRound": 899,
+    "storeBackfillCursorRound": 897,
     "completedCoreRoundCount": 18,
     "incompleteCoreRoundCount": 1215,
     "completedStoreRoundCount": 7,
@@ -39,26 +39,24 @@
     "coreCompleteCount": 651,
     "coreIncompleteCount": 582,
     "officialApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
-    "lastCheckedAt": "2026-09-12T22:52:30+09:00",
+    "lastCheckedAt": "2026-09-13T01:39:02+09:00",
     "latestOfficialRound": 1241,
     "recentReconcileCount": 60,
     "changedRounds": [
-      1241,
-      901,
-      900
+      899,
+      898
     ],
     "officialResultsApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
     "officialWinningStoresPage": "https://www.dhlottery.co.kr/wnprchsplcsrch/home",
     "storeRetryRounds": 4,
     "storeStatus": {
-      "1241": "ok-official-json-api:13",
-      "901": "ok-official-json-api:7",
-      "900": "ok-official-json-api:5"
+      "899": "ok-official-json-api:6",
+      "898": "ok-official-json-api:6"
     },
     "storeBackfillBatch": 2,
     "storeBackfillTargets": [
-      901,
-      900
+      899,
+      898
     ],
     "storesParserVersion": "8.6.1-direct-api-safe-backfill",
     "officialWinningStoresApi": "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do",
@@ -32952,12 +32950,46 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "교통카드판매대",
+          "method": "자동",
+          "address": "서울 송파구 송파대로28길 27 공영주차장앞가판"
+        },
+        {
+          "name": "드림 편의점",
+          "method": "수동",
+          "address": "서울 도봉구 덕릉로60길 26"
+        },
+        {
+          "name": "승차권판매소(북비산점)",
+          "method": "자동",
+          "address": "대구 서구 달서로 201"
+        },
+        {
+          "name": "아이지에이마트 오산무지개점",
+          "method": "수동",
+          "address": "경기 오산시 현충로 95"
+        },
+        {
+          "name": "행복미니슈퍼",
+          "method": "자동",
+          "address": "경기 부천시 부일로 409"
+        },
+        {
+          "name": "금호마트",
+          "method": "자동",
+          "address": "경기 구리시 검배로29번길 8 102호"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-09-13T01:39:01+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
@@ -32984,12 +33016,46 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "토큰판매소",
+          "method": "자동",
+          "address": "서울 송파구 바람드리길 62"
+        },
+        {
+          "name": "행운로또복권판매점",
+          "method": "수동",
+          "address": "서울 구로구 고척로 123-2"
+        },
+        {
+          "name": "행운의복권방",
+          "method": "수동",
+          "address": "서울 관악구 양녕로 37-1"
+        },
+        {
+          "name": "CU(입석강변점)",
+          "method": "자동",
+          "address": "대구 동구 동촌로 32"
+        },
+        {
+          "name": "흥건슈퍼",
+          "method": "반자동",
+          "address": "전북 전주시 완산구 거마평로 25 흥건슈퍼"
+        },
+        {
+          "name": "공단로또점",
+          "method": "수동",
+          "address": "경남 함안군 삼칠로 831 슈퍼 옆 1층"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-09-13T01:39:02+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
