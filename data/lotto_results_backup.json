@@ -29,7 +29,7 @@
     "coreBackfillBatchSize": 30,
     "coreBackfillCursorRound": 582,
     "storeBackfillBatchSize": 5,
-    "storeBackfillCursorRound": 887,
+    "storeBackfillCursorRound": 885,
     "completedCoreRoundCount": 18,
     "incompleteCoreRoundCount": 1215,
     "completedStoreRoundCount": 7,
@@ -39,24 +39,24 @@
     "coreCompleteCount": 651,
     "coreIncompleteCount": 582,
     "officialApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
-    "lastCheckedAt": "2026-09-13T08:12:13+09:00",
+    "lastCheckedAt": "2026-09-13T10:20:29+09:00",
     "latestOfficialRound": 1241,
     "recentReconcileCount": 60,
     "changedRounds": [
-      889,
-      888
+      887,
+      886
     ],
     "officialResultsApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
     "officialWinningStoresPage": "https://www.dhlottery.co.kr/wnprchsplcsrch/home",
     "storeRetryRounds": 4,
     "storeStatus": {
-      "889": "ok-official-json-api:8",
-      "888": "ok-official-json-api:8"
+      "887": "ok-official-json-api:6",
+      "886": "ok-official-json-api:6"
     },
     "storeBackfillBatch": 2,
     "storeBackfillTargets": [
-      889,
-      888
+      887,
+      886
     ],
     "storesParserVersion": "8.6.1-direct-api-safe-backfill",
     "officialWinningStoresApi": "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do",
@@ -33897,12 +33897,46 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "신안할인마트",
+          "method": "반자동",
+          "address": "서울 중랑구 공릉로2나길 44 신안2차아파트상가101"
+        },
+        {
+          "name": "가판100호",
+          "method": "수동",
+          "address": "서울 중구 을지로 113-4 가판"
+        },
+        {
+          "name": "주공24시편의방",
+          "method": "자동",
+          "address": "대전 동구 옥천로180번길 19 판암주공아파트2차상가"
+        },
+        {
+          "name": "왕대박로또",
+          "method": "수동",
+          "address": "경기 이천시 덕평로 917 CU이천덕평점"
+        },
+        {
+          "name": "천하명당",
+          "method": "자동",
+          "address": "경기 안양시 동안구 부림로 121 제125,제126"
+        },
+        {
+          "name": "해피드림조이",
+          "method": "수동",
+          "address": "경남 창원시 의창구 천주로 24-1"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-09-13T10:20:28+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
@@ -33929,12 +33963,46 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "명당복권방",
+          "method": "자동",
+          "address": "서울 동작구 상도로 281 1층"
+        },
+        {
+          "name": "셀피아",
+          "method": "자동",
+          "address": "울산 북구 무룡로 29"
+        },
+        {
+          "name": "행운복권",
+          "method": "자동",
+          "address": "경기 의정부시 평화로 359 상가동 110호"
+        },
+        {
+          "name": "금진슈퍼",
+          "method": "자동",
+          "address": "전남 여수시 좌수영로 11"
+        },
+        {
+          "name": "영화마을흥해점",
+          "method": "수동",
+          "address": "경북 포항시 북구 흥해로 26 도로변 1층"
+        },
+        {
+          "name": "코리아슈퍼",
+          "method": "자동",
+          "address": "경남 통영시 안개로 42 상가1층 103호"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-09-13T10:20:29+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
