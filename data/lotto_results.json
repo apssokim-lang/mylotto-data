@@ -29,7 +29,7 @@
     "coreBackfillBatchSize": 30,
     "coreBackfillCursorRound": 582,
     "storeBackfillBatchSize": 5,
-    "storeBackfillCursorRound": 871,
+    "storeBackfillCursorRound": 869,
     "completedCoreRoundCount": 18,
     "incompleteCoreRoundCount": 1215,
     "completedStoreRoundCount": 7,
@@ -39,26 +39,24 @@
     "coreCompleteCount": 651,
     "coreIncompleteCount": 582,
     "officialApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
-    "lastCheckedAt": "2026-09-19T23:10:37+09:00",
+    "lastCheckedAt": "2026-09-20T02:37:18+09:00",
     "latestOfficialRound": 1242,
     "recentReconcileCount": 60,
     "changedRounds": [
-      1242,
-      873,
-      872
+      871,
+      870
     ],
     "officialResultsApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
     "officialWinningStoresPage": "https://www.dhlottery.co.kr/wnprchsplcsrch/home",
     "storeRetryRounds": 4,
     "storeStatus": {
-      "1242": "ok-official-json-api:8",
-      "873": "ok-official-json-api:8",
-      "872": "ok-official-json-api:12"
+      "871": "ok-official-json-api:6",
+      "870": "ok-official-json-api:7"
     },
     "storeBackfillBatch": 2,
     "storeBackfillTargets": [
-      873,
-      872
+      871,
+      870
     ],
     "storesParserVersion": "8.6.1-direct-api-safe-backfill",
     "officialWinningStoresApi": "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do",
@@ -35255,12 +35253,46 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "스파",
+          "method": "자동",
+          "address": "서울 노원구 동일로 1493 주공10단지종합상가111"
+        },
+        {
+          "name": "흥양마중물",
+          "method": "자동",
+          "address": "강원 원주시 치악로 2334 1층"
+        },
+        {
+          "name": "보은로또판매점",
+          "method": "수동",
+          "address": "충북 보은군 보청대로 1892 식자재마트 앞 가판"
+        },
+        {
+          "name": "아산도고명당점",
+          "method": "자동",
+          "address": "충남 아산시 온천대로 104 1층 103호"
+        },
+        {
+          "name": "GS25(양산혜인점)",
+          "method": "자동",
+          "address": "경남 양산시 웅상대로 955"
+        },
+        {
+          "name": "탑로또",
+          "method": "자동",
+          "address": "경남 거제시 거제중앙로 1787 서원탑훼밀리마트고현점 내(계룡온천옆)"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-09-20T02:37:17+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
@@ -35287,12 +35319,51 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "종합가판점",
+          "method": "자동",
+          "address": "서울 동대문구 왕산로40길 6 건물 앞쪽 가판점 청량리역 5번출구 앞쪽"
+        },
+        {
+          "name": "복권방",
+          "method": "수동",
+          "address": "부산 부산진구 당감서로 84 202호"
+        },
+        {
+          "name": "힐링로또",
+          "method": "자동",
+          "address": "대전 대덕구 송촌남로47번길 2"
+        },
+        {
+          "name": "왕대박",
+          "method": "수동",
+          "address": "경기 평택시 안정순환로172번길 29"
+        },
+        {
+          "name": "로또명당해미점",
+          "method": "자동",
+          "address": "충남 서산시 남문2로 108"
+        },
+        {
+          "name": "로또야놀자",
+          "method": "수동",
+          "address": "경북 경주시 양정로 211"
+        },
+        {
+          "name": "목화휴게소",
+          "method": "자동",
+          "address": "경남 사천시 사천대로 912"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-09-20T02:37:18+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
