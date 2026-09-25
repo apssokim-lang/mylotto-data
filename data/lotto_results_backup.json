@@ -29,7 +29,7 @@
     "coreBackfillBatchSize": 30,
     "coreBackfillCursorRound": 582,
     "storeBackfillBatchSize": 5,
-    "storeBackfillCursorRound": 851,
+    "storeBackfillCursorRound": 849,
     "completedCoreRoundCount": 18,
     "incompleteCoreRoundCount": 1215,
     "completedStoreRoundCount": 7,
@@ -39,24 +39,24 @@
     "coreCompleteCount": 651,
     "coreIncompleteCount": 582,
     "officialApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
-    "lastCheckedAt": "2026-09-24T06:38:43+09:00",
+    "lastCheckedAt": "2026-09-25T06:39:29+09:00",
     "latestOfficialRound": 1242,
     "recentReconcileCount": 60,
     "changedRounds": [
-      853,
-      852
+      851,
+      850
     ],
     "officialResultsApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
     "officialWinningStoresPage": "https://www.dhlottery.co.kr/wnprchsplcsrch/home",
     "storeRetryRounds": 4,
     "storeStatus": {
-      "853": "ok-official-json-api:7",
-      "852": "ok-official-json-api:4"
+      "851": "ok-official-json-api:6",
+      "850": "ok-official-json-api:6"
     },
     "storeBackfillBatch": 2,
     "storeBackfillTargets": [
-      853,
-      852
+      851,
+      850
     ],
     "storesParserVersion": "8.6.1-direct-api-safe-backfill",
     "officialWinningStoresApi": "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do",
@@ -36678,12 +36678,46 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "소문난복권명당",
+          "method": "자동",
+          "address": "서울 성북구 돌곶이로 29"
+        },
+        {
+          "name": "씨유 송도점",
+          "method": "수동",
+          "address": "인천 연수구 인권로 9 1층 CU"
+        },
+        {
+          "name": "행운나라복권방",
+          "method": "자동",
+          "address": "경기 안양시 만안구 충훈로 95"
+        },
+        {
+          "name": "안성맞춤",
+          "method": "수동",
+          "address": "경기 안성시 중앙로 371 번길 81 ,1층"
+        },
+        {
+          "name": "신화복권방",
+          "method": "자동",
+          "address": "충북 청주시 청원구 충청대로57번길 2"
+        },
+        {
+          "name": "대박로또판매점",
+          "method": "자동",
+          "address": "충남 홍성군 충절로 985 대박로또판매점"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-09-25T06:39:29+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
@@ -36710,12 +36744,46 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "미나식품(로또판매점)",
+          "method": "자동",
+          "address": "서울 강서구 금낭화로 91-12"
+        },
+        {
+          "name": "세진전자통신",
+          "method": "자동",
+          "address": "대구 서구 서대구로 156"
+        },
+        {
+          "name": "포유25대호점",
+          "method": "자동",
+          "address": "경기 오산시 대호로 104"
+        },
+        {
+          "name": "마두5번출구가판로또",
+          "method": "자동",
+          "address": "경기 고양시 일산동구 중앙로 1200"
+        },
+        {
+          "name": "버스표판매소",
+          "method": "자동",
+          "address": "경기 고양시 덕양구 중앙로557번길 7-23 비금빌딩앞"
+        },
+        {
+          "name": "썬마트",
+          "method": "수동",
+          "address": "충북 청주시 흥덕구 진재로23번길 25"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-09-25T06:39:29+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
