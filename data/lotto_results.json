@@ -39,7 +39,7 @@
     "coreCompleteCount": 651,
     "coreIncompleteCount": 582,
     "officialApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
-    "lastCheckedAt": "2026-09-26T23:01:12+09:00",
+    "lastCheckedAt": "2026-09-26T23:01:36+09:00",
     "latestOfficialRound": 1243,
     "recentReconcileCount": 60,
     "changedRounds": [
@@ -151,9 +151,9 @@
       "dataSource": {
         "winning": "dhlottery-official-internal-json",
         "prize": "dhlottery-official-internal-json",
-        "verifiedAt": "2026-09-26T23:01:07+09:00",
+        "verifiedAt": "2026-09-26T23:01:33+09:00",
         "stores": "dhlottery-official-winning-store-json-api",
-        "storesVerifiedAt": "2026-09-26T23:01:09+09:00",
+        "storesVerifiedAt": "2026-09-26T23:01:34+09:00",
         "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       },
       "date": "2026-09-26"
@@ -37254,7 +37254,7 @@
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
         "stores": "dhlottery-official-winning-store-json-api",
-        "storesVerifiedAt": "2026-09-26T23:01:11+09:00",
+        "storesVerifiedAt": "2026-09-26T23:01:35+09:00",
         "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
@@ -37375,7 +37375,7 @@
         "firstWinnerCount": "pyony-round-page",
         "secondWinnerCount": "pyony-round-page",
         "stores": "dhlottery-official-winning-store-json-api",
-        "storesVerifiedAt": "2026-09-26T23:01:12+09:00",
+        "storesVerifiedAt": "2026-09-26T23:01:36+09:00",
         "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
