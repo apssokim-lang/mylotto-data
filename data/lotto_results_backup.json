@@ -29,7 +29,7 @@
     "coreBackfillBatchSize": 30,
     "coreBackfillCursorRound": 582,
     "storeBackfillBatchSize": 5,
-    "storeBackfillCursorRound": 819,
+    "storeBackfillCursorRound": 817,
     "completedCoreRoundCount": 18,
     "incompleteCoreRoundCount": 1215,
     "completedStoreRoundCount": 7,
@@ -39,24 +39,24 @@
     "coreCompleteCount": 651,
     "coreIncompleteCount": 582,
     "officialApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
-    "lastCheckedAt": "2026-09-30T07:29:48+09:00",
+    "lastCheckedAt": "2026-10-01T07:27:44+09:00",
     "latestOfficialRound": 1243,
     "recentReconcileCount": 60,
     "changedRounds": [
-      821,
-      820
+      819,
+      818
     ],
     "officialResultsApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
     "officialWinningStoresPage": "https://www.dhlottery.co.kr/wnprchsplcsrch/home",
     "storeRetryRounds": 4,
     "storeStatus": {
-      "821": "ok-official-json-api:12",
-      "820": "ok-official-json-api:4"
+      "819": "ok-official-json-api:6",
+      "818": "ok-official-json-api:11"
     },
     "storeBackfillBatch": 2,
     "storeBackfillTargets": [
-      821,
-      820
+      819,
+      818
     ],
     "storesParserVersion": "8.6.1-direct-api-safe-backfill",
     "officialWinningStoresApi": "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do",
@@ -39255,12 +39255,46 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "가판점",
+          "method": "자동",
+          "address": "서울 서초구 효령로 283 가판"
+        },
+        {
+          "name": "헬로마트",
+          "method": "자동",
+          "address": "서울 도봉구 도봉로170길 8"
+        },
+        {
+          "name": "대박로또",
+          "method": "자동",
+          "address": "서울 관악구 은천로 177 103호"
+        },
+        {
+          "name": "아트슈퍼",
+          "method": "자동",
+          "address": "부산 부산진구 가야대로 490"
+        },
+        {
+          "name": "행운복권",
+          "method": "수동",
+          "address": "세종 충현로 31"
+        },
+        {
+          "name": "복권방",
+          "method": "수동",
+          "address": "경기 용인시 기흥구 신갈로68번길 24"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-10-01T07:27:43+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
@@ -39287,12 +39321,71 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "복권명당ㆍ토탈클린",
+          "method": "자동",
+          "address": "서울 은평구 갈현로 304 1층"
+        },
+        {
+          "name": "복드림복권방",
+          "method": "자동",
+          "address": "서울 강동구 상암로 99"
+        },
+        {
+          "name": "반여상회",
+          "method": "자동",
+          "address": "부산 해운대구 선수촌로 190 1층"
+        },
+        {
+          "name": "과정미니슈퍼",
+          "method": "수동",
+          "address": "부산 연제구 과정로 234-1"
+        },
+        {
+          "name": "한국인세계대박복권",
+          "method": "자동",
+          "address": "인천 연수구 한나루로197번길 34"
+        },
+        {
+          "name": "행운복권 IGA",
+          "method": "자동",
+          "address": "인천 부평구 평천로 102-1 1층"
+        },
+        {
+          "name": "두꺼비복권방",
+          "method": "수동",
+          "address": "경기 광주시 능평로 214"
+        },
+        {
+          "name": "복권명당",
+          "method": "자동",
+          "address": "경기 광명시 광명로832번길 15"
+        },
+        {
+          "name": "해피복권방",
+          "method": "자동",
+          "address": "경기 고양시 일산동구 고봉로 608"
+        },
+        {
+          "name": "봉평명당",
+          "method": "자동",
+          "address": "강원 평창군 기풍로 145"
+        },
+        {
+          "name": "목화휴게소",
+          "method": "수동",
+          "address": "경남 사천시 사천대로 912"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-10-01T07:27:44+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
