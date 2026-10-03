@@ -29,7 +29,7 @@
     "coreBackfillBatchSize": 30,
     "coreBackfillCursorRound": 582,
     "storeBackfillBatchSize": 5,
-    "storeBackfillCursorRound": 805,
+    "storeBackfillCursorRound": 803,
     "completedCoreRoundCount": 18,
     "incompleteCoreRoundCount": 1215,
     "completedStoreRoundCount": 7,
@@ -39,24 +39,24 @@
     "coreCompleteCount": 651,
     "coreIncompleteCount": 582,
     "officialApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
-    "lastCheckedAt": "2026-10-04T06:37:27+09:00",
+    "lastCheckedAt": "2026-10-04T06:37:56+09:00",
     "latestOfficialRound": 1244,
     "recentReconcileCount": 60,
     "changedRounds": [
-      807,
-      806
+      805,
+      804
     ],
     "officialResultsApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
     "officialWinningStoresPage": "https://www.dhlottery.co.kr/wnprchsplcsrch/home",
     "storeRetryRounds": 4,
     "storeStatus": {
-      "807": "ok-official-json-api:6",
-      "806": "ok-official-json-api:7"
+      "805": "ok-official-json-api:3",
+      "804": "ok-official-json-api:8"
     },
     "storeBackfillBatch": 2,
     "storeBackfillTargets": [
-      807,
-      806
+      805,
+      804
     ],
     "storesParserVersion": "8.6.1-direct-api-safe-backfill",
     "officialWinningStoresApi": "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do",
@@ -40289,12 +40289,31 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "대박복권방",
+          "method": "자동",
+          "address": "서울 강남구 언주로70길 10 CU편의점 건물 오른편 1층"
+        },
+        {
+          "name": "일등복권편의점",
+          "method": "자동",
+          "address": "대구 달서구 대명천로 220 1층"
+        },
+        {
+          "name": "종합복권슈퍼",
+          "method": "반자동",
+          "address": "경기 시흥시 마유로 336 정일빌딩104"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-10-04T06:37:56+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
@@ -40321,12 +40340,56 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "제일슈퍼",
+          "method": "수동",
+          "address": "서울 서대문구 응암로 79"
+        },
+        {
+          "name": "메트로센터점",
+          "method": "수동",
+          "address": "대구 중구 달구벌대로 지하 2100 메트로센터C412호"
+        },
+        {
+          "name": "파란만장복권방",
+          "method": "자동",
+          "address": "경기 화성시 효행로 1016 101호"
+        },
+        {
+          "name": "KS마트",
+          "method": "자동",
+          "address": "경기 포천시 가산로 112"
+        },
+        {
+          "name": "현대할인마트",
+          "method": "자동",
+          "address": "경기 이천시 경충대로 3136 1층"
+        },
+        {
+          "name": "GS25(상동현해점)",
+          "method": "수동",
+          "address": "경기 부천시 상동로 105"
+        },
+        {
+          "name": "행복미니슈퍼",
+          "method": "반자동",
+          "address": "경기 부천시 부일로 409"
+        },
+        {
+          "name": "싱글벙글마트",
+          "method": "수동",
+          "address": "경기 광명시 광명로 884 1층 좌측호(광명동)"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-10-04T06:37:56+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
