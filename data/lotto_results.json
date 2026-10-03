@@ -29,7 +29,7 @@
     "coreBackfillBatchSize": 30,
     "coreBackfillCursorRound": 582,
     "storeBackfillBatchSize": 5,
-    "storeBackfillCursorRound": 807,
+    "storeBackfillCursorRound": 805,
     "completedCoreRoundCount": 18,
     "incompleteCoreRoundCount": 1215,
     "completedStoreRoundCount": 7,
@@ -39,24 +39,24 @@
     "coreCompleteCount": 651,
     "coreIncompleteCount": 582,
     "officialApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
-    "lastCheckedAt": "2026-10-04T03:27:34+09:00",
+    "lastCheckedAt": "2026-10-04T06:37:27+09:00",
     "latestOfficialRound": 1244,
     "recentReconcileCount": 60,
     "changedRounds": [
-      809,
-      808
+      807,
+      806
     ],
     "officialResultsApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
     "officialWinningStoresPage": "https://www.dhlottery.co.kr/wnprchsplcsrch/home",
     "storeRetryRounds": 4,
     "storeStatus": {
-      "809": "ok-official-json-api:6",
-      "808": "ok-official-json-api:4"
+      "807": "ok-official-json-api:6",
+      "806": "ok-official-json-api:7"
     },
     "storeBackfillBatch": 2,
     "storeBackfillTargets": [
-      809,
-      808
+      807,
+      806
     ],
     "storesParserVersion": "8.6.1-direct-api-safe-backfill",
     "officialWinningStoresApi": "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do",
@@ -40152,12 +40152,46 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "참좋은마트(복권방)",
+          "method": "수동",
+          "address": "부산 영도구 태종로 130-1"
+        },
+        {
+          "name": "일등복권편의점",
+          "method": "자동",
+          "address": "대구 달서구 대명천로 220 1층"
+        },
+        {
+          "name": "열두보석복권방",
+          "method": "수동",
+          "address": "경기 용인시 기흥구 구갈로 74 구갈스포츠센터106호"
+        },
+        {
+          "name": "마두5번출구가판로또",
+          "method": "자동",
+          "address": "경기 고양시 일산동구 중앙로 1200"
+        },
+        {
+          "name": "황금복권",
+          "method": "수동",
+          "address": "경북 영주시 구성로 379-1"
+        },
+        {
+          "name": "드림마트",
+          "method": "수동",
+          "address": "경남 김해시 인제로170번길 15-6 씨스페이스편의점 내"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-10-04T06:37:27+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
@@ -40184,12 +40218,51 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "롯또",
+          "method": "자동",
+          "address": "부산 해운대구 윗반송로 77 1층"
+        },
+        {
+          "name": "일등복권편의점",
+          "method": "자동",
+          "address": "대구 달서구 대명천로 220 1층"
+        },
+        {
+          "name": "운수대통",
+          "method": "자동",
+          "address": "인천 부평구 동암광장로 6 1층 A호"
+        },
+        {
+          "name": "복권사랑",
+          "method": "자동",
+          "address": "경기 양주시 평화로 1444"
+        },
+        {
+          "name": "역곡중앙슈퍼",
+          "method": "반자동",
+          "address": "경기 부천시 부일로 724"
+        },
+        {
+          "name": "로또명당인주점",
+          "method": "자동",
+          "address": "충남 아산시 서해로 519-2"
+        },
+        {
+          "name": "로또복권판매",
+          "method": "수동",
+          "address": "경북 상주시 삼백로 159"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-10-04T06:37:27+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {

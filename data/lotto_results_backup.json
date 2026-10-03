@@ -29,7 +29,7 @@
     "coreBackfillBatchSize": 30,
     "coreBackfillCursorRound": 582,
     "storeBackfillBatchSize": 5,
-    "storeBackfillCursorRound": 809,
+    "storeBackfillCursorRound": 807,
     "completedCoreRoundCount": 18,
     "incompleteCoreRoundCount": 1215,
     "completedStoreRoundCount": 7,
@@ -39,24 +39,24 @@
     "coreCompleteCount": 651,
     "coreIncompleteCount": 582,
     "officialApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
-    "lastCheckedAt": "2026-10-04T00:02:48+09:00",
+    "lastCheckedAt": "2026-10-04T03:27:34+09:00",
     "latestOfficialRound": 1244,
     "recentReconcileCount": 60,
     "changedRounds": [
-      811,
-      810
+      809,
+      808
     ],
     "officialResultsApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
     "officialWinningStoresPage": "https://www.dhlottery.co.kr/wnprchsplcsrch/home",
     "storeRetryRounds": 4,
     "storeStatus": {
-      "811": "ok-official-json-api:6",
-      "810": "ok-official-json-api:7"
+      "809": "ok-official-json-api:6",
+      "808": "ok-official-json-api:4"
     },
     "storeBackfillBatch": 2,
     "storeBackfillTargets": [
-      811,
-      810
+      809,
+      808
     ],
     "storesParserVersion": "8.6.1-direct-api-safe-backfill",
     "officialWinningStoresApi": "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do",
@@ -40030,12 +40030,46 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "복권광장",
+          "method": "자동",
+          "address": "인천 부평구 백범로 500 1층(십정동)"
+        },
+        {
+          "name": "대박복권방",
+          "method": "자동",
+          "address": "경기 양주시 가래비길 33 1층"
+        },
+        {
+          "name": "풍전슈퍼",
+          "method": "자동",
+          "address": "경기 부천시 조마루로 428"
+        },
+        {
+          "name": "로또또",
+          "method": "자동",
+          "address": "경기 김포시 봉수대로 1704 동신상가a동101호"
+        },
+        {
+          "name": "프로피스",
+          "method": "자동",
+          "address": "경기 구리시 이문안로 11"
+        },
+        {
+          "name": "SoundWave",
+          "method": "자동",
+          "address": "경기 광명시 오리로 956"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-10-04T03:27:33+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
@@ -40062,12 +40096,36 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "복권방",
+          "method": "자동",
+          "address": "서울 강동구 천호대로176길 10-3"
+        },
+        {
+          "name": "들꽃편의점",
+          "method": "수동",
+          "address": "경기 수원시 영통구 매탄로204번길 2 1층 일부(매탄동)"
+        },
+        {
+          "name": "형제상회",
+          "method": "자동",
+          "address": "경기 부천시 부일로 752"
+        },
+        {
+          "name": "코니아일랜드아이스크림",
+          "method": "자동",
+          "address": "경기 남양주시 마치로 339 진우로얄빌라제나동102"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-10-04T03:27:34+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
