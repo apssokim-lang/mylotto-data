@@ -29,7 +29,7 @@
     "coreBackfillBatchSize": 30,
     "coreBackfillCursorRound": 582,
     "storeBackfillBatchSize": 5,
-    "storeBackfillCursorRound": 795,
+    "storeBackfillCursorRound": 793,
     "completedCoreRoundCount": 18,
     "incompleteCoreRoundCount": 1215,
     "completedStoreRoundCount": 7,
@@ -39,24 +39,24 @@
     "coreCompleteCount": 651,
     "coreIncompleteCount": 582,
     "officialApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
-    "lastCheckedAt": "2026-10-04T21:10:11+09:00",
+    "lastCheckedAt": "2026-10-06T09:13:38+09:00",
     "latestOfficialRound": 1244,
     "recentReconcileCount": 60,
     "changedRounds": [
-      797,
-      796
+      795,
+      794
     ],
     "officialResultsApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
     "officialWinningStoresPage": "https://www.dhlottery.co.kr/wnprchsplcsrch/home",
     "storeRetryRounds": 4,
     "storeStatus": {
-      "797": "ok-official-json-api:6",
-      "796": "ok-official-json-api:3"
+      "795": "ok-official-json-api:9",
+      "794": "ok-official-json-api:7"
     },
     "storeBackfillBatch": 2,
     "storeBackfillTargets": [
-      797,
-      796
+      795,
+      794
     ],
     "storesParserVersion": "8.6.1-direct-api-safe-backfill",
     "officialWinningStoresApi": "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do",
@@ -40944,12 +40944,61 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "수연식품(대박찬스)",
+          "method": "자동",
+          "address": "서울 중랑구 면목로48길 11"
+        },
+        {
+          "name": "부영마트",
+          "method": "자동",
+          "address": "서울 중랑구 면목로 481 102호"
+        },
+        {
+          "name": "대박찬스",
+          "method": "수동",
+          "address": "서울 영등포구 도림로 356 1층복권방"
+        },
+        {
+          "name": "가로판매점",
+          "method": "수동",
+          "address": "서울 서대문구 수색로 34-17 명동의류앞"
+        },
+        {
+          "name": "CU(좌동중앙점)",
+          "method": "자동",
+          "address": "부산 해운대구 양운로 98 대하프라자1층 CU좌동중앙점"
+        },
+        {
+          "name": "삼성로또",
+          "method": "자동",
+          "address": "인천 연수구 학나래로6번길 56"
+        },
+        {
+          "name": "송가상사",
+          "method": "수동",
+          "address": "경기 안산시 단원구 중앙대로 462 안산역사쇼핑몰1층131-3호"
+        },
+        {
+          "name": "중앙복권방",
+          "method": "자동",
+          "address": "충북 청주시 청원구 율량로189번길 25"
+        },
+        {
+          "name": "영약국",
+          "method": "수동",
+          "address": "충남 금산군 인삼로 104"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-10-06T09:13:37+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
@@ -40976,12 +41025,51 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "윤성",
+          "method": "자동",
+          "address": "서울 종로구 청계천로 247 1층, 5호"
+        },
+        {
+          "name": "뉴빅마트",
+          "method": "자동",
+          "address": "부산 기장군 정관중앙로 48 106호"
+        },
+        {
+          "name": "행운로또복권방",
+          "method": "자동",
+          "address": "경기 파주시 동거리길 28"
+        },
+        {
+          "name": "나눔로또 판교역점",
+          "method": "자동",
+          "address": "경기 성남시 분당구 대왕판교로606번길 39 107호"
+        },
+        {
+          "name": "대박슈퍼",
+          "method": "자동",
+          "address": "세종 행복10길 3 1층 101호"
+        },
+        {
+          "name": "스타복권방",
+          "method": "자동",
+          "address": "충남 논산시 안심로 72"
+        },
+        {
+          "name": "GS25(서귀중문점)",
+          "method": "수동",
+          "address": "제주 서귀포시 천제연로 210"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-10-06T09:13:38+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {

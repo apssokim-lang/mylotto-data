@@ -29,7 +29,7 @@
     "coreBackfillBatchSize": 30,
     "coreBackfillCursorRound": 582,
     "storeBackfillBatchSize": 5,
-    "storeBackfillCursorRound": 797,
+    "storeBackfillCursorRound": 795,
     "completedCoreRoundCount": 18,
     "incompleteCoreRoundCount": 1215,
     "completedStoreRoundCount": 7,
@@ -39,24 +39,24 @@
     "coreCompleteCount": 651,
     "coreIncompleteCount": 582,
     "officialApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
-    "lastCheckedAt": "2026-10-04T14:31:12+09:00",
+    "lastCheckedAt": "2026-10-04T21:10:11+09:00",
     "latestOfficialRound": 1244,
     "recentReconcileCount": 60,
     "changedRounds": [
-      799,
-      798
+      797,
+      796
     ],
     "officialResultsApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
     "officialWinningStoresPage": "https://www.dhlottery.co.kr/wnprchsplcsrch/home",
     "storeRetryRounds": 4,
     "storeStatus": {
-      "799": "ok-official-json-api:7",
-      "798": "ok-official-json-api:7"
+      "797": "ok-official-json-api:6",
+      "796": "ok-official-json-api:3"
     },
     "storeBackfillBatch": 2,
     "storeBackfillTargets": [
-      799,
-      798
+      797,
+      796
     ],
     "storesParserVersion": "8.6.1-direct-api-safe-backfill",
     "officialWinningStoresApi": "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do",
@@ -40827,12 +40827,46 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "영화유통(1등복권방)",
+          "method": "자동",
+          "address": "울산 남구 신정로 19 삼성아파트 상가 204-101"
+        },
+        {
+          "name": "일산탑복권",
+          "method": "자동",
+          "address": "경기 고양시 일산서구 일산로 517 107호"
+        },
+        {
+          "name": "CU(정동진모래시계점)",
+          "method": "자동",
+          "address": "강원 강릉시 헌화로 1018"
+        },
+        {
+          "name": "복권명당",
+          "method": "자동",
+          "address": "충남 아산시 모산로91번길 9-2 1층"
+        },
+        {
+          "name": "무지개",
+          "method": "자동",
+          "address": "전북 군산시 수송남로 36-1"
+        },
+        {
+          "name": "로또복권애니타임점",
+          "method": "자동",
+          "address": "경북 구미시 인동중앙로11길 24 애니타임편의점 내"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-10-04T21:10:10+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
@@ -40859,12 +40893,31 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "복권세상",
+          "method": "자동",
+          "address": "서울 양천구 신월로 187 1층"
+        },
+        {
+          "name": "메트로센터점",
+          "method": "자동",
+          "address": "대구 중구 달구벌대로 지하 2100 메트로센터C412호"
+        },
+        {
+          "name": "GS25(칠곡구안점)",
+          "method": "자동",
+          "address": "대구 북구 칠곡중앙대로 442"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-10-04T21:10:11+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
