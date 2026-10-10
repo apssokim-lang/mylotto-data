@@ -29,7 +29,7 @@
     "coreBackfillBatchSize": 30,
     "coreBackfillCursorRound": 582,
     "storeBackfillBatchSize": 5,
-    "storeBackfillCursorRound": 779,
+    "storeBackfillCursorRound": 777,
     "completedCoreRoundCount": 18,
     "incompleteCoreRoundCount": 1215,
     "completedStoreRoundCount": 7,
@@ -39,24 +39,24 @@
     "coreCompleteCount": 651,
     "coreIncompleteCount": 582,
     "officialApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
-    "lastCheckedAt": "2026-10-11T06:54:54+09:00",
+    "lastCheckedAt": "2026-10-11T07:21:28+09:00",
     "latestOfficialRound": 1245,
     "recentReconcileCount": 60,
     "changedRounds": [
-      781,
-      780
+      779,
+      778
     ],
     "officialResultsApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
     "officialWinningStoresPage": "https://www.dhlottery.co.kr/wnprchsplcsrch/home",
     "storeRetryRounds": 4,
     "storeStatus": {
-      "781": "ok-official-json-api:6",
-      "780": "ok-official-json-api:6"
+      "779": "ok-official-json-api:9",
+      "778": "ok-official-json-api:3"
     },
     "storeBackfillBatch": 2,
     "storeBackfillTargets": [
-      781,
-      780
+      779,
+      778
     ],
     "storesParserVersion": "8.6.1-direct-api-safe-backfill",
     "officialWinningStoresApi": "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do",
@@ -42160,12 +42160,61 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "원바이원",
+          "method": "반자동",
+          "address": "부산 중구 흑교로 18"
+        },
+        {
+          "name": "제이지컴퍼니(JGC)",
+          "method": "수동",
+          "address": "부산 부산진구 연수로 43 1층"
+        },
+        {
+          "name": "돈벼락맞는곳",
+          "method": "자동",
+          "address": "부산 동구 조방로49번길 18-1"
+        },
+        {
+          "name": "복권명당(서부점)",
+          "method": "수동",
+          "address": "대구 달서구 월배로 452"
+        },
+        {
+          "name": "로또복권방",
+          "method": "자동",
+          "address": "인천 서해구 장고개로 333"
+        },
+        {
+          "name": "행복세상",
+          "method": "자동",
+          "address": "대전 대덕구 중리로 52"
+        },
+        {
+          "name": "천사로또방",
+          "method": "자동",
+          "address": "경기 남양주시 사릉로34번길 24 1층 7호"
+        },
+        {
+          "name": "로또판매점",
+          "method": "수동",
+          "address": "충북 음성군 신내로 443 거성모터스 1층"
+        },
+        {
+          "name": "복권나라",
+          "method": "수동",
+          "address": "충남 계룡시 엄사중앙로 99"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-10-11T07:21:28+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
@@ -42192,12 +42241,31 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "한아름매점",
+          "method": "자동",
+          "address": "충남 홍성군 광천로 330"
+        },
+        {
+          "name": "행운로또",
+          "method": "자동",
+          "address": "충남 천안시 서북구 늘푸른1길 19 부경아파트 상가동 내"
+        },
+        {
+          "name": "로또복권",
+          "method": "자동",
+          "address": "경북 포항시 북구 용두산길 31 파리바케트 옆"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-10-11T07:21:28+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
