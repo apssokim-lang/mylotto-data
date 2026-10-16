@@ -29,7 +29,7 @@
     "coreBackfillBatchSize": 30,
     "coreBackfillCursorRound": 582,
     "storeBackfillBatchSize": 5,
-    "storeBackfillCursorRound": 763,
+    "storeBackfillCursorRound": 761,
     "completedCoreRoundCount": 18,
     "incompleteCoreRoundCount": 1215,
     "completedStoreRoundCount": 7,
@@ -39,24 +39,24 @@
     "coreCompleteCount": 651,
     "coreIncompleteCount": 582,
     "officialApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
-    "lastCheckedAt": "2026-10-15T06:51:35+09:00",
+    "lastCheckedAt": "2026-10-16T06:35:49+09:00",
     "latestOfficialRound": 1245,
     "recentReconcileCount": 60,
     "changedRounds": [
-      765,
-      764
+      763,
+      762
     ],
     "officialResultsApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
     "officialWinningStoresPage": "https://www.dhlottery.co.kr/wnprchsplcsrch/home",
     "storeRetryRounds": 4,
     "storeStatus": {
-      "765": "ok-official-json-api:11",
-      "764": "ok-official-json-api:5"
+      "763": "ok-official-json-api:8",
+      "762": "ok-official-json-api:9"
     },
     "storeBackfillBatch": 2,
     "storeBackfillTargets": [
-      765,
-      764
+      763,
+      762
     ],
     "storesParserVersion": "8.6.1-direct-api-safe-backfill",
     "officialWinningStoresApi": "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do",
@@ -43351,12 +43351,56 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "GS25(동묘역점)",
+          "method": "자동",
+          "address": "서울 종로구 종로 344 대우디오빌(GS동묘역점)"
+        },
+        {
+          "name": "뉴빅마트",
+          "method": "수동",
+          "address": "부산 기장군 정관중앙로 48 106호"
+        },
+        {
+          "name": "주택복권방",
+          "method": "수동",
+          "address": "경기 용인시 수지구 풍덕천로 144-1 103호"
+        },
+        {
+          "name": "서울복권방",
+          "method": "자동",
+          "address": "경기 동두천시 어수로 116"
+        },
+        {
+          "name": "강릉성산점",
+          "method": "수동",
+          "address": "강원 강릉시 구산길 58 1층 복권판매점"
+        },
+        {
+          "name": "로또복권",
+          "method": "자동",
+          "address": "충북 청주시 상당구 중고개로 344 103호"
+        },
+        {
+          "name": "대박마트",
+          "method": "자동",
+          "address": "충남 천안시 동남구 봉서8길 13 봉명청솔아파트상가103호"
+        },
+        {
+          "name": "코사마트크로바점",
+          "method": "수동",
+          "address": "전북 전주시 덕진구 매봉로 26"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-10-16T06:35:48+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
@@ -43383,12 +43427,61 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "신세계슈퍼",
+          "method": "수동",
+          "address": "서울 영등포구 대림로 191"
+        },
+        {
+          "name": "치즈마트",
+          "method": "수동",
+          "address": "서울 송파구 양재대로 932 가락몰 2관 1층 2-1호"
+        },
+        {
+          "name": "로또판매점",
+          "method": "자동",
+          "address": "서울 노원구 상계로 309-1 cu"
+        },
+        {
+          "name": "지에스25 검단더힐대박",
+          "method": "자동",
+          "address": "인천 검단구 서로3로 255 단지내상가동 B201호(원당동, 검단신도시 대방 디에트르더힐)"
+        },
+        {
+          "name": "로또명당",
+          "method": "수동",
+          "address": "경기 평택시 삼남로 190"
+        },
+        {
+          "name": "은행복권방",
+          "method": "수동",
+          "address": "경기 시흥시 은계호수로 49 1층 1062호"
+        },
+        {
+          "name": "세류보석복권방",
+          "method": "자동",
+          "address": "경기 수원시 권선구 세지로 30"
+        },
+        {
+          "name": "관문로또",
+          "method": "수동",
+          "address": "경기 과천시 별양상가2로 20 새서울프라자 1호"
+        },
+        {
+          "name": "로또편의점",
+          "method": "수동",
+          "address": "전북 전주시 덕진구 아중로 173"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-10-16T06:35:49+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
