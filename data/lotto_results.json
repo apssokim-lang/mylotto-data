@@ -29,7 +29,7 @@
     "coreBackfillBatchSize": 30,
     "coreBackfillCursorRound": 582,
     "storeBackfillBatchSize": 5,
-    "storeBackfillCursorRound": 735,
+    "storeBackfillCursorRound": 733,
     "completedCoreRoundCount": 18,
     "incompleteCoreRoundCount": 1215,
     "completedStoreRoundCount": 7,
@@ -39,24 +39,24 @@
     "coreCompleteCount": 651,
     "coreIncompleteCount": 582,
     "officialApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
-    "lastCheckedAt": "2026-10-22T06:52:38+09:00",
+    "lastCheckedAt": "2026-10-23T06:49:48+09:00",
     "latestOfficialRound": 1246,
     "recentReconcileCount": 60,
     "changedRounds": [
-      737,
-      736
+      735,
+      734
     ],
     "officialResultsApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
     "officialWinningStoresPage": "https://www.dhlottery.co.kr/wnprchsplcsrch/home",
     "storeRetryRounds": 4,
     "storeStatus": {
-      "737": "ok-official-json-api:2",
-      "736": "ok-official-json-api:5"
+      "735": "ok-official-json-api:9",
+      "734": "ok-official-json-api:8"
     },
     "storeBackfillBatch": 2,
     "storeBackfillTargets": [
-      737,
-      736
+      735,
+      734
     ],
     "storesParserVersion": "8.6.1-direct-api-safe-backfill",
     "officialWinningStoresApi": "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do",
@@ -45539,12 +45539,61 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "토큰판매소",
+          "method": "자동",
+          "address": "대구 동구 아양로 200"
+        },
+        {
+          "name": "L마트",
+          "method": "자동",
+          "address": "인천 서해구 승학로 528 아카데미프라자107호"
+        },
+        {
+          "name": "로또명당 퍼니마트",
+          "method": "자동",
+          "address": "인천 미추홀구 문학길 4 편의점내"
+        },
+        {
+          "name": "원내복권방",
+          "method": "수동",
+          "address": "대전 유성구 원내로 35"
+        },
+        {
+          "name": "지에스25 울산동구남목점",
+          "method": "수동",
+          "address": "울산 동구 동해안로 27"
+        },
+        {
+          "name": "열두보석복권방",
+          "method": "자동",
+          "address": "경기 용인시 기흥구 구갈로 74 구갈스포츠센터106호"
+        },
+        {
+          "name": "로또명당가두판매점",
+          "method": "자동",
+          "address": "경기 안양시 동안구 경수대로 848-2"
+        },
+        {
+          "name": "입암복권방",
+          "method": "자동",
+          "address": "강원 강릉시 입암로 157 103호"
+        },
+        {
+          "name": "씨스페이스 김천다원점",
+          "method": "자동",
+          "address": "경북 김천시 영남대로 1953"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-10-23T06:49:47+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
@@ -45571,12 +45620,56 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "스파",
+          "method": "자동",
+          "address": "서울 노원구 동일로 1493 주공10단지종합상가111"
+        },
+        {
+          "name": "로또(파발마점)",
+          "method": "수동",
+          "address": "경기 시흥시 마유로 415 역전프라자105호"
+        },
+        {
+          "name": "팡팡복권마트.잡화슈퍼",
+          "method": "자동",
+          "address": "전북 전주시 덕진구 가리내로 26"
+        },
+        {
+          "name": "복권나라",
+          "method": "자동",
+          "address": "전북 군산시 번영로 891"
+        },
+        {
+          "name": "복권명당",
+          "method": "자동",
+          "address": "경북 경주시 동문로 46"
+        },
+        {
+          "name": "CU노서점",
+          "method": "자동",
+          "address": "경북 경주시 금성로259번길 38 CU경주노서점 내"
+        },
+        {
+          "name": "GS25(창원코아점)",
+          "method": "자동",
+          "address": "경남 창원시 성산구 용지로113번길 7"
+        },
+        {
+          "name": "로또행운마트",
+          "method": "자동",
+          "address": "경남 김해시 능동로 177 복권판매점"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-10-23T06:49:48+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
