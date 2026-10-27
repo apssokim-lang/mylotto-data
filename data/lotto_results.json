@@ -29,7 +29,7 @@
     "coreBackfillBatchSize": 30,
     "coreBackfillCursorRound": 582,
     "storeBackfillBatchSize": 5,
-    "storeBackfillCursorRound": 711,
+    "storeBackfillCursorRound": 709,
     "completedCoreRoundCount": 18,
     "incompleteCoreRoundCount": 1215,
     "completedStoreRoundCount": 7,
@@ -39,24 +39,24 @@
     "coreCompleteCount": 651,
     "coreIncompleteCount": 582,
     "officialApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
-    "lastCheckedAt": "2026-10-27T07:48:48+09:00",
+    "lastCheckedAt": "2026-10-28T07:27:50+09:00",
     "latestOfficialRound": 1247,
     "recentReconcileCount": 60,
     "changedRounds": [
-      713,
-      712
+      711,
+      710
     ],
     "officialResultsApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
     "officialWinningStoresPage": "https://www.dhlottery.co.kr/wnprchsplcsrch/home",
     "storeRetryRounds": 4,
     "storeStatus": {
-      "713": "ok-official-json-api:7",
-      "712": "ok-official-json-api:4"
+      "711": "ok-official-json-api:5",
+      "710": "ok-official-json-api:3"
     },
     "storeBackfillBatch": 2,
     "storeBackfillTargets": [
-      713,
-      712
+      711,
+      710
     ],
     "storesParserVersion": "8.6.1-direct-api-safe-backfill",
     "officialWinningStoresApi": "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do",
@@ -47303,12 +47303,41 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "CU(정릉센터점)",
+          "method": "수동",
+          "address": "서울 성북구 정릉로38마길 29 101~104호 CU정릉센터점 내"
+        },
+        {
+          "name": "운수대통가판점",
+          "method": "수동",
+          "address": "서울 성동구 왕십리로 327"
+        },
+        {
+          "name": "복권방 담배",
+          "method": "수동",
+          "address": "서울 도봉구 도당로 91"
+        },
+        {
+          "name": "송강로또",
+          "method": "수동",
+          "address": "대전 유성구 봉산로 10"
+        },
+        {
+          "name": "스카이25",
+          "method": "자동",
+          "address": "경기 남양주시 미금로 26-2"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-10-28T07:27:50+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
@@ -47335,12 +47364,31 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "나들가게24(황금어장)",
+          "method": "수동",
+          "address": "부산 중구 중앙대로 96 흥우빌딩1층 나들가게편의점"
+        },
+        {
+          "name": "월드복권",
+          "method": "수동",
+          "address": "대구 서구 북비산로 98"
+        },
+        {
+          "name": "현대",
+          "method": "자동",
+          "address": "경기 동두천시 삼육사로 1005 1층"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-10-28T07:27:50+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
