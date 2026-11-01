@@ -29,7 +29,7 @@
     "coreBackfillBatchSize": 30,
     "coreBackfillCursorRound": 582,
     "storeBackfillBatchSize": 5,
-    "storeBackfillCursorRound": 695,
+    "storeBackfillCursorRound": 693,
     "completedCoreRoundCount": 18,
     "incompleteCoreRoundCount": 1215,
     "completedStoreRoundCount": 7,
@@ -39,24 +39,24 @@
     "coreCompleteCount": 651,
     "coreIncompleteCount": 582,
     "officialApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
-    "lastCheckedAt": "2026-11-01T07:22:01+09:00",
+    "lastCheckedAt": "2026-11-01T10:22:44+09:00",
     "latestOfficialRound": 1248,
     "recentReconcileCount": 60,
     "changedRounds": [
-      697,
-      696
+      695,
+      694
     ],
     "officialResultsApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
     "officialWinningStoresPage": "https://www.dhlottery.co.kr/wnprchsplcsrch/home",
     "storeRetryRounds": 4,
     "storeStatus": {
-      "697": "ok-official-json-api:9",
-      "696": "ok-official-json-api:6"
+      "695": "ok-official-json-api:11",
+      "694": "ok-official-json-api:6"
     },
     "storeBackfillBatch": 2,
     "storeBackfillTargets": [
-      697,
-      696
+      695,
+      694
     ],
     "storesParserVersion": "8.6.1-direct-api-safe-backfill",
     "officialWinningStoresApi": "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do",
@@ -48449,12 +48449,71 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "행복나눔통신",
+          "method": "자동",
+          "address": "서울 강서구 양천로49길 4"
+        },
+        {
+          "name": "충무로또",
+          "method": "반자동",
+          "address": "부산 서구 구덕로 115-2"
+        },
+        {
+          "name": "씨유 지저동",
+          "method": "자동",
+          "address": "대구 동구 해동로 49 1층 CU편의점"
+        },
+        {
+          "name": "복권명당(영남점)",
+          "method": "수동",
+          "address": "대구 달서구 월배로 122"
+        },
+        {
+          "name": "포시즌마전점",
+          "method": "자동",
+          "address": "인천 검단구 완정로10번길 6-6 검단2지구37블록1롯트"
+        },
+        {
+          "name": "버스매표소",
+          "method": "반자동",
+          "address": "인천 부평구 부평대로 3 가판"
+        },
+        {
+          "name": "1등복권방",
+          "method": "자동",
+          "address": "울산 울주군 동문길 84"
+        },
+        {
+          "name": "HX복권방",
+          "method": "자동",
+          "address": "경기 이천시 경충대로 2106 현대시티플라자106호"
+        },
+        {
+          "name": "로또휴게실",
+          "method": "자동",
+          "address": "경기 용인시 기흥구 용구대로 1885"
+        },
+        {
+          "name": "영일종합장식",
+          "method": "수동",
+          "address": "경기 안산시 단원구 고잔로 112 신광프라자102호"
+        },
+        {
+          "name": "복권나라",
+          "method": "수동",
+          "address": "경기 안산시 단원구 원본로 38"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-11-01T10:22:44+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
@@ -48481,12 +48540,46 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "명성복권방",
+          "method": "자동",
+          "address": "경기 화성시 병점구 경기대로 1043"
+        },
+        {
+          "name": "행운로또",
+          "method": "자동",
+          "address": "경기 하남시 미사강변중앙로 164 101호"
+        },
+        {
+          "name": "행운복권방",
+          "method": "자동",
+          "address": "경기 포천시 솔모루로 86-1"
+        },
+        {
+          "name": "주몽동명",
+          "method": "수동",
+          "address": "경기 용인시 수지구 포은대로 319 중앙빌딩 104호"
+        },
+        {
+          "name": "부자복권방",
+          "method": "수동",
+          "address": "전북 군산시 구시장로 4"
+        },
+        {
+          "name": "씨유제주구남중앙점",
+          "method": "수동",
+          "address": "제주 제주시 구남동2길 27"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-11-01T10:22:44+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
