@@ -29,7 +29,7 @@
     "coreBackfillBatchSize": 30,
     "coreBackfillCursorRound": 582,
     "storeBackfillBatchSize": 5,
-    "storeBackfillCursorRound": 687,
+    "storeBackfillCursorRound": 685,
     "completedCoreRoundCount": 18,
     "incompleteCoreRoundCount": 1215,
     "completedStoreRoundCount": 7,
@@ -39,24 +39,24 @@
     "coreCompleteCount": 651,
     "coreIncompleteCount": 582,
     "officialApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
-    "lastCheckedAt": "2026-11-02T07:14:37+09:00",
+    "lastCheckedAt": "2026-11-03T10:08:23+09:00",
     "latestOfficialRound": 1248,
     "recentReconcileCount": 60,
     "changedRounds": [
-      689,
-      688
+      687,
+      686
     ],
     "officialResultsApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
     "officialWinningStoresPage": "https://www.dhlottery.co.kr/wnprchsplcsrch/home",
     "storeRetryRounds": 4,
     "storeStatus": {
-      "689": "ok-official-json-api:4",
-      "688": "ok-official-json-api:6"
+      "687": "ok-official-json-api:5",
+      "686": "ok-official-json-api:7"
     },
     "storeBackfillBatch": 2,
     "storeBackfillTargets": [
-      689,
-      688
+      687,
+      686
     ],
     "storesParserVersion": "8.6.1-direct-api-safe-backfill",
     "officialWinningStoresApi": "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do",
@@ -49012,12 +49012,41 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "갈렙분식한식",
+          "method": "자동",
+          "address": "서울 중랑구 용마산로115길 92"
+        },
+        {
+          "name": "CU(망우점)",
+          "method": "자동",
+          "address": "서울 중랑구 망우로 410"
+        },
+        {
+          "name": "부일카서비스",
+          "method": "자동",
+          "address": "부산 동구 자성로133번길 35"
+        },
+        {
+          "name": "주택복권방",
+          "method": "자동",
+          "address": "경기 용인시 수지구 풍덕천로 144-1 103호"
+        },
+        {
+          "name": "오복슈퍼",
+          "method": "자동",
+          "address": "경기 성남시 중원구 금빛로 95"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-11-03T10:08:22+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
@@ -49044,12 +49073,51 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "복권천국",
+          "method": "자동",
+          "address": "서울 서초구 서초대로 97 1층"
+        },
+        {
+          "name": "복권명당율하점",
+          "method": "자동",
+          "address": "대구 동구 율하동로23길 37"
+        },
+        {
+          "name": "한국인세계대박복권",
+          "method": "수동",
+          "address": "인천 연수구 한나루로197번길 34"
+        },
+        {
+          "name": "로또휴게실",
+          "method": "자동",
+          "address": "경기 용인시 기흥구 용구대로 1885"
+        },
+        {
+          "name": "복권백화점",
+          "method": "수동",
+          "address": "경기 여주시 세종로 41 1층"
+        },
+        {
+          "name": "로또복권",
+          "method": "자동",
+          "address": "경기 광명시 금당로 36 8단지종합상가공유지"
+        },
+        {
+          "name": "베스트올수성점",
+          "method": "수동",
+          "address": "전북 정읍시 수성2로 28"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-11-03T10:08:23+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
