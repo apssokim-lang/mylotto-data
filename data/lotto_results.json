@@ -29,7 +29,7 @@
     "coreBackfillBatchSize": 30,
     "coreBackfillCursorRound": 582,
     "storeBackfillBatchSize": 5,
-    "storeBackfillCursorRound": 675,
+    "storeBackfillCursorRound": 673,
     "completedCoreRoundCount": 18,
     "incompleteCoreRoundCount": 1215,
     "completedStoreRoundCount": 7,
@@ -39,26 +39,24 @@
     "coreCompleteCount": 651,
     "coreIncompleteCount": 582,
     "officialApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
-    "lastCheckedAt": "2026-11-08T01:44:02+09:00",
+    "lastCheckedAt": "2026-11-08T04:13:02+09:00",
     "latestOfficialRound": 1249,
     "recentReconcileCount": 60,
     "changedRounds": [
-      1249,
-      677,
-      676
+      675,
+      674
     ],
     "officialResultsApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
     "officialWinningStoresPage": "https://www.dhlottery.co.kr/wnprchsplcsrch/home",
     "storeRetryRounds": 4,
     "storeStatus": {
-      "1249": "ok-official-json-api:13",
-      "677": "ok-official-json-api:5",
-      "676": "ok-official-json-api:7"
+      "675": "ok-official-json-api:2",
+      "674": "ok-official-json-api:6"
     },
     "storeBackfillBatch": 2,
     "storeBackfillTargets": [
-      677,
-      676
+      675,
+      674
     ],
     "storesParserVersion": "8.6.1-direct-api-safe-backfill",
     "officialWinningStoresApi": "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do",
@@ -49961,12 +49959,26 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "GS25(성애병원점)",
+          "method": "반자동",
+          "address": "서울 영등포구 여의대방로53길 28"
+        },
+        {
+          "name": "베스토아",
+          "method": "수동",
+          "address": "서울 강남구 역삼로 166"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-11-08T04:13:02+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
@@ -49993,12 +50005,46 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "인더라인25",
+          "method": "자동",
+          "address": "서울 마포구 월드컵북로54길 17 132호"
+        },
+        {
+          "name": "스파",
+          "method": "수동",
+          "address": "서울 노원구 동일로 1493 주공10단지종합상가111"
+        },
+        {
+          "name": "뉴빅마트",
+          "method": "수동",
+          "address": "부산 기장군 정관중앙로 48 106호"
+        },
+        {
+          "name": "GS25(하안연서점)",
+          "method": "수동",
+          "address": "경기 광명시 안현로 52"
+        },
+        {
+          "name": "영로또",
+          "method": "수동",
+          "address": "충북 음성군 원중로 1374 킹스밀 오피스텔 1차 104호"
+        },
+        {
+          "name": "진교로또복권판매점",
+          "method": "자동",
+          "address": "경남 하동군 민다리길 76"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-11-08T04:13:02+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
