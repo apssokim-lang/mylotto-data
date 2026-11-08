@@ -29,7 +29,7 @@
     "coreBackfillBatchSize": 30,
     "coreBackfillCursorRound": 582,
     "storeBackfillBatchSize": 5,
-    "storeBackfillCursorRound": 667,
+    "storeBackfillCursorRound": 665,
     "completedCoreRoundCount": 18,
     "incompleteCoreRoundCount": 1215,
     "completedStoreRoundCount": 7,
@@ -39,24 +39,24 @@
     "coreCompleteCount": 651,
     "coreIncompleteCount": 582,
     "officialApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
-    "lastCheckedAt": "2026-11-08T14:41:45+09:00",
+    "lastCheckedAt": "2026-11-08T22:09:12+09:00",
     "latestOfficialRound": 1249,
     "recentReconcileCount": 60,
     "changedRounds": [
-      669,
-      668
+      667,
+      666
     ],
     "officialResultsApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
     "officialWinningStoresPage": "https://www.dhlottery.co.kr/wnprchsplcsrch/home",
     "storeRetryRounds": 4,
     "storeStatus": {
-      "669": "ok-official-json-api:6",
-      "668": "ok-official-json-api:4"
+      "667": "ok-official-json-api:6",
+      "666": "ok-official-json-api:6"
     },
     "storeBackfillBatch": 2,
     "storeBackfillTargets": [
-      669,
-      668
+      667,
+      666
     ],
     "storesParserVersion": "8.6.1-direct-api-safe-backfill",
     "officialWinningStoresApi": "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do",
@@ -50472,12 +50472,46 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "종로3가1호선역2번출구가로판매점82호",
+          "method": "자동",
+          "address": "서울 종로구 돈화문로 23 가판"
+        },
+        {
+          "name": "천하명당복권방",
+          "method": "자동",
+          "address": "서울 성북구 정릉로 268"
+        },
+        {
+          "name": "복권나라",
+          "method": "자동",
+          "address": "서울 성동구 용답중앙15길 12-1 1층"
+        },
+        {
+          "name": "뚜레쥬르화곡역점",
+          "method": "자동",
+          "address": "서울 강서구 강서로 178"
+        },
+        {
+          "name": "씨스페이스(범어사역점)",
+          "method": "자동",
+          "address": "부산 금정구 중앙대로 2097"
+        },
+        {
+          "name": "싱글벙글마트",
+          "method": "자동",
+          "address": "경기 광명시 광명로 884 1층 좌측호(광명동)"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-11-08T22:09:11+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
@@ -50504,12 +50538,46 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "가두판매점",
+          "method": "수동",
+          "address": "경기 안양시 만안구 안양로 330-1"
+        },
+        {
+          "name": "로또판매점",
+          "method": "수동",
+          "address": "경기 안산시 상록구 영화7길 22-1 102호"
+        },
+        {
+          "name": "주노",
+          "method": "수동",
+          "address": "경기 고양시 덕양구 행신로 131-11 1층 120호"
+        },
+        {
+          "name": "로또부자세상",
+          "method": "수동",
+          "address": "강원 원주시 천사로 286 1층"
+        },
+        {
+          "name": "대우할인매장",
+          "method": "수동",
+          "address": "경남 창원시 성산구 정동로162번길 74 대우상가 1층 대우할인마트"
+        },
+        {
+          "name": "이효민나눔로또",
+          "method": "자동",
+          "address": "경남 거제시 능포로 164 1층"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-11-08T22:09:12+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
