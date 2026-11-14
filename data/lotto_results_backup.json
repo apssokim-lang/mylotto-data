@@ -29,7 +29,7 @@
     "coreBackfillBatchSize": 30,
     "coreBackfillCursorRound": 582,
     "storeBackfillBatchSize": 5,
-    "storeBackfillCursorRound": 651,
+    "storeBackfillCursorRound": 649,
     "completedCoreRoundCount": 18,
     "incompleteCoreRoundCount": 1215,
     "completedStoreRoundCount": 7,
@@ -39,26 +39,24 @@
     "coreCompleteCount": 651,
     "coreIncompleteCount": 582,
     "officialApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
-    "lastCheckedAt": "2026-11-15T01:50:56+09:00",
+    "lastCheckedAt": "2026-11-15T04:37:49+09:00",
     "latestOfficialRound": 1250,
     "recentReconcileCount": 60,
     "changedRounds": [
-      1250,
-      653,
-      652
+      651,
+      650
     ],
     "officialResultsApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
     "officialWinningStoresPage": "https://www.dhlottery.co.kr/wnprchsplcsrch/home",
     "storeRetryRounds": 4,
     "storeStatus": {
-      "1250": "ok-official-json-api:9",
-      "653": "ok-official-json-api:9",
-      "652": "ok-official-json-api:2"
+      "651": "ok-official-json-api:5",
+      "650": "ok-official-json-api:3"
     },
     "storeBackfillBatch": 2,
     "storeBackfillTargets": [
-      653,
-      652
+      651,
+      650
     ],
     "storesParserVersion": "8.6.1-direct-api-safe-backfill",
     "officialWinningStoresApi": "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do",
@@ -51625,12 +51623,41 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "G마트",
+          "method": "자동",
+          "address": "서울 영등포구 디지털로 387"
+        },
+        {
+          "name": "이마트24대전대흥그린점",
+          "method": "자동",
+          "address": "대전 중구 대종로 465 이안과병원 건너편"
+        },
+        {
+          "name": "팬더복권",
+          "method": "자동",
+          "address": "경북 포항시 남구 충무로 39-1 1층,우측상가"
+        },
+        {
+          "name": "대동도기상사",
+          "method": "자동",
+          "address": "경북 영천시 금완로 30 복권방"
+        },
+        {
+          "name": "목화휴게소",
+          "method": "자동",
+          "address": "경남 사천시 사천대로 912"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-11-15T04:37:49+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
@@ -51657,12 +51684,31 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "럭키마켓",
+          "method": "수동",
+          "address": "서울 강동구 명일로 159 1층"
+        },
+        {
+          "name": "행운마트",
+          "method": "자동",
+          "address": "인천 부평구 배곶남로9번길 4"
+        },
+        {
+          "name": "포시즌",
+          "method": "수동",
+          "address": "경남 김해시 내외중앙로 99 복권판매점"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-11-15T04:37:49+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
