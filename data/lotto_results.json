@@ -29,7 +29,7 @@
     "coreBackfillBatchSize": 30,
     "coreBackfillCursorRound": 582,
     "storeBackfillBatchSize": 5,
-    "storeBackfillCursorRound": 637,
+    "storeBackfillCursorRound": 635,
     "completedCoreRoundCount": 18,
     "incompleteCoreRoundCount": 1215,
     "completedStoreRoundCount": 7,
@@ -39,24 +39,24 @@
     "coreCompleteCount": 651,
     "coreIncompleteCount": 582,
     "officialApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
-    "lastCheckedAt": "2026-11-17T10:56:00+09:00",
+    "lastCheckedAt": "2026-11-18T10:07:07+09:00",
     "latestOfficialRound": 1250,
     "recentReconcileCount": 60,
     "changedRounds": [
-      639,
-      638
+      637,
+      636
     ],
     "officialResultsApi": "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do",
     "officialWinningStoresPage": "https://www.dhlottery.co.kr/wnprchsplcsrch/home",
     "storeRetryRounds": 4,
     "storeStatus": {
-      "639": "ok-official-json-api:4",
-      "638": "ok-official-json-api:3"
+      "637": "ok-official-json-api:4",
+      "636": "ok-official-json-api:7"
     },
     "storeBackfillBatch": 2,
     "storeBackfillTargets": [
-      639,
-      638
+      637,
+      636
     ],
     "storesParserVersion": "8.6.1-direct-api-safe-backfill",
     "officialWinningStoresApi": "https://www.dhlottery.co.kr/wnprchsplcsrch/selectLtWnShp.do",
@@ -52482,12 +52482,36 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "가로판매소",
+          "method": "수동",
+          "address": "서울 구로구 새말로 117-24 (신도림역2번출구)(구로동)"
+        },
+        {
+          "name": "복권나라",
+          "method": "자동",
+          "address": "대구 달성군 논공중앙로 106"
+        },
+        {
+          "name": "드림로또",
+          "method": "자동",
+          "address": "대전 중구 대둔산로 365-2"
+        },
+        {
+          "name": "NG24",
+          "method": "수동",
+          "address": "경북 칠곡군 북중리3길 59"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-11-18T10:07:06+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
@@ -52514,12 +52538,51 @@
         },
         "totalSalesAmount": null
       },
-      "stores": [],
+      "stores": [
+        {
+          "name": "영광정보통신",
+          "method": "수동",
+          "address": "서울 성북구 화랑로 92 1층 우측1호"
+        },
+        {
+          "name": "로또",
+          "method": "자동",
+          "address": "서울 강동구 올림픽로92길 66"
+        },
+        {
+          "name": "행복충전소",
+          "method": "자동",
+          "address": "경기 평택시 탄현로 332-2"
+        },
+        {
+          "name": "대운복권",
+          "method": "수동",
+          "address": "경기 성남시 중원구 성남대로 1149"
+        },
+        {
+          "name": "다들복권방",
+          "method": "자동",
+          "address": "경기 부천시 고리울로 51 고강빌딩1층"
+        },
+        {
+          "name": "김포로또",
+          "method": "자동",
+          "address": "경기 김포시 돌문로 48 한솔프라자101"
+        },
+        {
+          "name": "GS25(두정메트로점)",
+          "method": "자동",
+          "address": "충남 천안시 서북구 성정두정로 12"
+        }
+      ],
       "dataSource": {
         "winning": "pyony-round-page",
         "firstPrize": "pyony-round-page",
         "firstWinnerCount": "pyony-round-page",
-        "secondWinnerCount": "pyony-round-page"
+        "secondWinnerCount": "pyony-round-page",
+        "stores": "dhlottery-official-winning-store-json-api",
+        "storesVerifiedAt": "2026-11-18T10:07:07+09:00",
+        "storesParserVersion": "8.6.1-direct-api-safe-backfill"
       }
     },
     {
